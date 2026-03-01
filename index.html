@@ -500,16 +500,7 @@
       <button class="lang-btn" onclick="setLang('en')">ENG</button>
       <button class="lang-btn" onclick="setLang('ru')">РУС</button>
     </div>
-    <button class="btn btn-outline" onclick="openModal('login')">
-      <span data-lang="uk">Увійти</span>
-      <span data-lang="en">Login</span>
-      <span data-lang="ru">Войти</span>
-    </button>
-    <button class="btn btn-primary" onclick="openModal('register')">
-      <span data-lang="uk">Реєстрація</span>
-      <span data-lang="en">Sign Up</span>
-      <span data-lang="ru">Регистрация</span>
-    </button>
+
     <button class="btn" style="background:var(--bg3);border:1px solid var(--border);color:var(--muted);font-size:0.75rem;" onclick="openModal('admin')">⚙️ Адмін</button>
   </div>
 </nav>
@@ -540,7 +531,7 @@
       <span data-lang="ru">Тысячи фильмов и сериалов бесплатно. Без регистрации, без подписки — просто нажми и смотри.</span>
     </p>
     <div class="hero-actions">
-      <button class="btn-hero btn-watch" onclick="openModal('register')">
+      <button class="btn-hero btn-watch" onclick="scrollToSection('movies')">
         ▶
         <span data-lang="uk">Почати дивитись</span>
         <span data-lang="en">Start Watching</span>
@@ -728,74 +719,9 @@
   </div>
 </footer>
 
-<!-- LOGIN MODAL -->
-<div class="modal-overlay" id="loginModal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal('login')">✕</button>
-    <h2>
-      <span data-lang="uk">Вхід</span>
-      <span data-lang="en">Login</span>
-      <span data-lang="ru">Вход</span>
-    </h2>
-    <p>
-      <span data-lang="uk">Ласкаво просимо назад!</span>
-      <span data-lang="en">Welcome back!</span>
-      <span data-lang="ru">Добро пожаловать!</span>
-    </p>
-    <div class="form-group">
-      <input type="email" class="form-input" placeholder="Email">
-    </div>
-    <div class="form-group">
-      <input type="password" class="form-input" placeholder="Password">
-    </div>
-    <button class="btn-submit">
-      <span data-lang="uk">Увійти</span>
-      <span data-lang="en">Login</span>
-      <span data-lang="ru">Войти</span>
-    </button>
-    <p class="form-switch">
-      <span data-lang="uk">Немає акаунту? <a onclick="switchModal('login','register')">Зареєструватись</a></span>
-      <span data-lang="en">No account? <a onclick="switchModal('login','register')">Sign up</a></span>
-      <span data-lang="ru">Нет аккаунта? <a onclick="switchModal('login','register')">Регистрация</a></span>
-    </p>
-  </div>
-</div>
 
-<!-- REGISTER MODAL -->
-<div class="modal-overlay" id="registerModal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal('register')">✕</button>
-    <h2>
-      <span data-lang="uk">Реєстрація</span>
-      <span data-lang="en">Sign Up</span>
-      <span data-lang="ru">Регистрация</span>
-    </h2>
-    <p>
-      <span data-lang="uk">Безкоштовно та без підписки!</span>
-      <span data-lang="en">Free and no subscription!</span>
-      <span data-lang="ru">Бесплатно и без подписки!</span>
-    </p>
-    <div class="form-group">
-      <input type="text" class="form-input" placeholder="Ім'я / Name">
-    </div>
-    <div class="form-group">
-      <input type="email" class="form-input" placeholder="Email">
-    </div>
-    <div class="form-group">
-      <input type="password" class="form-input" placeholder="Password">
-    </div>
-    <button class="btn-submit">
-      <span data-lang="uk">Зареєструватись</span>
-      <span data-lang="en">Create Account</span>
-      <span data-lang="ru">Создать аккаунт</span>
-    </button>
-    <p class="form-switch">
-      <span data-lang="uk">Вже є акаунт? <a onclick="switchModal('register','login')">Увійти</a></span>
-      <span data-lang="en">Have an account? <a onclick="switchModal('register','login')">Login</a></span>
-      <span data-lang="ru">Есть аккаунт? <a onclick="switchModal('register','login')">Войти</a></span>
-    </p>
-  </div>
-</div>
+
+
 
 <script>
 // ===== MOVIE DATA =====
@@ -1099,7 +1025,7 @@ function openMovieLink(id) {
   if (m && m.link) {
     window.open(m.link, '_blank');
   } else {
-    openModal('register');
+    scrollToSection('movies');
   }
 }
 
