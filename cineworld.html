@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CineWorld — Дивись фільми онлайн</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Mulish:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #111118;
+    --bg3: #1a1a24;
+    --card: #16161e;
+    --accent: #e50914;
+    --accent2: #ff6b35;
+    --gold: #f5c518;
+    --text: #e8e8f0;
+    --muted: #7a7a9a;
+    --border: #2a2a3a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Mulish', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 64px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.95), transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 3px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    cursor: pointer;
+  }
+
+  .nav-links {
+    display: flex; gap: 28px; list-style: none;
+  }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: 0.85rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-right {
+    display: flex; align-items: center; gap: 16px;
+  }
+
+  .lang-switcher {
+    display: flex; gap: 6px;
+  }
+  .lang-btn {
+    background: var(--bg3); border: 1px solid var(--border);
+    color: var(--muted); padding: 4px 10px; border-radius: 4px;
+    font-size: 0.75rem; font-weight: 700; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .lang-btn.active, .lang-btn:hover {
+    background: var(--accent); color: white; border-color: var(--accent);
+  }
+
+  .btn {
+    padding: 8px 20px; border-radius: 6px; font-size: 0.85rem;
+    font-weight: 700; cursor: pointer; transition: all 0.2s; border: none;
+  }
+  .btn-outline {
+    background: transparent; border: 1px solid var(--border); color: var(--text);
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-primary {
+    background: var(--accent); color: white;
+  }
+  .btn-primary:hover { background: #c40812; transform: translateY(-1px); }
+
+  /* HERO */
+  .hero {
+    position: relative; height: 85vh; display: flex; align-items: flex-end;
+    padding: 0 60px 80px;
+    background: linear-gradient(135deg, #0a0a0f 0%, #1a0a14 50%, #0a0f1a 100%);
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 60% at 70% 40%, rgba(229,9,20,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 30% 60%, rgba(255,107,53,0.08) 0%, transparent 50%);
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0; opacity: 0.03;
+    background-image: linear-gradient(rgba(255,255,255,.5) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,.5) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+
+  .hero-movies {
+    position: absolute; right: 40px; top: 50%; transform: translateY(-50%);
+    display: flex; gap: 20px; opacity: 0.6;
+  }
+
+  .hero-poster {
+    width: 120px; height: 180px; border-radius: 8px;
+    background: var(--card); border: 1px solid var(--border);
+    animation: float 6s ease-in-out infinite;
+    background-size: cover; background-position: center;
+  }
+  .hero-poster:nth-child(2) { animation-delay: -2s; margin-top: 30px; }
+  .hero-poster:nth-child(3) { animation-delay: -4s; }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  .hero-content { position: relative; z-index: 1; max-width: 600px; }
+  .hero-badge {
+    display: inline-block; background: var(--accent); color: white;
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    padding: 4px 12px; border-radius: 4px; margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 6vw, 5rem);
+    line-height: 0.95; letter-spacing: 2px;
+    margin-bottom: 16px;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero p {
+    color: var(--muted); font-size: 1rem; line-height: 1.6;
+    margin-bottom: 28px; max-width: 480px;
+  }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-hero {
+    padding: 14px 32px; font-size: 0.95rem; font-weight: 700;
+    border-radius: 6px; cursor: pointer; border: none; transition: all 0.2s;
+  }
+  .btn-watch {
+    background: var(--accent); color: white;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .btn-watch:hover { background: #c40812; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(229,9,20,0.4); }
+  .btn-browse {
+    background: rgba(255,255,255,0.1); color: white;
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .btn-browse:hover { background: rgba(255,255,255,0.18); }
+
+  /* AD BANNER */
+  .ad-banner {
+    background: linear-gradient(90deg, var(--bg2), var(--bg3));
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    padding: 12px 60px;
+    display: flex; align-items: center; justify-content: center; gap: 16px;
+    font-size: 0.8rem; color: var(--muted);
+  }
+  .ad-label {
+    background: var(--gold); color: #000;
+    font-size: 0.65rem; font-weight: 800; letter-spacing: 1px;
+    padding: 2px 6px; border-radius: 3px; text-transform: uppercase;
+  }
+  .ad-content {
+    display: flex; align-items: center; gap: 24px; flex: 1; justify-content: center;
+    max-width: 800px;
+  }
+  .ad-slot {
+    height: 60px; background: var(--bg3); border: 1px dashed var(--border);
+    border-radius: 6px; flex: 1; display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-size: 0.75rem; letter-spacing: 1px;
+  }
+
+  /* SEARCH */
+  .search-section {
+    padding: 48px 60px 32px;
+    background: var(--bg);
+  }
+  .search-wrapper {
+    max-width: 700px; margin: 0 auto; position: relative;
+  }
+  .search-input {
+    width: 100%; padding: 18px 24px 18px 56px;
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 12px; color: var(--text); font-size: 1rem;
+    font-family: 'Mulish', sans-serif; outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .search-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(229,9,20,0.15);
+  }
+  .search-input::placeholder { color: var(--muted); }
+  .search-icon {
+    position: absolute; left: 20px; top: 50%; transform: translateY(-50%);
+    color: var(--muted); font-size: 1.2rem;
+  }
+  .search-btn {
+    position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+    background: var(--accent); color: white; border: none;
+    padding: 10px 20px; border-radius: 8px; font-weight: 700;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .search-btn:hover { background: #c40812; }
+
+  /* FILTERS */
+  .filters {
+    padding: 0 60px 40px;
+    display: flex; gap: 10px; flex-wrap: wrap;
+  }
+  .filter-btn {
+    padding: 8px 18px; border-radius: 20px; font-size: 0.8rem; font-weight: 700;
+    cursor: pointer; transition: all 0.2s;
+    border: 1px solid var(--border); background: var(--bg3); color: var(--muted);
+  }
+  .filter-btn.active, .filter-btn:hover {
+    background: var(--accent); color: white; border-color: var(--accent);
+  }
+
+  /* SECTIONS */
+  .section { padding: 40px 60px; }
+  .section-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem; letter-spacing: 2px;
+  }
+  .section-title span { color: var(--accent); }
+  .see-all {
+    color: var(--muted); font-size: 0.8rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px; cursor: pointer;
+    transition: color 0.2s;
+  }
+  .see-all:hover { color: var(--accent); }
+
+  /* MOVIE GRID */
+  .movie-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+  }
+
+  .movie-card {
+    position: relative; cursor: pointer;
+    border-radius: 10px; overflow: hidden;
+    background: var(--card); border: 1px solid var(--border);
+    transition: transform 0.25s, box-shadow 0.25s;
+    animation: fadeIn 0.5s ease both;
+  }
+  .movie-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 0 1px var(--accent);
+    z-index: 2;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .movie-poster {
+    width: 100%; aspect-ratio: 2/3;
+    background: linear-gradient(135deg, var(--bg3), var(--bg2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3rem; position: relative; overflow: hidden;
+  }
+
+  .movie-poster-img {
+    position: absolute; inset: 0;
+    background-size: cover; background-position: center;
+    transition: transform 0.4s;
+  }
+  .movie-card:hover .movie-poster-img { transform: scale(1.06); }
+
+  .movie-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0) 50%);
+    opacity: 0; transition: opacity 0.25s;
+    display: flex; align-items: flex-end; padding: 14px;
+  }
+  .movie-card:hover .movie-overlay { opacity: 1; }
+  .play-btn {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: var(--accent); border: none; color: white;
+    font-size: 1rem; cursor: pointer; display: flex;
+    align-items: center; justify-content: center;
+    transition: transform 0.2s, background 0.2s;
+  }
+  .play-btn:hover { transform: scale(1.1); background: #ff1a25; }
+
+  .movie-badge {
+    position: absolute; top: 10px; left: 10px;
+    background: var(--accent); color: white;
+    font-size: 0.6rem; font-weight: 800; letter-spacing: 1px;
+    padding: 3px 7px; border-radius: 4px; text-transform: uppercase;
+  }
+  .movie-badge.free { background: #22c55e; }
+  .movie-badge.new { background: var(--accent2); }
+
+  .movie-rating {
+    position: absolute; top: 10px; right: 10px;
+    background: rgba(0,0,0,0.8); color: var(--gold);
+    font-size: 0.7rem; font-weight: 800;
+    padding: 3px 7px; border-radius: 4px;
+    display: flex; align-items: center; gap: 3px;
+  }
+
+  .movie-info { padding: 12px 14px; }
+  .movie-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 4px; line-height: 1.3; }
+  .movie-meta { color: var(--muted); font-size: 0.75rem; display: flex; gap: 8px; }
+  .movie-genre {
+    display: inline-block; background: var(--bg3);
+    color: var(--muted); font-size: 0.65rem; font-weight: 700;
+    padding: 2px 7px; border-radius: 3px; margin-top: 6px;
+  }
+
+  /* AD STRIP */
+  .ad-strip {
+    margin: 0 60px;
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px 24px;
+    display: flex; align-items: center; gap: 20px;
+  }
+  .ad-strip-label {
+    background: var(--gold); color: #000;
+    font-size: 0.6rem; font-weight: 800; letter-spacing: 1px;
+    padding: 2px 6px; border-radius: 3px; white-space: nowrap;
+  }
+  .ad-strip-slot {
+    flex: 1; height: 80px; border: 1px dashed rgba(255,255,255,0.1);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-size: 0.75rem;
+  }
+
+  /* STATS */
+  .stats {
+    padding: 40px 60px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+  }
+  .stat-card {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 12px; padding: 24px;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem; color: var(--accent); letter-spacing: 2px;
+  }
+  .stat-label { color: var(--muted); font-size: 0.8rem; margin-top: 4px; }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,0.85); backdrop-filter: blur(6px);
+    align-items: center; justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 16px; padding: 40px; max-width: 440px; width: 90%;
+    position: relative; animation: slideUp 0.3s ease;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .modal-close {
+    position: absolute; top: 16px; right: 16px;
+    background: var(--bg3); border: 1px solid var(--border);
+    color: var(--muted); width: 32px; height: 32px; border-radius: 50%;
+    cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  }
+  .modal-close:hover { color: white; border-color: var(--accent); }
+  .modal h2 {
+    font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+  .modal p { color: var(--muted); font-size: 0.85rem; margin-bottom: 24px; }
+  .form-group { margin-bottom: 16px; }
+  .form-input {
+    width: 100%; padding: 12px 16px;
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text); font-size: 0.9rem;
+    font-family: 'Mulish', sans-serif; outline: none; transition: border-color 0.2s;
+  }
+  .form-input:focus { border-color: var(--accent); }
+  .form-input::placeholder { color: var(--muted); }
+  .btn-submit {
+    width: 100%; padding: 14px; background: var(--accent); color: white;
+    border: none; border-radius: 8px; font-size: 1rem; font-weight: 700;
+    cursor: pointer; transition: background 0.2s;
+    font-family: 'Mulish', sans-serif;
+  }
+  .btn-submit:hover { background: #c40812; }
+  .form-switch { text-align: center; margin-top: 16px; color: var(--muted); font-size: 0.85rem; }
+  .form-switch a { color: var(--accent); cursor: pointer; }
+
+  /* FOOTER */
+  footer {
+    background: var(--bg2); border-top: 1px solid var(--border);
+    padding: 48px 60px 24px;
+    margin-top: 60px;
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px; margin-bottom: 40px;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 3px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 12px;
+  }
+  .footer-desc { color: var(--muted); font-size: 0.85rem; line-height: 1.6; }
+  .footer-col h4 {
+    font-size: 0.75rem; font-weight: 800; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 16px;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 8px; }
+  .footer-col a { color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--accent); }
+  .footer-bottom {
+    border-top: 1px solid var(--border); padding-top: 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    color: var(--muted); font-size: 0.75rem;
+  }
+
+  /* TRANSLATIONS */
+  [data-lang]:not([data-lang="uk"]) { display: none; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 0 20px 60px; }
+    .hero-movies { display: none; }
+    .search-section, .section, .filters { padding-left: 20px; padding-right: 20px; }
+    .stats { grid-template-columns: repeat(2, 1fr); padding: 20px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .ad-banner, .ad-strip { margin: 0 20px; padding: 12px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">CineWorld</div>
+  <ul class="nav-links">
+    <li><a href="#" onclick="scrollToSection('movies')">
+      <span data-lang="uk">Фільми</span>
+      <span data-lang="en">Movies</span>
+      <span data-lang="ru">Фильмы</span>
+    </a></li>
+    <li><a href="#" onclick="scrollToSection('series')">
+      <span data-lang="uk">Серіали</span>
+      <span data-lang="en">Series</span>
+      <span data-lang="ru">Сериалы</span>
+    </a></li>
+    <li><a href="#">
+      <span data-lang="uk">Топ-100</span>
+      <span data-lang="en">Top-100</span>
+      <span data-lang="ru">Топ-100</span>
+    </a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLang('uk')">УКР</button>
+      <button class="lang-btn" onclick="setLang('en')">ENG</button>
+      <button class="lang-btn" onclick="setLang('ru')">РУС</button>
+    </div>
+    <button class="btn btn-outline" onclick="openModal('login')">
+      <span data-lang="uk">Увійти</span>
+      <span data-lang="en">Login</span>
+      <span data-lang="ru">Войти</span>
+    </button>
+    <button class="btn btn-primary" onclick="openModal('register')">
+      <span data-lang="uk">Реєстрація</span>
+      <span data-lang="en">Sign Up</span>
+      <span data-lang="ru">Регистрация</span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-movies">
+    <div class="hero-poster" style="background:linear-gradient(135deg,#1a1030,#3a1050)">🎬</div>
+    <div class="hero-poster" style="background:linear-gradient(135deg,#102030,#103050)">🎥</div>
+    <div class="hero-poster" style="background:linear-gradient(135deg,#301020,#501030)">🎞️</div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span data-lang="uk">✦ Безкоштовно</span>
+      <span data-lang="en">✦ Free</span>
+      <span data-lang="ru">✦ Бесплатно</span>
+    </div>
+    <h1>
+      <span data-lang="uk">Дивись<br><span>фільми</span><br>онлайн</span>
+      <span data-lang="en">Watch<br><span>movies</span><br>online</span>
+      <span data-lang="ru">Смотри<br><span>фильмы</span><br>онлайн</span>
+    </h1>
+    <p>
+      <span data-lang="uk">Тисячі фільмів та серіалів безкоштовно. Без реєстрації, без підписки — просто натисни та дивись.</span>
+      <span data-lang="en">Thousands of movies and series for free. No registration, no subscription — just click and watch.</span>
+      <span data-lang="ru">Тысячи фильмов и сериалов бесплатно. Без регистрации, без подписки — просто нажми и смотри.</span>
+    </p>
+    <div class="hero-actions">
+      <button class="btn-hero btn-watch" onclick="openModal('register')">
+        ▶
+        <span data-lang="uk">Почати дивитись</span>
+        <span data-lang="en">Start Watching</span>
+        <span data-lang="ru">Начать смотреть</span>
+      </button>
+      <button class="btn-hero btn-browse" onclick="scrollToSection('movies')">
+        <span data-lang="uk">Переглянути каталог</span>
+        <span data-lang="en">Browse Catalog</span>
+        <span data-lang="ru">Смотреть каталог</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- AD BANNER -->
+<div class="ad-banner">
+  <span class="ad-label">AD</span>
+  <div class="ad-content">
+    <div class="ad-slot">728×90 — Google AdSense / Рекламний банер</div>
+  </div>
+</div>
+
+<!-- SEARCH -->
+<section class="search-section">
+  <div class="search-wrapper">
+    <span class="search-icon">🔍</span>
+    <input type="text" class="search-input" id="searchInput"
+      placeholder="Пошук фільмів, серіалів, актори..."
+      oninput="filterMovies(this.value)">
+    <button class="search-btn">
+      <span data-lang="uk">Знайти</span>
+      <span data-lang="en">Search</span>
+      <span data-lang="ru">Найти</span>
+    </button>
+  </div>
+</section>
+
+<!-- FILTERS -->
+<div class="filters" id="filters">
+  <button class="filter-btn active" onclick="setFilter(this,'all')">
+    <span data-lang="uk">Всі</span><span data-lang="en">All</span><span data-lang="ru">Все</span>
+  </button>
+  <button class="filter-btn" onclick="setFilter(this,'action')">
+    <span data-lang="uk">Бойовик</span><span data-lang="en">Action</span><span data-lang="ru">Боевик</span>
+  </button>
+  <button class="filter-btn" onclick="setFilter(this,'comedy')">
+    <span data-lang="uk">Комедія</span><span data-lang="en">Comedy</span><span data-lang="ru">Комедия</span>
+  </button>
+  <button class="filter-btn" onclick="setFilter(this,'drama')">
+    <span data-lang="uk">Драма</span><span data-lang="en">Drama</span><span data-lang="ru">Драма</span>
+  </button>
+  <button class="filter-btn" onclick="setFilter(this,'horror')">
+    <span data-lang="uk">Жахи</span><span data-lang="en">Horror</span><span data-lang="ru">Ужасы</span>
+  </button>
+  <button class="filter-btn" onclick="setFilter(this,'sci-fi')">
+    <span data-lang="uk">Фантастика</span><span data-lang="en">Sci-Fi</span><span data-lang="ru">Фантастика</span>
+  </button>
+  <button class="filter-btn" onclick="setFilter(this,'thriller')">
+    <span data-lang="uk">Трилер</span><span data-lang="en">Thriller</span><span data-lang="ru">Триллер</span>
+  </button>
+  <button class="filter-btn" onclick="setFilter(this,'animation')">
+    <span data-lang="uk">Мультфільм</span><span data-lang="en">Animation</span><span data-lang="ru">Мультфильм</span>
+  </button>
+</div>
+
+<!-- MOVIES SECTION -->
+<section class="section" id="movies">
+  <div class="section-header">
+    <div class="section-title">
+      <span data-lang="uk">🔥 <span>Популярні</span> зараз</span>
+      <span data-lang="en">🔥 <span>Popular</span> now</span>
+      <span data-lang="ru">🔥 <span>Популярные</span> сейчас</span>
+    </div>
+    <span class="see-all" onclick="scrollToSection('all')">
+      <span data-lang="uk">Всі фільми →</span>
+      <span data-lang="en">All movies →</span>
+      <span data-lang="ru">Все фильмы →</span>
+    </span>
+  </div>
+  <div class="movie-grid" id="movieGrid"></div>
+</section>
+
+<!-- AD STRIP -->
+<div class="ad-strip">
+  <span class="ad-strip-label">AD</span>
+  <div class="ad-strip-slot">336×280 — Google AdSense блок між секціями</div>
+</div>
+
+<!-- NEW SECTION -->
+<section class="section" id="series">
+  <div class="section-header">
+    <div class="section-title">
+      <span data-lang="uk">🆕 <span>Нові</span> надходження</span>
+      <span data-lang="en">🆕 <span>New</span> arrivals</span>
+      <span data-lang="ru">🆕 <span>Новые</span> поступления</span>
+    </div>
+  </div>
+  <div class="movie-grid" id="newGrid"></div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat-card">
+    <div class="stat-num">12,400+</div>
+    <div class="stat-label">
+      <span data-lang="uk">Фільмів у каталозі</span>
+      <span data-lang="en">Movies in catalog</span>
+      <span data-lang="ru">Фильмов в каталоге</span>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">850K</div>
+    <div class="stat-label">
+      <span data-lang="uk">Користувачів</span>
+      <span data-lang="en">Users</span>
+      <span data-lang="ru">Пользователей</span>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">3</div>
+    <div class="stat-label">
+      <span data-lang="uk">Мови сайту</span>
+      <span data-lang="en">Languages</span>
+      <span data-lang="ru">Языка сайта</span>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">4K</div>
+    <div class="stat-label">
+      <span data-lang="uk">Якість відео</span>
+      <span data-lang="en">Video quality</span>
+      <span data-lang="ru">Качество видео</span>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">CineWorld</div>
+      <p class="footer-desc">
+        <span data-lang="uk">Безкоштовний каталог фільмів. Знаходь, де дивитись легально та безпечно.</span>
+        <span data-lang="en">Free movie catalog. Find where to watch legally and safely.</span>
+        <span data-lang="ru">Бесплатный каталог фильмов. Находи, где смотреть легально и безопасно.</span>
+      </p>
+    </div>
+    <div class="footer-col">
+      <h4><span data-lang="uk">Каталог</span><span data-lang="en">Catalog</span><span data-lang="ru">Каталог</span></h4>
+      <ul>
+        <li><a href="#">
+          <span data-lang="uk">Фільми</span><span data-lang="en">Movies</span><span data-lang="ru">Фильмы</span>
+        </a></li>
+        <li><a href="#">
+          <span data-lang="uk">Серіали</span><span data-lang="en">Series</span><span data-lang="ru">Сериалы</span>
+        </a></li>
+        <li><a href="#">Топ IMDb</a></li>
+        <li><a href="#">
+          <span data-lang="uk">Новинки</span><span data-lang="en">New</span><span data-lang="ru">Новинки</span>
+        </a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4><span data-lang="uk">Жанри</span><span data-lang="en">Genres</span><span data-lang="ru">Жанры</span></h4>
+      <ul>
+        <li><a href="#"><span data-lang="uk">Бойовик</span><span data-lang="en">Action</span><span data-lang="ru">Боевик</span></a></li>
+        <li><a href="#"><span data-lang="uk">Комедія</span><span data-lang="en">Comedy</span><span data-lang="ru">Комедия</span></a></li>
+        <li><a href="#"><span data-lang="uk">Драма</span><span data-lang="en">Drama</span><span data-lang="ru">Драма</span></a></li>
+        <li><a href="#"><span data-lang="uk">Жахи</span><span data-lang="en">Horror</span><span data-lang="ru">Ужасы</span></a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4><span data-lang="uk">Про нас</span><span data-lang="en">About</span><span data-lang="ru">О нас</span></h4>
+      <ul>
+        <li><a href="#"><span data-lang="uk">Контакти</span><span data-lang="en">Contact</span><span data-lang="ru">Контакты</span></a></li>
+        <li><a href="#"><span data-lang="uk">Реклама</span><span data-lang="en">Advertise</span><span data-lang="ru">Реклама</span></a></li>
+        <li><a href="#"><span data-lang="uk">Умови</span><span data-lang="en">Terms</span><span data-lang="ru">Условия</span></a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 CineWorld</span>
+    <span style="color:var(--accent)">❤</span>
+    <span>Made for movie lovers</span>
+  </div>
+</footer>
+
+<!-- LOGIN MODAL -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('login')">✕</button>
+    <h2>
+      <span data-lang="uk">Вхід</span>
+      <span data-lang="en">Login</span>
+      <span data-lang="ru">Вход</span>
+    </h2>
+    <p>
+      <span data-lang="uk">Ласкаво просимо назад!</span>
+      <span data-lang="en">Welcome back!</span>
+      <span data-lang="ru">Добро пожаловать!</span>
+    </p>
+    <div class="form-group">
+      <input type="email" class="form-input" placeholder="Email">
+    </div>
+    <div class="form-group">
+      <input type="password" class="form-input" placeholder="Password">
+    </div>
+    <button class="btn-submit">
+      <span data-lang="uk">Увійти</span>
+      <span data-lang="en">Login</span>
+      <span data-lang="ru">Войти</span>
+    </button>
+    <p class="form-switch">
+      <span data-lang="uk">Немає акаунту? <a onclick="switchModal('login','register')">Зареєструватись</a></span>
+      <span data-lang="en">No account? <a onclick="switchModal('login','register')">Sign up</a></span>
+      <span data-lang="ru">Нет аккаунта? <a onclick="switchModal('login','register')">Регистрация</a></span>
+    </p>
+  </div>
+</div>
+
+<!-- REGISTER MODAL -->
+<div class="modal-overlay" id="registerModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('register')">✕</button>
+    <h2>
+      <span data-lang="uk">Реєстрація</span>
+      <span data-lang="en">Sign Up</span>
+      <span data-lang="ru">Регистрация</span>
+    </h2>
+    <p>
+      <span data-lang="uk">Безкоштовно та без підписки!</span>
+      <span data-lang="en">Free and no subscription!</span>
+      <span data-lang="ru">Бесплатно и без подписки!</span>
+    </p>
+    <div class="form-group">
+      <input type="text" class="form-input" placeholder="Ім'я / Name">
+    </div>
+    <div class="form-group">
+      <input type="email" class="form-input" placeholder="Email">
+    </div>
+    <div class="form-group">
+      <input type="password" class="form-input" placeholder="Password">
+    </div>
+    <button class="btn-submit">
+      <span data-lang="uk">Зареєструватись</span>
+      <span data-lang="en">Create Account</span>
+      <span data-lang="ru">Создать аккаунт</span>
+    </button>
+    <p class="form-switch">
+      <span data-lang="uk">Вже є акаунт? <a onclick="switchModal('register','login')">Увійти</a></span>
+      <span data-lang="en">Have an account? <a onclick="switchModal('register','login')">Login</a></span>
+      <span data-lang="ru">Есть аккаунт? <a onclick="switchModal('register','login')">Войти</a></span>
+    </p>
+  </div>
+</div>
+
+<script>
+// ===== MOVIE DATA =====
+const movies = [
+  { id:1, title_uk:"Початок", title_en:"Inception", title_ru:"Начало", year:2010, rating:8.8, genre:"sci-fi", badge:"free", color:"135deg,#1a1030,#3a1050", emoji:"🌀" },
+  { id:2, title_uk:"Темний лицар", title_en:"The Dark Knight", title_ru:"Тёмный рыцарь", year:2008, rating:9.0, genre:"action", badge:"free", color:"135deg,#101020,#202040", emoji:"🦇" },
+  { id:3, title_uk:"Матриця", title_en:"The Matrix", title_ru:"Матрица", year:1999, rating:8.7, genre:"sci-fi", badge:"free", color:"135deg,#001500,#003000", emoji:"💊" },
+  { id:4, title_uk:"Інтерстеллар", title_en:"Interstellar", title_ru:"Интерстеллар", year:2014, rating:8.6, genre:"sci-fi", badge:"free", color:"135deg,#050510,#101030", emoji:"🪐" },
+  { id:5, title_uk:"Бійцівський клуб", title_en:"Fight Club", title_ru:"Бойцовский клуб", year:1999, rating:8.8, genre:"drama", badge:"free", color:"135deg,#200a00,#400a00", emoji:"👊" },
+  { id:6, title_uk:"Форрест Гамп", title_en:"Forrest Gump", title_ru:"Форрест Гамп", year:1994, rating:8.8, genre:"drama", badge:"free", color:"135deg,#102010,#205020", emoji:"🍫" },
+  { id:7, title_uk:"Веселі хлопці", title_en:"Home Alone", title_ru:"Один дома", year:1990, rating:7.7, genre:"comedy", badge:"free", color:"135deg,#202000,#404000", emoji:"😂" },
+  { id:8, title_uk:"Чужий", title_en:"Alien", title_ru:"Чужой", year:1979, rating:8.4, genre:"horror", badge:"free", color:"135deg,#100000,#200a0a", emoji:"👾" },
+  { id:9, title_uk:"Список Шиндлера", title_en:"Schindler's List", title_ru:"Список Шиндлера", year:1993, rating:9.0, genre:"drama", badge:"free", color:"135deg,#0a0a0a,#1a1a1a", emoji:"📋" },
+  { id:10, title_uk:"Месники", title_en:"Avengers", title_ru:"Мстители", year:2012, rating:8.0, genre:"action", badge:"new", color:"135deg,#150a00,#300a00", emoji:"⚡" },
+  { id:11, title_uk:"Термінатор", title_en:"Terminator", title_ru:"Терминатор", year:1984, rating:8.0, genre:"sci-fi", badge:"free", color:"135deg,#0a0000,#200000", emoji:"🤖" },
+  { id:12, title_uk:"Паразити", title_en:"Parasite", title_ru:"Паразиты", year:2019, rating:8.5, genre:"thriller", badge:"free", color:"135deg,#001020,#002040", emoji:"🏠" },
+];
+
+const newMovies = [
+  { id:13, title_uk:"Дюна: Частина 2", title_en:"Dune: Part Two", title_ru:"Дюна: Часть 2", year:2024, rating:8.5, genre:"sci-fi", badge:"new", color:"135deg,#201000,#402000", emoji:"🏜️" },
+  { id:14, title_uk:"Оппенгеймер", title_en:"Oppenheimer", title_ru:"Оппенгеймер", year:2023, rating:8.9, genre:"drama", badge:"new", color:"135deg,#150500,#2a0a00", emoji:"☢️" },
+  { id:15, title_uk:"Барбі", title_en:"Barbie", title_ru:"Барби", year:2023, rating:6.9, genre:"comedy", badge:"new", color:"135deg,#300020,#600040", emoji:"💝" },
+  { id:16, title_uk:"Бідолашні створіння", title_en:"Poor Things", title_ru:"Бедные создания", year:2023, rating:7.9, genre:"drama", badge:"new", color:"135deg,#001020,#002030", emoji:"🎭" },
+  { id:17, title_uk:"Хлопчики", title_en:"The Boys", title_ru:"Пацаны", year:2024, rating:8.7, genre:"action", badge:"new", color:"135deg,#100020,#200040", emoji:"💥" },
+  { id:18, title_uk:"Зона інтересів", title_en:"Zone of Interest", title_ru:"Зона интересов", year:2023, rating:7.4, genre:"drama", badge:"new", color:"135deg,#080808,#121218", emoji:"🌿" },
+];
+
+let currentLang = 'uk';
+let currentFilter = 'all';
+
+// ===== RENDER MOVIES =====
+function renderMovies(list, containerId) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = '';
+  const filtered = currentFilter === 'all' ? list : list.filter(m => m.genre === currentFilter);
+  filtered.forEach((m, i) => {
+    const title = m[`title_${currentLang}`] || m.title_en;
+    const badgeLabel = m.badge === 'free' ? {uk:'БЕЗКОШТОВНО',en:'FREE',ru:'БЕСПЛАТНО'}[currentLang]
+                     : m.badge === 'new'  ? {uk:'НОВИНКА',en:'NEW',ru:'НОВИНКА'}[currentLang] : '';
+    const badgeClass = m.badge === 'free' ? 'free' : m.badge === 'new' ? 'new' : '';
+    const genreLabels = {
+      'action':{uk:'Бойовик',en:'Action',ru:'Боевик'},
+      'sci-fi':{uk:'Фантастика',en:'Sci-Fi',ru:'Фантастика'},
+      'drama':{uk:'Драма',en:'Drama',ru:'Драма'},
+      'comedy':{uk:'Комедія',en:'Comedy',ru:'Комедия'},
+      'horror':{uk:'Жахи',en:'Horror',ru:'Ужасы'},
+      'thriller':{uk:'Трилер',en:'Thriller',ru:'Триллер'},
+      'animation':{uk:'Мультфільм',en:'Animation',ru:'Мультфильм'},
+    };
+    const genre = genreLabels[m.genre]?.[currentLang] || m.genre;
+
+    container.innerHTML += `
+      <div class="movie-card" style="animation-delay:${i*0.07}s" onclick="openModal('register')">
+        <div class="movie-poster">
+          <div class="movie-poster-img" style="background:linear-gradient(${m.color})"></div>
+          <span style="position:relative;z-index:1;font-size:2.5rem">${m.emoji}</span>
+        </div>
+        ${badgeLabel ? `<span class="movie-badge ${badgeClass}">${badgeLabel}</span>` : ''}
+        <span class="movie-rating">⭐ ${m.rating}</span>
+        <div class="movie-overlay">
+          <button class="play-btn" onclick="openModal('register')">▶</button>
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">${title}</div>
+          <div class="movie-meta"><span>${m.year}</span><span>HD</span></div>
+          <span class="movie-genre">${genre}</span>
+        </div>
+      </div>`;
+  });
+  if (filtered.length === 0) {
+    container.innerHTML = `<div style="color:var(--muted);padding:20px;grid-column:1/-1">
+      ${currentLang==='uk'?'Нічого не знайдено':currentLang==='en'?'Nothing found':'Ничего не найдено'}
+    </div>`;
+  }
+}
+
+function render() {
+  renderMovies(movies, 'movieGrid');
+  renderMovies(newMovies, 'newGrid');
+}
+
+// ===== LANGUAGE =====
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    if (b.textContent.toLowerCase().includes(lang) ||
+        (lang==='uk'&&b.textContent.includes('УКР')) ||
+        (lang==='en'&&b.textContent.includes('ENG')) ||
+        (lang==='ru'&&b.textContent.includes('РУС'))) b.classList.add('active');
+  });
+  document.querySelectorAll('[data-lang]').forEach(el => {
+    el.style.display = el.dataset.lang === lang ? '' : 'none';
+  });
+  // placeholder
+  const pl = {uk:'Пошук фільмів, серіалів, актори...', en:'Search movies, series, actors...', ru:'Поиск фильмов, сериалов, актёры...'};
+  document.getElementById('searchInput').placeholder = pl[lang];
+  render();
+}
+
+// ===== FILTER =====
+function setFilter(btn, genre) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentFilter = genre;
+  render();
+}
+
+// ===== SEARCH =====
+function filterMovies(query) {
+  const q = query.toLowerCase();
+  if (!q) { render(); return; }
+  const all = [...movies, ...newMovies];
+  const filtered = all.filter(m =>
+    (m[`title_${currentLang}`]||m.title_en).toLowerCase().includes(q)
+  );
+  const container = document.getElementById('movieGrid');
+  container.innerHTML = '';
+  if (filtered.length === 0) {
+    container.innerHTML = `<div style="color:var(--muted);padding:20px;grid-column:1/-1">
+      ${currentLang==='uk'?'Нічого не знайдено':currentLang==='en'?'Nothing found':'Ничего не найдено'}
+    </div>`;
+    return;
+  }
+  filtered.forEach((m,i) => {
+    const title = m[`title_${currentLang}`]||m.title_en;
+    container.innerHTML += `
+      <div class="movie-card" style="animation-delay:${i*0.07}s" onclick="openModal('register')">
+        <div class="movie-poster">
+          <div class="movie-poster-img" style="background:linear-gradient(${m.color})"></div>
+          <span style="position:relative;z-index:1;font-size:2.5rem">${m.emoji}</span>
+        </div>
+        <span class="movie-rating">⭐ ${m.rating}</span>
+        <div class="movie-overlay"><button class="play-btn">▶</button></div>
+        <div class="movie-info">
+          <div class="movie-title">${title}</div>
+          <div class="movie-meta"><span>${m.year}</span></div>
+        </div>
+      </div>`;
+  });
+}
+
+// ===== MODAL =====
+function openModal(type) {
+  document.getElementById(type+'Modal').classList.add('open');
+}
+function closeModal(type) {
+  document.getElementById(type+'Modal').classList.remove('open');
+}
+function switchModal(from, to) {
+  closeModal(from); openModal(to);
+}
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) overlay.classList.remove('open');
+  });
+});
+
+// ===== SCROLL =====
+function scrollToSection(id) {
+  document.getElementById(id)?.scrollIntoView({behavior:'smooth'});
+}
+
+// ===== INIT =====
+setLang('uk');
+</script>
+</body>
+</html>
