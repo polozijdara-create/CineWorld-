@@ -848,15 +848,17 @@ function renderMovies(list, containerId) {
     const genre = genreLabels[m.genre]?.[currentLang] || m.genre;
 
     container.innerHTML += `
-      <div class="movie-card" style="animation-delay:${i*0.07}s" onclick="openMovieLink(${m.id})">
+      <div class="movie-card" style="animation-delay:${i*0.07}s" onclick="openMoviePlayer(${m.id})">
         <div class="movie-poster">
-          <div class="movie-poster-img" style="background:linear-gradient(${m.color})"></div>
-          <span style="position:relative;z-index:1;font-size:2.5rem">${m.emoji}</span>
+          ${m.poster 
+            ? `<div class="movie-poster-img" style="background-image:url('${m.poster}');background-size:cover;background-position:center"></div>`
+            : `<div class="movie-poster-img" style="background:linear-gradient(${m.color})"></div><span style="position:relative;z-index:1;font-size:2.5rem">${m.emoji}</span>`
+          }
         </div>
         ${badgeLabel ? `<span class="movie-badge ${badgeClass}">${badgeLabel}</span>` : ''}
         <span class="movie-rating">⭐ ${m.rating}</span>
         <div class="movie-overlay">
-          <button class="play-btn" onclick="openMovieLink(${m.id})">▶</button>
+          <button class="play-btn" onclick="openMoviePlayer(${m.id})">▶</button>
         </div>
         <div class="movie-info">
           <div class="movie-title">${title}</div>
@@ -1032,6 +1034,8 @@ function adminAddMovie() {
   const badge = document.getElementById('addBadge').value;
   const emoji = document.getElementById('addEmoji').value || '🎬';
   const link = document.getElementById('addLink').value.trim();
+  const poster = document.getElementById('addPoster').value.trim();
+  const youtube = document.getElementById('addYoutube').value.trim();
   const color = document.getElementById('addColor').value.trim() || '135deg,#1a1030,#3a1050';
   const msg = document.getElementById('addMovieMsg');
 
@@ -1043,7 +1047,7 @@ function adminAddMovie() {
   }
 
   const newId = Date.now();
-  const movie = { id: newId, title_uk: titleUk, title_en: titleEn, title_ru: titleRu || titleUk, year, rating, genre, badge, emoji, link, color, custom: true };
+  const movie = { id: newId, title_uk: titleUk, title_en: titleEn, title_ru: titleRu || titleUk, year, rating, genre, badge, emoji, link, poster, youtube, color, custom: true };
   movies.unshift(movie);
   saveCustomMovies();
   render();
@@ -1051,7 +1055,7 @@ function adminAddMovie() {
   document.getElementById('movieCount').textContent = movies.length + newMovies.length;
 
   // Clear form
-  ['addTitleUk','addTitleEn','addTitleRu','addYear','addRating','addLink'].forEach(id => document.getElementById(id).value = '');
+  ['addTitleUk','addTitleEn','addTitleRu','addYear','addRating','addLink','addPoster','addYoutube'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('addEmoji').value = '';
   document.getElementById('addColor').value = '135deg,#1a1030,#3a1050';
 
@@ -1101,6 +1105,83 @@ function openMovieLink(id) {
 
 // Load custom movies on init
 loadCustomMovies();
+
+
+// ===== YOUTUBE PLAYER =====
+let currentPlayerMovie = null;
+
+function openMoviePlayer(id) {
+  const allMovies = [...movies, ...newMovies];
+  const m = allMovies.find(x => x.id === id);
+  if (!m) return;
+  currentPlayerMovie = m;
+  
+  const title = m['title_' + currentLang] || m.title_en;
+  document.getElementById('playerTitle').textContent = title;
+  document.getElementById('playerRating').textContent = '⭐ ' + m.rating;
+  document.getElementById('playerYear').textContent = m.year;
+  
+  const genreLabels = {
+    'action':{uk:'Бойовик',en:'Action',ru:'Боевик'},
+    'sci-fi':{uk:'Фантастика',en:'Sci-Fi',ru:'Фантастика'},
+    'drama':{uk:'Драма',en:'Drama',ru:'Драма'},
+    'comedy':{uk:'Комедія',en:'Comedy',ru:'Комедия'},
+    'horror':{uk:'Жахи',en:'Horror',ru:'Ужасы'},
+    'thriller':{uk:'Трилер',en:'Thriller',ru:'Триллер'},
+    'animation':{uk:'Мультфільм',en:'Animation',ru:'Мультфильм'},
+  };
+  document.getElementById('playerGenre').textContent = genreLabels[m.genre]?.[currentLang] || m.genre;
+  
+  // Watch button
+  const watchBtn = document.getElementById('playerWatchBtn');
+  if (m.link) {
+    watchBtn.style.display = 'block';
+  } else {
+    watchBtn.style.display = 'none';
+  }
+  
+  // YouTube or fallback
+  if (m.youtube) {
+    document.getElementById('youtubeContainer').style.display = 'block';
+    document.getElementById('noTrailerBox').style.display = 'none';
+    document.getElementById('youtubeFrame').src = 'https://www.youtube.com/embed/' + m.youtube + '?autoplay=1&rel=0';
+  } else {
+    document.getElementById('youtubeContainer').style.display = 'none';
+    document.getElementById('noTrailerBox').style.display = 'block';
+    const posterEl = document.getElementById('noTrailerPoster');
+    if (m.poster) {
+      posterEl.style.backgroundImage = "url('" + m.poster + "')";
+      posterEl.style.display = 'block';
+    } else {
+      posterEl.style.display = 'none';
+    }
+  }
+  
+  document.getElementById('playerModal').classList.add('open');
+}
+
+function closePlayerModal(event) {
+  if (event.target === document.getElementById('playerModal')) {
+    closeModal('player');
+    document.getElementById('youtubeFrame').src = '';
+  }
+}
+
+function openPlayerLink() {
+  if (currentPlayerMovie && currentPlayerMovie.link) {
+    window.open(currentPlayerMovie.link, '_blank');
+  }
+}
+
+// Override closeModal to stop youtube on close
+const _origClose = closeModal;
+window.closeModal = function(type) {
+  _origClose(type);
+  if (type === 'player') {
+    document.getElementById('youtubeFrame').src = '';
+    currentPlayerMovie = null;
+  }
+};
 
 </script>
 
@@ -1174,6 +1255,14 @@ loadCustomMovies();
           <input type="text" class="form-input" id="addEmoji" placeholder="🎬" maxlength="2">
         </div>
         <div style="grid-column:1/-1">
+          <div style="font-size:0.75rem;color:var(--muted);margin-bottom:4px">Постер фільму (URL зображення)</div>
+          <input type="text" class="form-input" id="addPoster" placeholder="https://... посилання на постер з Google або IMDb">
+        </div>
+        <div style="grid-column:1/-1">
+          <div style="font-size:0.75rem;color:var(--muted);margin-bottom:4px">YouTube трейлер (ID відео)</div>
+          <input type="text" class="form-input" id="addYoutube" placeholder="dQw4w9WgXcQ (тільки ID після v= в посиланні)">
+        </div>
+        <div style="grid-column:1/-1">
           <div style="font-size:0.75rem;color:var(--muted);margin-bottom:4px">Посилання на фільм (URL)</div>
           <input type="text" class="form-input" id="addLink" placeholder="https://megogo.net/... або інше посилання">
         </div>
@@ -1191,6 +1280,36 @@ loadCustomMovies();
       📋 Всі фільми у каталозі (<span id="movieCount">0</span>)
     </div>
     <div id="adminMovieList"></div>
+  </div>
+</div>
+
+<!-- YOUTUBE PLAYER MODAL -->
+<div class="modal-overlay" id="playerModal" onclick="closePlayerModal(event)">
+  <div style="position:relative;width:90%;max-width:900px;background:#000;border-radius:12px;overflow:hidden;box-shadow:0 0 60px rgba(0,0,0,0.8)">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:var(--bg2)">
+      <div id="playerTitle" style="font-family:Bebas Neue,sans-serif;font-size:1.4rem;letter-spacing:2px;color:white"></div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <button id="playerWatchBtn" onclick="openPlayerLink()" style="background:var(--accent);color:white;border:none;padding:8px 18px;border-radius:6px;font-weight:700;cursor:pointer;font-size:0.85rem">▶ Дивитись повністю</button>
+        <button onclick="closeModal('player')" style="background:var(--bg3);border:1px solid var(--border);color:var(--muted);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1rem">✕</button>
+      </div>
+    </div>
+    <!-- YouTube embed -->
+    <div id="youtubeContainer" style="display:none;position:relative;padding-bottom:56.25%;height:0">
+      <iframe id="youtubeFrame" style="position:absolute;top:0;left:0;width:100%;height:100%" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <!-- No trailer fallback -->
+    <div id="noTrailerBox" style="display:none;padding:40px;text-align:center">
+      <div style="font-size:3rem;margin-bottom:12px">🎬</div>
+      <div id="noTrailerPoster" style="width:150px;height:220px;margin:0 auto 16px;border-radius:8px;background:var(--bg3);background-size:cover;background-position:center"></div>
+      <div style="color:var(--muted);margin-bottom:8px">Трейлер недоступний</div>
+      <div style="color:var(--text);font-size:0.9rem">Натисни кнопку вище щоб дивитись повністю</div>
+    </div>
+    <!-- Movie info bar -->
+    <div style="padding:14px 20px;background:var(--bg2);display:flex;gap:16px;align-items:center">
+      <span id="playerRating" style="color:#f5c518;font-weight:700">⭐</span>
+      <span id="playerYear" style="color:var(--muted);font-size:0.85rem"></span>
+      <span id="playerGenre" style="background:var(--bg3);color:var(--muted);font-size:0.75rem;padding:2px 8px;border-radius:4px"></span>
+    </div>
   </div>
 </div>
 </body>
