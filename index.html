@@ -738,6 +738,12 @@ const movies = [
   { id:10, title_uk:"Месники", title_en:"Avengers", title_ru:"Мстители", year:2012, rating:8.0, genre:"action", badge:"new", color:"135deg,#150a00,#300a00", emoji:"⚡" },
   { id:11, title_uk:"Термінатор", title_en:"Terminator", title_ru:"Терминатор", year:1984, rating:8.0, genre:"sci-fi", badge:"free", color:"135deg,#0a0000,#200000", emoji:"🤖" },
   { id:12, title_uk:"Паразити", title_en:"Parasite", title_ru:"Паразиты", year:2019, rating:8.5, genre:"thriller", badge:"free", color:"135deg,#001020,#002040", emoji:"🏠" },
+  { id:20, title_uk:"Розумний сумнів", title_en:"Reasonable Doubt", title_ru:"Разумное сомнение", year:2014, rating:5.7, genre:"thriller", badge:"free", color:"135deg,#0a0a1a,#1a1a2e", emoji:"⚖️", poster:"https://uaserials.com/posters/3902.jpg", youtube:"2ouw3hSAjWs", link:"https://megogo.net/ua/view/1244321-rozumniy-sumniv.html" },
+  { id:21, title_uk:"Обман", title_en:"Absolute Deception", title_ru:"Обман", year:2013, rating:4.4, genre:"action", badge:"free", color:"135deg,#1a0a0a,#2e1a1a", emoji:"🕵️", poster:"https://www.kino-teatr.ru/movie/posters/big/2/9/182692.jpg", youtube:"Ziztcy7pndE", link:"https://megogo.net/ua/view/1030271-obman.html" },
+  { id:22, title_uk:"Погана поведінка", title_en:"Behaving Badly", title_ru:"Плохое поведение", year:2013, rating:4.3, genre:"comedy", badge:"free", color:"135deg,#1a1a0a,#2e2e1a", emoji:"😈", poster:"https://upload.wikimedia.org/wikipedia/ru/8/80/Behaving_Badly.jpg", youtube:"oyVTKJugsiA", link:"https://megogo.net/ua/view/68781-pogana-povedinka.html" },
+  { id:23, title_uk:"Опинись у моїй шкірі", title_en:"Under the Skin", title_ru:"Окажись в моей коже", year:2014, rating:4.4, genre:"horror", badge:"free", color:"135deg,#0a0a0a,#1a0a2e", emoji:"👁️", poster:"https://upload.wikimedia.org/wikipedia/uk/4/4c/Under_the_Skin_poster.jpg", youtube:"2Nh21Wo86tI", link:"https://megogo.net/ua/view/21329-opinis-u-mo-y-shkiri.html" },
+  { id:24, title_uk:"Як кохатися по-англійськи", title_en:"Some Kind of Beautiful", title_ru:"Как заниматься любовью по-английски", year:2015, rating:5.7, genre:"comedy", badge:"free", color:"135deg,#1a0a1a,#2e1a2e", emoji:"💑", poster:"https://s3.vcdn.biz/static/f/872130621/image.jpg/pt/r375x0x4", youtube:"yNICzXRiYcM", link:"https://megogo.net/ua/view/1065441-yak-kohatisya-po-angliyski.html" },
+  { id:25, title_uk:"Фортуна Вегаса", title_en:"Lay the Favorite", title_ru:"Фортуна Вегаса", year:2012, rating:4.9, genre:"comedy", badge:"free", color:"135deg,#0a1a0a,#1a2e1a", emoji:"🎰", poster:"https://upload.wikimedia.org/wikipedia/ru/4/4f/Lay_the_Favorite.jpg", youtube:"WLQBynHyAvo", link:"https://megogo.net/ua/view/21323-fortuna-vehasa.html" },
 ];
 
 const newMovies = [
@@ -850,7 +856,7 @@ function filterMovies(query) {
   filtered.forEach((m,i) => {
     const title = m[`title_${currentLang}`]||m.title_en;
     container.innerHTML += `
-      <div class="movie-card" style="animation-delay:${i*0.07}s" onclick="openMovieLink(${m.id})">
+      <div class="movie-card" style="animation-delay:${i*0.07}s" onclick="openMoviePlayer(${m.id})">
         <div class="movie-poster">
           <div class="movie-poster-img" style="background:linear-gradient(${m.color})"></div>
           <span style="position:relative;z-index:1;font-size:2.5rem">${m.emoji}</span>
@@ -1040,6 +1046,15 @@ function openMoviePlayer(id) {
   const allMovies = [...movies, ...newMovies];
   const m = allMovies.find(x => x.id === id);
   if (!m) return;
+  
+  // If no trailer and no poster but has link - open link directly
+  if (!m.youtube && !m.poster && m.link) {
+    window.open(m.link, '_blank');
+    return;
+  }
+  // If nothing at all - do nothing useful
+  if (!m.youtube && !m.poster && !m.link) return;
+  
   currentPlayerMovie = m;
   
   const title = m['title_' + currentLang] || m.title_en;
@@ -1099,15 +1114,14 @@ function openPlayerLink() {
   }
 }
 
-// Override closeModal to stop youtube on close
-const _origClose = closeModal;
-window.closeModal = function(type) {
-  _origClose(type);
-  if (type === 'player') {
+// Stop youtube on player close
+function closePlayerModal(event) {
+  if (event.target === document.getElementById('playerModal')) {
+    document.getElementById('playerModal').classList.remove('open');
     document.getElementById('youtubeFrame').src = '';
     currentPlayerMovie = null;
   }
-};
+}
 
 </script>
 
@@ -1216,7 +1230,7 @@ window.closeModal = function(type) {
       <div id="playerTitle" style="font-family:Bebas Neue,sans-serif;font-size:1.4rem;letter-spacing:2px;color:white"></div>
       <div style="display:flex;gap:10px;align-items:center">
         <button id="playerWatchBtn" onclick="openPlayerLink()" style="background:var(--accent);color:white;border:none;padding:8px 18px;border-radius:6px;font-weight:700;cursor:pointer;font-size:0.85rem">▶ Дивитись повністю</button>
-        <button onclick="closeModal('player')" style="background:var(--bg3);border:1px solid var(--border);color:var(--muted);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1rem">✕</button>
+        <button onclick="closeModal('player');document.getElementById('youtubeFrame').src='';" style="background:var(--bg3);border:1px solid var(--border);color:var(--muted);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1rem">✕</button>
       </div>
     </div>
     <!-- YouTube embed -->
