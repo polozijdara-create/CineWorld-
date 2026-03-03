@@ -780,6 +780,13 @@ const newMovies = [
   { id:33, title_uk:"Афера по-американськи", title_en:"American Hustle", title_ru:"Афёра по-американски", year:2014, rating:7.2, genre:"drama", badge:"free", color:"135deg,#1a1000,#2e2000", emoji:"🎭", poster:"https://upload.wikimedia.org/wikipedia/uk/1/10/%D0%90%D0%BC%D0%B5%D1%80%D0%B8%D0%BA%D0%B0%D0%BD%D1%81%D1%8C%D0%BA%D0%B0_%D0%B0%D1%84%D0%B5%D1%80%D0%B0_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg", youtube:"IyfMfe3TvEQ", link:"https://megogo.net/ua/view/103431-afera-po-amerikanski.html" },
   { id:34, title_uk:"Вірус", title_en:"Viral", title_ru:"Вирус", year:2016, rating:5.5, genre:"horror", badge:"free", color:"135deg,#001a00,#002e00", emoji:"🦠", poster:"https://upload.wikimedia.org/wikipedia/uk/2/24/Viral_film_poster.png", youtube:"l2L0S8Ctbko", link:"https://megogo.net/ua/view/1191931-virus.html" },
   { id:35, title_uk:"Драйвер на ніч", title_en:"Stretch", title_ru:"Драйвер на ночь", year:2015, rating:6.5, genre:"comedy", badge:"free", color:"135deg,#0a0a1a,#15152e", emoji:"🚗", poster:"https://upload.wikimedia.org/wikipedia/ru/b/b9/%D0%94%D1%80%D0%B0%D0%B9%D0%B2%D0%B5%D1%80_%D0%BD%D0%B0_%D0%BD%D0%BE%D1%87%D1%8C.jpg", youtube:"du_16Rg-B-Y", link:"https://megogo.net/ua/view/1065921-drayver-na-nich.html" },
+  { id:36, title_uk:"Високий потенціал", title_en:"High Potential", title_ru:"Большой потенциал", year:2024, rating:7.7, genre:"drama", badge:"new", color:"135deg,#0a1a2e,#152e3e", emoji:"🔍", poster:"https://uaserials.my/posters/9488.webp", link:"https://uaserials.my/9488-vysokyi-potencial.html" },
+  { id:37, title_uk:"9-1-1: Нешвілл", title_en:"9-1-1: Nashville", title_ru:"9-1-1 Нешвилл", year:2025, rating:5.2, genre:"thriller", badge:"new", color:"135deg,#1a0a0a,#2e1515", emoji:"🚨", poster:"https://uaserials.my/posters/11511.webp", link:"https://uaserials.my/11527-9-1-1-neshvill.html" },
+  { id:38, title_uk:"Праведниця", title_en:"The Equalizer", title_ru:"Праведница", year:2021, rating:5.6, genre:"action", badge:"free", color:"135deg,#0a0a1a,#15152e", emoji:"⚖️", poster:"https://uaserials.my/posters/11199.webp", link:"https://uaserials.my/11213-pravednycia.html" },
+  { id:39, title_uk:"Мій коханий демон", title_en:"My Demon", title_ru:"Мой любимый демон", year:2023, rating:7.7, genre:"drama", badge:"free", color:"135deg,#1a0a1a,#2e152e", emoji:"😈", poster:"https://uaserials.my/posters/10972.webp", link:"https://uaserials.my/10984-mii-kokhanyi-demon.html" },
+  { id:40, title_uk:"Вашингтон Блек", title_en:"Washington Black", title_ru:"Вашингтон Блэк", year:2025, rating:6.4, genre:"drama", badge:"new", color:"135deg,#1a1000,#2e2000", emoji:"🌊", poster:"https://uaserials.my/posters/10999.webp", link:"https://uaserials.my/11011-vashyngton-blek.html" },
+  { id:41, title_uk:"9-1-1", title_en:"9-1-1", title_ru:"9-1-1", year:2018, rating:9.0, genre:"thriller", badge:"free", color:"135deg,#1a0000,#2e0000", emoji:"🚒", poster:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcHNIc_vQm7eNCezZ6CVNZqDohFCG7qKbTXA&s", link:"https://uaserials.my/1230-9-1-1.html" },
+  { id:42, title_uk:"Воруши ластами 2", title_en:"A Turtle's Tale 2", title_ru:"Шевели ластами 2", year:2012, rating:5.6, genre:"animation", badge:"free", color:"135deg,#003a2e,#005a40", emoji:"🐢", poster:"https://uakino.best/uploads/mini/poster/5b/372bb500059c4ebeda15597a082bba.webp", link:"https://megogo.net/ua/view/1348051-vorushi-lastami-2.html" },
 ];
 
 let currentLang = 'uk';
@@ -1066,89 +1073,23 @@ function openMovieLink(id) {
 loadCustomMovies();
 
 
-// ===== YOUTUBE PLAYER =====
+// ===== MOVIE CLICK =====
 let currentPlayerMovie = null;
-
 function openMoviePlayer(id) {
   const allMovies = [...movies, ...newMovies];
   const m = allMovies.find(x => x.id === id);
   if (!m) return;
-  
-  // If no trailer and no poster but has link - open link directly
-  if (!m.youtube && !m.poster && m.link) {
-    window.open(m.link, '_blank');
-    return;
-  }
-  // If nothing at all - do nothing useful
-  if (!m.youtube && !m.poster && !m.link) return;
-  
-  currentPlayerMovie = m;
-  
-  const title = m['title_' + currentLang] || m.title_en;
-  document.getElementById('playerTitle').textContent = title;
-  document.getElementById('playerRating').textContent = '⭐ ' + m.rating;
-  document.getElementById('playerYear').textContent = m.year;
-  
-  const genreLabels = {
-    'action':{uk:'Бойовик',en:'Action',ru:'Боевик'},
-    'sci-fi':{uk:'Фантастика',en:'Sci-Fi',ru:'Фантастика'},
-    'drama':{uk:'Драма',en:'Drama',ru:'Драма'},
-    'comedy':{uk:'Комедія',en:'Comedy',ru:'Комедия'},
-    'horror':{uk:'Жахи',en:'Horror',ru:'Ужасы'},
-    'thriller':{uk:'Трилер',en:'Thriller',ru:'Триллер'},
-    'animation':{uk:'Мультфільм',en:'Animation',ru:'Мультфильм'},
-  };
-  document.getElementById('playerGenre').textContent = genreLabels[m.genre]?.[currentLang] || m.genre;
-  
-  // Watch button
-  const watchBtn = document.getElementById('playerWatchBtn');
   if (m.link) {
-    watchBtn.style.display = 'block';
-  } else {
-    watchBtn.style.display = 'none';
-  }
-  
-  // YouTube or fallback
-  if (m.youtube) {
-    document.getElementById('youtubeContainer').style.display = 'block';
-    document.getElementById('noTrailerBox').style.display = 'none';
-    document.getElementById('youtubeFrame').src = 'https://www.youtube.com/embed/' + m.youtube + '?autoplay=1&rel=0';
-  } else {
-    document.getElementById('youtubeContainer').style.display = 'none';
-    document.getElementById('noTrailerBox').style.display = 'block';
-    const posterEl = document.getElementById('noTrailerPoster');
-    if (m.poster) {
-      posterEl.style.backgroundImage = "url('" + m.poster + "')";
-      posterEl.style.display = 'block';
-    } else {
-      posterEl.style.display = 'none';
-    }
-  }
-  
-  document.getElementById('playerModal').classList.add('open');
-}
-
-function closePlayerModal(event) {
-  if (event.target === document.getElementById('playerModal')) {
-    closeModal('player');
-    document.getElementById('youtubeFrame').src = '';
+    window.open(m.link, '_blank');
   }
 }
 
-function openPlayerLink() {
-  if (currentPlayerMovie && currentPlayerMovie.link) {
-    window.open(currentPlayerMovie.link, '_blank');
-  }
-}
+
+
+
 
 // Stop youtube on player close
-function closePlayerModal(event) {
-  if (event.target === document.getElementById('playerModal')) {
-    document.getElementById('playerModal').classList.remove('open');
-    document.getElementById('youtubeFrame').src = '';
-    currentPlayerMovie = null;
-  }
-}
+
 
 </script>
 
@@ -1250,16 +1191,7 @@ function closePlayerModal(event) {
   </div>
 </div>
 
-<!-- YOUTUBE PLAYER MODAL -->
-<div class="modal-overlay" id="playerModal" onclick="closePlayerModal(event)">
-  <div style="position:relative;width:90%;max-width:900px;background:#000;border-radius:12px;overflow:hidden;box-shadow:0 0 60px rgba(0,0,0,0.8)">
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:var(--bg2)">
-      <div id="playerTitle" style="font-family:Bebas Neue,sans-serif;font-size:1.4rem;letter-spacing:2px;color:white"></div>
-      <div style="display:flex;gap:10px;align-items:center">
-        <button id="playerWatchBtn" onclick="openPlayerLink()" style="background:var(--accent);color:white;border:none;padding:8px 18px;border-radius:6px;font-weight:700;cursor:pointer;font-size:0.85rem">▶ Дивитись повністю</button>
-        <button onclick="closeModal('player');document.getElementById('youtubeFrame').src='';" style="background:var(--bg3);border:1px solid var(--border);color:var(--muted);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1rem">✕</button>
-      </div>
-    </div>
+
     <!-- YouTube embed -->
     <div id="youtubeContainer" style="display:none;position:relative;padding-bottom:56.25%;height:0">
       <iframe id="youtubeFrame" style="position:absolute;top:0;left:0;width:100%;height:100%" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe>
