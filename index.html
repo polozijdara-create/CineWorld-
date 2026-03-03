@@ -496,7 +496,7 @@
       <span data-lang="en">Series</span>
       <span data-lang="ru">Сериалы</span>
     </a></li>
-    <li><a href="#">
+    <li><a href="#" onclick="showTopMovies()">
       <span data-lang="uk">Топ-100</span>
       <span data-lang="en">Top-100</span>
       <span data-lang="ru">Топ-100</span>
@@ -613,7 +613,7 @@
       <span data-lang="en">🔥 <span>Popular</span> now</span>
       <span data-lang="ru">🔥 <span>Популярные</span> сейчас</span>
     </div>
-    <span class="see-all" onclick="scrollToSection('all')">
+    <span class="see-all" onclick="showAllMovies()">
       <span data-lang="uk">Всі фільми →</span>
       <span data-lang="en">All movies →</span>
       <span data-lang="ru">Все фильмы →</span>
@@ -780,12 +780,12 @@ const newMovies = [
   { id:33, title_uk:"Афера по-американськи", title_en:"American Hustle", title_ru:"Афёра по-американски", year:2014, rating:7.2, genre:"drama", badge:"free", color:"135deg,#1a1000,#2e2000", emoji:"🎭", poster:"https://upload.wikimedia.org/wikipedia/uk/1/10/%D0%90%D0%BC%D0%B5%D1%80%D0%B8%D0%BA%D0%B0%D0%BD%D1%81%D1%8C%D0%BA%D0%B0_%D0%B0%D1%84%D0%B5%D1%80%D0%B0_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg", youtube:"IyfMfe3TvEQ", link:"https://megogo.net/ua/view/103431-afera-po-amerikanski.html" },
   { id:34, title_uk:"Вірус", title_en:"Viral", title_ru:"Вирус", year:2016, rating:5.5, genre:"horror", badge:"free", color:"135deg,#001a00,#002e00", emoji:"🦠", poster:"https://upload.wikimedia.org/wikipedia/uk/2/24/Viral_film_poster.png", youtube:"l2L0S8Ctbko", link:"https://megogo.net/ua/view/1191931-virus.html" },
   { id:35, title_uk:"Драйвер на ніч", title_en:"Stretch", title_ru:"Драйвер на ночь", year:2015, rating:6.5, genre:"comedy", badge:"free", color:"135deg,#0a0a1a,#15152e", emoji:"🚗", poster:"https://upload.wikimedia.org/wikipedia/ru/b/b9/%D0%94%D1%80%D0%B0%D0%B9%D0%B2%D0%B5%D1%80_%D0%BD%D0%B0_%D0%BD%D0%BE%D1%87%D1%8C.jpg", youtube:"du_16Rg-B-Y", link:"https://megogo.net/ua/view/1065921-drayver-na-nich.html" },
-  { id:36, title_uk:"Високий потенціал", title_en:"High Potential", title_ru:"Большой потенциал", year:2024, rating:7.7, genre:"drama", badge:"new", color:"135deg,#0a1a2e,#152e3e", emoji:"🔍", poster:"https://uaserials.my/posters/9488.webp", link:"https://uaserials.my/9488-vysokyi-potencial.html" },
-  { id:37, title_uk:"9-1-1: Нешвілл", title_en:"9-1-1: Nashville", title_ru:"9-1-1 Нешвилл", year:2025, rating:5.2, genre:"thriller", badge:"new", color:"135deg,#1a0a0a,#2e1515", emoji:"🚨", poster:"https://uaserials.my/posters/11511.webp", link:"https://uaserials.my/11527-9-1-1-neshvill.html" },
-  { id:38, title_uk:"Праведниця", title_en:"The Equalizer", title_ru:"Праведница", year:2021, rating:5.6, genre:"action", badge:"free", color:"135deg,#0a0a1a,#15152e", emoji:"⚖️", poster:"https://uaserials.my/posters/11199.webp", link:"https://uaserials.my/11213-pravednycia.html" },
-  { id:39, title_uk:"Мій коханий демон", title_en:"My Demon", title_ru:"Мой любимый демон", year:2023, rating:7.7, genre:"drama", badge:"free", color:"135deg,#1a0a1a,#2e152e", emoji:"😈", poster:"https://uaserials.my/posters/10972.webp", link:"https://uaserials.my/10984-mii-kokhanyi-demon.html" },
-  { id:40, title_uk:"Вашингтон Блек", title_en:"Washington Black", title_ru:"Вашингтон Блэк", year:2025, rating:6.4, genre:"drama", badge:"new", color:"135deg,#1a1000,#2e2000", emoji:"🌊", poster:"https://uaserials.my/posters/10999.webp", link:"https://uaserials.my/11011-vashyngton-blek.html" },
-  { id:41, title_uk:"9-1-1", title_en:"9-1-1", title_ru:"9-1-1", year:2018, rating:9.0, genre:"thriller", badge:"free", color:"135deg,#1a0000,#2e0000", emoji:"🚒", poster:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcHNIc_vQm7eNCezZ6CVNZqDohFCG7qKbTXA&s", link:"https://uaserials.my/1230-9-1-1.html" },
+  { id:36, title_uk:"Високий потенціал", title_en:"High Potential", title_ru:"Большой потенциал", year:2024, rating:7.7, genre:"series", badge:"new", color:"135deg,#0a1a2e,#152e3e", emoji:"🔍", poster:"https://uaserials.my/posters/9488.webp", link:"https://uaserials.my/9488-vysokyi-potencial.html" },
+  { id:37, title_uk:"9-1-1: Нешвілл", title_en:"9-1-1: Nashville", title_ru:"9-1-1 Нешвилл", year:2025, rating:5.2, genre:"series", badge:"new", color:"135deg,#1a0a0a,#2e1515", emoji:"🚨", poster:"https://uaserials.my/posters/11511.webp", link:"https://uaserials.my/11527-9-1-1-neshvill.html" },
+  { id:38, title_uk:"Праведниця", title_en:"The Equalizer", title_ru:"Праведница", year:2021, rating:5.6, genre:"series", badge:"free", color:"135deg,#0a0a1a,#15152e", emoji:"⚖️", poster:"https://uaserials.my/posters/11199.webp", link:"https://uaserials.my/11213-pravednycia.html" },
+  { id:39, title_uk:"Мій коханий демон", title_en:"My Demon", title_ru:"Мой любимый демон", year:2023, rating:7.7, genre:"series", badge:"free", color:"135deg,#1a0a1a,#2e152e", emoji:"😈", poster:"https://uaserials.my/posters/10972.webp", link:"https://uaserials.my/10984-mii-kokhanyi-demon.html" },
+  { id:40, title_uk:"Вашингтон Блек", title_en:"Washington Black", title_ru:"Вашингтон Блэк", year:2025, rating:6.4, genre:"series", badge:"new", color:"135deg,#1a1000,#2e2000", emoji:"🌊", poster:"https://uaserials.my/posters/10999.webp", link:"https://uaserials.my/11011-vashyngton-blek.html" },
+  { id:41, title_uk:"9-1-1", title_en:"9-1-1", title_ru:"9-1-1", year:2018, rating:9.0, genre:"series", badge:"free", color:"135deg,#1a0000,#2e0000", emoji:"🚒", poster:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcHNIc_vQm7eNCezZ6CVNZqDohFCG7qKbTXA&s", link:"https://uaserials.my/1230-9-1-1.html" },
   { id:42, title_uk:"Воруши ластами 2", title_en:"A Turtle's Tale 2", title_ru:"Шевели ластами 2", year:2012, rating:5.6, genre:"animation", badge:"free", color:"135deg,#003a2e,#005a40", emoji:"🐢", poster:"https://uakino.best/uploads/mini/poster/5b/372bb500059c4ebeda15597a082bba.webp", link:"https://megogo.net/ua/view/1348051-vorushi-lastami-2.html" },
 ];
 
@@ -841,8 +841,11 @@ function renderMovies(list, containerId) {
 }
 
 function render() {
-  renderMovies(movies, 'movieGrid');
-  renderMovies(newMovies, 'newGrid');
+  const films = movies.filter(m => m.genre !== 'series');
+  const series = [...movies, ...newMovies].filter(m => m.genre === 'series');
+  const newFilms = newMovies.filter(m => m.genre !== 'series');
+  renderMovies(films, 'movieGrid');
+  renderMovies(series.length > 0 ? series : newFilms, 'newGrid');
 }
 
 // ===== LANGUAGE =====
@@ -1091,6 +1094,24 @@ function openMoviePlayer(id) {
 // Stop youtube on player close
 
 
+
+function showTopMovies() {
+  scrollToSection('movies');
+  const all = [...movies, ...newMovies];
+  const top = all.filter(m => m.rating >= 6.0).sort((a,b) => b.rating - a.rating);
+  const container = document.getElementById('movieGrid');
+  container.innerHTML = '';
+  top.forEach((m, i) => {
+    const allM = [...movies, ...newMovies];
+    renderMovies([m], 'movieGrid');
+  });
+  renderMovies(top, 'movieGrid');
+}
+
+function showAllMovies() {
+  scrollToSection('movies');
+  render();
+}
 </script>
 
 <!-- ADMIN LOGIN MODAL -->
