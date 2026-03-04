@@ -486,23 +486,7 @@
 <!-- NAV -->
 <nav>
   <div class="logo">CineWorld</div>
-  <ul class="nav-links">
-    <li><a href="#" onclick="scrollToSection('movies')">
-      <span data-lang="uk">Фільми</span>
-      <span data-lang="en">Movies</span>
-      <span data-lang="ru">Фильмы</span>
-    </a></li>
-    <li><a href="#" onclick="scrollToSection('series')">
-      <span data-lang="uk">Серіали</span>
-      <span data-lang="en">Series</span>
-      <span data-lang="ru">Сериалы</span>
-    </a></li>
-    <li><a href="#" onclick="showTopMovies()">
-      <span data-lang="uk">Топ-100</span>
-      <span data-lang="en">Top-100</span>
-      <span data-lang="ru">Топ-100</span>
-    </a></li>
-  </ul>
+  <ul class="nav-links"></ul>
   <div class="nav-right">
     <div class="lang-switcher">
       <button class="lang-btn active" onclick="setLang('uk')">УКР</button>
@@ -614,6 +598,13 @@
   </button>
   <button class="filter-btn" onclick="setFilter(this,'animation')">
     <span data-lang="uk">Мультфільм</span><span data-lang="en">Animation</span><span data-lang="ru">Мультфильм</span>
+  </button>
+
+  <button class="filter-btn" onclick="setFilter(this,'series')">
+    <span data-lang="uk">📺 Серіали</span><span data-lang="en">📺 Series</span><span data-lang="ru">📺 Сериалы</span>
+  </button>
+  <button class="filter-btn" onclick="showTopMovies()">
+    <span data-lang="uk">🏆 Топ</span><span data-lang="en">🏆 Top</span><span data-lang="ru">🏆 Топ</span>
   </button>
 </div>
 
@@ -817,6 +808,7 @@ const newMovies = [
   { id:32, title_uk:"Ідеальна втеча", title_en:"A Perfect Getaway", title_ru:"Идеальный побег", year:2009, rating:6.5, genre:"thriller", badge:"free", color:"135deg,#0a1a0a,#152e15", emoji:"🏃", poster:"https://ua-images.kinorium.com/movie/1080/410426.jpg?1718362756", youtube:"R66U22KCyRw", link:"https://megogo.net/ua/view/8011-idealna-vtecha.html" },
   { id:33, title_uk:"Афера по-американськи", title_en:"American Hustle", title_ru:"Афёра по-американски", year:2014, rating:7.2, genre:"drama", badge:"free", color:"135deg,#1a1000,#2e2000", emoji:"🎭", poster:"https://upload.wikimedia.org/wikipedia/uk/1/10/%D0%90%D0%BC%D0%B5%D1%80%D0%B8%D0%BA%D0%B0%D0%BD%D1%81%D1%8C%D0%BA%D0%B0_%D0%B0%D1%84%D0%B5%D1%80%D0%B0_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg", youtube:"IyfMfe3TvEQ", link:"https://megogo.net/ua/view/103431-afera-po-amerikanski.html" },
   { id:34, title_uk:"Вірус", title_en:"Viral", title_ru:"Вирус", year:2016, rating:5.5, genre:"horror", badge:"free", color:"135deg,#001a00,#002e00", emoji:"🦠", poster:"https://upload.wikimedia.org/wikipedia/uk/2/24/Viral_film_poster.png", youtube:"l2L0S8Ctbko", link:"https://megogo.net/ua/view/1191931-virus.html" },
+  { id:34, title_uk:"Вірус", title_en:"Viral", title_ru:"Вирус", year:2016, rating:5.5, genre:"horror", badge:"free", color:"135deg,#001a00,#002e00", emoji:"🦠", poster:"https://upload.wikimedia.org/wikipedia/uk/2/24/Viral_film_poster.png", youtube:"l2L0S8Ctbko", link:"https://megogo.net/ua/view/1191931-virus.html" },
   { id:35, title_uk:"Драйвер на ніч", title_en:"Stretch", title_ru:"Драйвер на ночь", year:2015, rating:6.5, genre:"comedy", badge:"free", color:"135deg,#0a0a1a,#15152e", emoji:"🚗", poster:"https://upload.wikimedia.org/wikipedia/ru/b/b9/%D0%94%D1%80%D0%B0%D0%B9%D0%B2%D0%B5%D1%80_%D0%BD%D0%B0_%D0%BD%D0%BE%D1%87%D1%8C.jpg", youtube:"du_16Rg-B-Y", link:"https://megogo.net/ua/view/1065921-drayver-na-nich.html" },
 ];
 
@@ -872,11 +864,9 @@ function renderMovies(list, containerId) {
 }
 
 function render() {
-  const films = movies.filter(m => m.genre !== 'series');
-  const series = [...movies, ...newMovies].filter(m => m.genre === 'series');
+  renderMovies(movies, 'movieGrid');
   const newFilms = newMovies.filter(m => m.genre !== 'series');
-  renderMovies(films, 'movieGrid');
-  renderMovies(series.length > 0 ? series : newFilms, 'newGrid');
+  renderMovies(newFilms, 'newGrid');
 }
 
 // ===== LANGUAGE =====
@@ -902,7 +892,39 @@ function setFilter(btn, genre) {
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   currentFilter = genre;
-  render();
+  const allMovies = [...movies, ...newMovies];
+  const container = document.getElementById('movieGrid');
+  if (genre === 'all') {
+    renderMovies(movies, 'movieGrid');
+  } else {
+    const filtered = allMovies.filter(m => m.genre === genre);
+    container.innerHTML = '';
+    filtered.forEach((m, i) => {
+      const title = m['title_' + currentLang] || m.title_en;
+      const genreLabels = {action:{uk:'Бойовик',en:'Action',ru:'Боевик'},'sci-fi':{uk:'Фантастика',en:'Sci-Fi',ru:'Фантастика'},drama:{uk:'Драма',en:'Drama',ru:'Драма'},comedy:{uk:'Комедія',en:'Comedy',ru:'Комедия'},horror:{uk:'Жахи',en:'Horror',ru:'Ужасы'},thriller:{uk:'Трилер',en:'Thriller',ru:'Триллер'},animation:{uk:'Мультфільм',en:'Animation',ru:'Мультфильм'},series:{uk:'Серіал',en:'Series',ru:'Сериал'}};
+      const genre2 = genreLabels[m.genre]?.[currentLang] || m.genre;
+      const badgeLabel = m.badge==='free'?'Безкоштовно':m.badge==='new'?'Новинка':'';
+      const badgeClass = m.badge==='free'?'badge-free':'badge-new';
+      container.innerHTML += `
+        <div class="movie-card" style="animation-delay:${i*0.07}s" onclick="openMoviePlayer(${m.id})">
+          <div class="movie-poster">
+            ${m.poster ? `<div class="movie-poster-img" style="background-image:url('${m.poster}');background-size:cover;background-position:center"></div>` : `<div class="movie-poster-img" style="background:linear-gradient(${m.color})"></div><span style="position:relative;z-index:1;font-size:2.5rem">${m.emoji}</span>`}
+          </div>
+          ${badgeLabel ? `<span class="movie-badge ${badgeClass}">${badgeLabel}</span>` : ''}
+          <span class="movie-rating">⭐ ${m.rating}</span>
+          <div class="movie-overlay"><button class="play-btn" onclick="openMoviePlayer(${m.id})">▶</button></div>
+          <div class="movie-info">
+            <div class="movie-title">${title}</div>
+            <div class="movie-meta"><span>${m.year}</span><span>HD</span></div>
+            <span class="movie-genre">${genre2}</span>
+          </div>
+        </div>`;
+    });
+    if (filtered.length === 0) {
+      container.innerHTML = `<div style="color:var(--muted);padding:40px;text-align:center">Нічого не знайдено</div>`;
+    }
+  }
+  scrollToSection('movies');
 }
 
 // ===== SEARCH =====
