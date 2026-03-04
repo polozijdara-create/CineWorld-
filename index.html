@@ -2,6 +2,7 @@
 <html lang="uk">
 <head>
 <meta charset="UTF-8">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6017941702609770" crossorigin="anonymous"></script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZWWCB5LY72"></script>
 <script>
@@ -513,6 +514,17 @@
   </div>
 </nav>
 
+<!-- ADSENSE TOP BANNER -->
+<div style="text-align:center;padding:10px;background:var(--bg2)">
+  <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-6017941702609770"
+     data-ad-slot="auto"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
 <!-- HERO -->
 <section class="hero">
   <div class="hero-bg"></div>
@@ -623,9 +635,16 @@
 </section>
 
 <!-- AD STRIP -->
-<div class="ad-strip">
-  <span class="ad-strip-label">AD</span>
-  <ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-6017941702609770" data-ad-slot="auto"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+
+<!-- ADSENSE MID BANNER -->
+<div style="text-align:center;padding:20px 60px">
+  <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-6017941702609770"
+     data-ad-slot="auto"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
 
 <!-- NORDVPN BANNER -->
@@ -698,6 +717,17 @@
       <span data-lang="ru">Качество видео</span>
     </div>
   </div>
+</div>
+
+<!-- ADSENSE BOTTOM BANNER -->
+<div style="text-align:center;padding:20px 60px">
+  <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-6017941702609770"
+     data-ad-slot="auto"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
 
 <!-- FOOTER -->
@@ -1113,6 +1143,38 @@ function showAllMovies() {
   scrollToSection('movies');
   render();
 }
+
+// ===== PAGES =====
+function showPage(type) {
+  const allMovies = [...movies, ...newMovies];
+  const movieGrid = document.getElementById('movieGrid');
+  const seriesSection = document.getElementById('series');
+  const moviesSection = document.getElementById('movies');
+
+  if (type === 'films') {
+    const films = allMovies.filter(m => m.genre !== 'series' && m.genre !== 'animation');
+    moviesSection.style.display = 'block';
+    seriesSection.style.display = 'none';
+    renderMovies(films, 'movieGrid');
+    scrollToSection('movies');
+    // Update section title
+    document.querySelector('#movies .section-title [data-lang="uk"]').innerHTML = '🎬 <span>Всі</span> фільми';
+  } else if (type === 'series') {
+    const series = allMovies.filter(m => m.genre === 'series');
+    moviesSection.style.display = 'block';
+    seriesSection.style.display = 'none';
+    renderMovies(series, 'movieGrid');
+    scrollToSection('movies');
+    document.querySelector('#movies .section-title [data-lang="uk"]').innerHTML = '📺 <span>Всі</span> серіали';
+  } else if (type === 'top') {
+    const top = allMovies.filter(m => m.rating >= 5.0).sort((a,b) => b.rating - a.rating);
+    moviesSection.style.display = 'block';
+    seriesSection.style.display = 'none';
+    renderMovies(top, 'movieGrid');
+    scrollToSection('movies');
+    document.querySelector('#movies .section-title [data-lang="uk"]').innerHTML = '🏆 <span>Топ</span> фільмів';
+  }
+}
 </script>
 
 <!-- ADMIN LOGIN MODAL -->
@@ -1233,5 +1295,140 @@ function showAllMovies() {
     </div>
   </div>
 </div>
+
+<!-- ADSENSE BOTTOM BANNER -->
+<div style="text-align:center;padding:20px 60px">
+  <ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-6017941702609770"
+     data-ad-slot="auto"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+<!-- FOOTER -->
+<footer style="background:var(--bg2);border-top:1px solid var(--border);padding:40px 60px;margin-top:60px">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px">
+    <div>
+      <div style="font-family:Bebas Neue,sans-serif;font-size:1.8rem;color:var(--accent);letter-spacing:3px">CineWorld</div>
+      <div style="color:var(--muted);font-size:0.8rem;margin-top:4px">© 2025 CineWorld. Всі права захищені.</div>
+    </div>
+    <div style="display:flex;gap:24px;flex-wrap:wrap">
+      <a href="#" onclick="openModal('privacy')" style="color:var(--muted);text-decoration:none;font-size:0.85rem;transition:color 0.2s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">
+        🔒 Політика конфіденційності
+      </a>
+      <a href="#" onclick="openModal('about')" style="color:var(--muted);text-decoration:none;font-size:0.85rem;transition:color 0.2s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">
+        ℹ️ Про нас
+      </a>
+      <a href="#" onclick="openModal('contacts')" style="color:var(--muted);text-decoration:none;font-size:0.85rem;transition:color 0.2s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">
+        📧 Контакти
+      </a>
+    </div>
+  </div>
+</footer>
+
+<!-- PRIVACY POLICY MODAL -->
+<div class="modal-overlay" id="privacyModal">
+  <div class="modal" style="max-width:680px;max-height:85vh;overflow-y:auto">
+    <button class="modal-close" onclick="closeModal('privacy')">✕</button>
+    <h2>🔒 Політика конфіденційності</h2>
+    <div style="color:var(--muted);font-size:0.85rem;line-height:1.8">
+      <p><strong style="color:var(--text)">Останнє оновлення:</strong> 1 березня 2025 року</p>
+      
+      <h3 style="color:var(--text);margin-top:20px">1. Загальні положення</h3>
+      <p>CineWorld (cine-world-gray.vercel.app) — це каталог фільмів та серіалів. Ми поважаємо вашу конфіденційність і зобов'язуємося захищати ваші персональні дані.</p>
+      
+      <h3 style="color:var(--text);margin-top:20px">2. Які дані ми збираємо</h3>
+      <p>Ми не збираємо персональні дані користувачів безпосередньо. Наш сайт використовує:</p>
+      <ul style="margin-left:20px">
+        <li><strong style="color:var(--text)">Google Analytics</strong> — для аналізу відвідуваності (анонімні дані)</li>
+        <li><strong style="color:var(--text)">Google AdSense</strong> — для показу реклами (використовує cookies)</li>
+        <li><strong style="color:var(--text)">Cookies</strong> — технічні файли для коректної роботи сайту</li>
+      </ul>
+      
+      <h3 style="color:var(--text);margin-top:20px">3. Використання cookies</h3>
+      <p>Наш сайт використовує файли cookies для покращення досвіду користувачів. Google AdSense може використовувати cookies для показу персоналізованої реклами. Ви можете відключити cookies у налаштуваннях браузера.</p>
+      
+      <h3 style="color:var(--text);margin-top:20px">4. Реклама</h3>
+      <p>Ми використовуємо Google AdSense для монетизації сайту. Google може використовувати дані про ваші відвідування для показу релевантної реклами. Детальніше: <a href="https://policies.google.com/privacy" target="_blank" style="color:var(--accent)">Політика конфіденційності Google</a></p>
+      
+      <h3 style="color:var(--text);margin-top:20px">5. Посилання на сторонні сайти</h3>
+      <p>Наш сайт містить посилання на сторонні ресурси (Megogo, UASerials та інші). Ми не несемо відповідальності за їх політику конфіденційності.</p>
+      
+      <h3 style="color:var(--text);margin-top:20px">6. Зміни до політики</h3>
+      <p>Ми залишаємо за собою право змінювати цю політику. Актуальна версія завжди доступна на цій сторінці.</p>
+      
+      <h3 style="color:var(--text);margin-top:20px">7. Контакти</h3>
+      <p>З питань конфіденційності: <a href="mailto:cineworldfilms9@gmail.com" style="color:var(--accent)">cineworldfilms9@gmail.com</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT MODAL -->
+<div class="modal-overlay" id="aboutModal">
+  <div class="modal" style="max-width:680px;max-height:85vh;overflow-y:auto">
+    <button class="modal-close" onclick="closeModal('about')">✕</button>
+    <h2>ℹ️ Про CineWorld</h2>
+    <div style="color:var(--muted);font-size:0.85rem;line-height:1.8">
+      <div style="background:var(--bg3);border-radius:12px;padding:20px;margin-bottom:20px;text-align:center">
+        <div style="font-family:Bebas Neue,sans-serif;font-size:2.5rem;color:var(--accent);letter-spacing:4px">CineWorld</div>
+        <div style="color:var(--muted);font-size:0.9rem">Твій провідник у світі кіно 🎬</div>
+      </div>
+      
+      <p><strong style="color:var(--text)">CineWorld</strong> — це безкоштовний каталог фільмів, серіалів та мультфільмів українською мовою.</p>
+      
+      <h3 style="color:var(--text);margin-top:20px">🎯 Наша місія</h3>
+      <p>Допомогти кожному знайти цікавий фільм або серіал для перегляду — швидко, зручно і безкоштовно.</p>
+      
+      <h3 style="color:var(--text);margin-top:20px">✅ Що ми пропонуємо</h3>
+      <ul style="margin-left:20px">
+        <li>Великий каталог фільмів та серіалів</li>
+        <li>Зручний пошук та фільтрація за жанрами</li>
+        <li>Посилання на легальні джерела перегляду</li>
+        <li>Інтерфейс українською, англійською та російською мовами</li>
+        <li>Постійне оновлення каталогу новинками</li>
+      </ul>
+      
+      <h3 style="color:var(--text);margin-top:20px">📱 Ми в соцмережах</h3>
+      <p>Telegram канал: <a href="https://t.me/cineworld_film_ua" target="_blank" style="color:var(--accent)">@cineworld_film_ua</a></p>
+      
+      <h3 style="color:var(--text);margin-top:20px">⚖️ Правова інформація</h3>
+      <p>CineWorld є агрегатором посилань на легальний контент. Ми не зберігаємо та не розповсюджуємо відеоматеріали. Всі права на контент належать їх власникам.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACTS MODAL -->
+<div class="modal-overlay" id="contactsModal">
+  <div class="modal" style="max-width:580px">
+    <button class="modal-close" onclick="closeModal('contacts')">✕</button>
+    <h2>📧 Контакти</h2>
+    <div style="color:var(--muted);font-size:0.85rem;line-height:1.8">
+      
+      <div style="background:var(--bg3);border-radius:12px;padding:20px;margin-bottom:16px">
+        <div style="font-weight:700;color:var(--text);margin-bottom:8px">📧 Email</div>
+        <a href="mailto:cineworld.film.ua@gmail.com" style="color:var(--accent);text-decoration:none">cineworldfilms9@gmail.com</a>
+      </div>
+      
+      <div style="background:var(--bg3);border-radius:12px;padding:20px;margin-bottom:16px">
+        <div style="font-weight:700;color:var(--text);margin-bottom:8px">📱 Telegram / Viber (тільки SMS)</div>
+        <a href="https://t.me/cineworld_film_ua" target="_blank" style="color:var(--accent);text-decoration:none">@cineworld_film_ua</a>
+        <div style="margin-top:8px;color:var(--text)">+38 066 669 03 37</div>
+      </div>
+      
+      <div style="background:var(--bg3);border-radius:12px;padding:20px;margin-bottom:16px">
+        <div style="font-weight:700;color:var(--text);margin-bottom:8px">🌐 Сайт</div>
+        <a href="https://cine-world-gray.vercel.app" target="_blank" style="color:var(--accent);text-decoration:none">cine-world-gray.vercel.app</a>
+      </div>
+
+      <div style="background:var(--bg3);border-radius:12px;padding:20px">
+        <div style="font-weight:700;color:var(--text);margin-bottom:8px">💬 З питань співпраці та реклами</div>
+        <p>Якщо ви хочете розмістити рекламу на нашому сайті або запропонувати співпрацю — пишіть на email вище.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
