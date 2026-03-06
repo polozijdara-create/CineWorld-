@@ -131,14 +131,15 @@
 
   .hero-movies {
     position: absolute; right: 40px; top: 50%; transform: translateY(-50%);
-    display: flex; gap: 20px; opacity: 0.6;
+    display: flex; gap: 16px; opacity: 0.92;
   }
 
   .hero-poster {
-    width: 120px; height: 180px; border-radius: 8px;
+    width: 160px; height: 240px; border-radius: 12px;
     background: var(--card); border: 1px solid var(--border);
     animation: float 6s ease-in-out infinite;
     background-size: cover; background-position: center;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
   }
   .hero-poster:nth-child(2) { animation-delay: -2s; margin-top: 30px; }
   .hero-poster:nth-child(3) { animation-delay: -4s; }
@@ -684,14 +685,14 @@
     </div>
   </div>
   <div class="stat-card">
-    <div class="stat-num">3</div>
+    <div class="stat-num">2</div>
     <div class="stat-label">
       <span data-lang="uk">Мови сайту</span>
       <span data-lang="en">Languages</span>
     </div>
   </div>
   <div class="stat-card">
-    <div class="stat-num">4K</div>
+    <div class="stat-num">1080p</div>
     <div class="stat-label">
       <span data-lang="uk">Якість відео</span>
       <span data-lang="en">Video quality</span>
@@ -720,43 +721,6 @@
         <span data-lang="en">Free movie catalog. Find where to watch legally and safely.</span>
       </p>
     </div>
-    <div class="footer-col">
-      <h4><span data-lang="uk">Каталог</span><span data-lang="en">Catalog</span></h4>
-      <ul>
-        <li><a href="#">
-          <span data-lang="uk">Фільми</span><span data-lang="en">Movies</span>
-        </a></li>
-        <li><a href="#">
-          <span data-lang="uk">Серіали</span><span data-lang="en">Series</span>
-        </a></li>
-        <li><a href="#">Топ IMDb</a></li>
-        <li><a href="#">
-          <span data-lang="uk">Новинки</span><span data-lang="en">New</span>
-        </a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4><span data-lang="uk">Жанри</span><span data-lang="en">Genres</span></h4>
-      <ul>
-        <li><a href="#"><span data-lang="uk">Бойовик</span><span data-lang="en">Action</span></a></li>
-        <li><a href="#"><span data-lang="uk">Комедія</span><span data-lang="en">Comedy</span></a></li>
-        <li><a href="#"><span data-lang="uk">Драма</span><span data-lang="en">Drama</span></a></li>
-        <li><a href="#"><span data-lang="uk">Жахи</span><span data-lang="en">Horror</span></a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4><span data-lang="uk">Про нас</span><span data-lang="en">About</span></h4>
-      <ul>
-        <li><a href="#"><span data-lang="uk">Контакти</span><span data-lang="en">Contact</span></a></li>
-        <li><a href="#"><span data-lang="uk">Реклама</span><span data-lang="en">Advertise</span></a></li>
-        <li><a href="#"><span data-lang="uk">Умови</span><span data-lang="en">Terms</span></a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span>© 2026 CineWorld</span>
-    <span style="color:var(--accent)">❤</span>
-    <span>Made for movie lovers</span>
   </div>
 </footer>
 
@@ -1143,16 +1107,11 @@ function openMoviePlayer(id) {
 
 function showTopMovies() {
   scrollToSection('movies');
-  const all = [...movies, ...newMovies];
-  const top = all.filter(m => m.rating >= 6.0).sort((a,b) => b.rating - a.rating);
-  const container = document.getElementById('movieGrid');
-  container.innerHTML = '';
-  top.forEach((m, i) => {
-    const allM = [...movies, ...newMovies];
-    renderMovies([m], 'movieGrid');
-  });
+  const top = movies.filter(m => m.rating >= 5.0).sort((a,b) => b.rating - a.rating);
   renderMovies(top, 'movieGrid');
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
 }
+
 
 function showAllMovies() {
   scrollToSection('movies');
