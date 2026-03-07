@@ -370,6 +370,12 @@
   }
   .play-btn:hover { transform: scale(1.1); background: #ff1a25; }
 
+  .movie-age-badge {
+    position: absolute; top: 8px; right: 8px; z-index: 3;
+    background: rgba(0,0,0,0.75); color: #fff;
+    font-size: 0.65rem; font-weight: 700; padding: 2px 6px;
+    border-radius: 4px; border: 1px solid rgba(255,255,255,0.3);
+  }
   .movie-badge {
     position: absolute; top: 10px; left: 10px;
     background: var(--accent); color: white;
@@ -416,13 +422,14 @@
 
   /* STATS */
   .stats {
-    padding: 40px 60px;
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+    display: flex; gap: 16px; padding: 24px;
+    background: var(--bg2); flex-wrap: wrap;
+    justify-content: center;
   }
   .stat-card {
     background: var(--card); border: 1px solid var(--border);
-    border-radius: 12px; padding: 20px 16px; text-align: center;
-    flex: 1; min-width: 120px;
+    border-radius: 12px; padding: 20px 28px; text-align: center;
+    flex: 1; min-width: 140px;
   }
   .stat-icon { font-size: 1.8rem; margin-bottom: 6px; }
   .stat-num {
@@ -782,6 +789,25 @@
 <div class="stats">
   <div class="stat-card">
     <div class="stat-icon">🎬</div>
+    <div class="stat-num">40+</div>
+    <div class="stat-label"><span data-lang="uk">Фільмів у каталозі</span><span data-lang="en">Movies in catalog</span></div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">📺</div>
+    <div class="stat-num">6+</div>
+    <div class="stat-label"><span data-lang="uk">Серіалів онлайн</span><span data-lang="en">Series online</span></div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">🆓</div>
+    <div class="stat-num">100%</div>
+    <div class="stat-label"><span data-lang="uk">Безкоштовно</span><span data-lang="en">Free to watch</span></div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">🇺🇦</div>
+    <div class="stat-num">УКР</div>
+    <div class="stat-label"><span data-lang="uk">Українською мовою</span><span data-lang="en">In Ukrainian</span></div>
+  </div>
+</div>
     <div class="stat-num">27+</div>
     <div class="stat-label"><span data-lang="uk">Фільмів у каталозі</span><span data-lang="en">Movies in catalog</span></div>
   </div>
@@ -845,13 +871,14 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-grid">
-    <div>
-      <div class="footer-logo">CineWorld</div>
-      <p class="footer-desc">
-        <span data-lang="uk">Безкоштовний каталог фільмів. Знаходь, де дивитись легально та безпечно.</span>
-        <span data-lang="en">Free movie catalog. Find where to watch legally and safely.</span>
-      </p>
+  <div style="text-align:center; padding: 20px; color: var(--muted); font-size:0.8rem; border-top: 1px solid var(--border);">
+    <div class="footer-logo" style="margin-bottom:6px">CineWorld</div>
+    <span data-lang="uk">© 2025 CineWorld. Безкоштовний каталог фільмів. Всі права захищені.</span>
+    <span data-lang="en">© 2025 CineWorld. Free movie catalog. All rights reserved.</span>
+    <div style="margin-top:8px; display:flex; gap:16px; justify-content:center; flex-wrap:wrap">
+      <a href="#" onclick="showModal('privacy')" style="color:var(--muted)"><span data-lang="uk">Політика конфіденційності</span><span data-lang="en">Privacy Policy</span></a>
+      <a href="#" onclick="showModal('about')" style="color:var(--muted)"><span data-lang="uk">Про нас</span><span data-lang="en">About</span></a>
+      <a href="#" onclick="showModal('contacts')" style="color:var(--muted)"><span data-lang="uk">Контакти</span><span data-lang="en">Contacts</span></a>
     </div>
   </div>
 </footer>
@@ -888,6 +915,31 @@ const movies = [
   { id:40, title_uk:"Вашингтон Блек", title_en:"Washington Black", title_ru:"Вашингтон Блэк", year:2025, rating:6.4, genre:"series", badge:"free", color:"135deg,#1a1000,#2e2000", emoji:"🌊", poster:"https://uaserials.my/posters/10999.webp", desc:"Молодий раб у 19 столітті тікає і подорожує світом відкриваючи для себе науку та свободу. Історична міні-драма.", age:12, link:"https://uaserials.my/11011-vashyngton-blek.html" },
   { id:41, title_uk:"9-1-1", title_en:"9-1-1", title_ru:"9-1-1", year:2018, rating:9.0, genre:"series", badge:"free", color:"135deg,#1a0000,#2e0000", emoji:"🚒", poster:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcHNIc_vQm7eNCezZ6CVNZqDohFCG7qKbTXA&s", desc:"Диспетчери та рятувальники екстреної служби щодня вирішують питання життя і смерті. Популярний американський серіал.", age:12, link:"https://uaserials.my/1230-9-1-1.html" },
 
+
+  { id:43, title_uk:"Теорія змови", title_en:"Zulu", title_ru:"Теорія змови", year:2013, rating:6.7, genre:"thriller", badge:"free", age:"16+", color:"135deg,#0a0a1a,#1a1a2e", emoji:"🔍", poster:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2CkH54TR8w-n9VImNNUdjR0xeTtDalJfbc8NS-btGtg&s", desc:"Поліціянт Алі Нойман розслідує жорстокі злочини в Кейптауні. Кримінальний трилер про справедливість та темне минуле.", link:"https://megogo.net/ua/view/1065391-teoriya-zmovi.html" },
+  { id:44, title_uk:"Безкоштовні зразки", title_en:"Free Samples", title_ru:"Безкоштовні зразки", year:2012, rating:5.6, genre:"comedy", badge:"free", age:"18+", color:"135deg,#1a1000,#2e2000", emoji:"🍦", poster:"https://static.kinoafisha.info/k/movie_posters/220/upload/movie_posters/7/5/9/8134957/a7e83c197fceb55cb67aa9a1138c5e06.jpg", desc:"Дівчина роздає безкоштовне морозиво але грубить усім клієнтам. Кумедна комедія про другий шанс у житті.", link:"https://megogo.net/ua/view/1065471-bezkoshtovni-zrazki.html" },
+  { id:45, title_uk:"Липучка", title_en:"Flypaper", title_ru:"Липучка", year:2011, rating:6.3, genre:"comedy", badge:"free", age:"18+", color:"135deg,#1a0a0a,#2e1515", emoji:"🏦", poster:"https://upload.wikimedia.org/wikipedia/ru/f/f2/Flypaper.jpg", desc:"Два гангстерські угруповання одночасно пограбують один банк. Абсурдна кримінальна комедія.", link:"https://megogo.net/ua/view/1321721-lipuchka.html" },
+  { id:46, title_uk:"Ласкаво просимо до капкану", title_en:"Welcome to the Punch", title_ru:"Ласкаво просимо до капкану", year:2013, rating:6.1, genre:"action", badge:"free", age:"16+", color:"135deg,#0a1a0a,#152e15", emoji:"🎯", poster:"https://upload.wikimedia.org/wikipedia/ru/b/bb/Welcome_to_the_Punch.jpg", desc:"Злочинець повертається щоб врятувати сина, а поліцейський нарешті має шанс його спіймати. Гострий британський бойовик.", link:"https://megogo.net/ua/view/1343301-laskavo-prosimo-do-kapkanu.html" },
+  { id:47, title_uk:"Дітородні", title_en:"The Babymakers", title_ru:"Дітородні", year:2012, rating:5.0, genre:"comedy", badge:"free", age:"16+", color:"135deg,#1a1a0a,#2e2e15", emoji:"👶", poster:"https://upload.wikimedia.org/wikipedia/uk/1/19/The_Babymakers_poster.jpg", desc:"Чоловік планує викрасти власні донорські зразки з банку сперми щоб завести дитину. Безумна комедія.", link:"https://megogo.net/ua/view/1343781-ditorodni.html" },
+  { id:48, title_uk:"Обличчя янгола", title_en:"The Face of an Angel", title_ru:"Обличчя янгола", year:2014, rating:4.6, genre:"drama", badge:"free", age:"18+", color:"135deg,#1a0a1a,#2e152e", emoji:"😇", poster:"https://upload.wikimedia.org/wikipedia/ru/3/3e/The_Face_of_an_Angel_%28film%2C_2014%29.jpg", desc:"Британський режисер їде до Сієни шукати натхнення і потрапляє у резонансну кримінальну справу.", link:"https://megogo.net/ua/view/1656261-oblichchya-yangola.html" },
+  { id:49, title_uk:"Місія «Звіропотяг»", title_en:"Falcon Express", title_ru:"Місія «Звіропотяг»", year:2025, rating:6.3, genre:"animation", badge:"new", age:"7+", color:"135deg,#0a1a2e,#152e3e", emoji:"🚂", poster:"https://uaserials.my/posters/11711.webp", desc:"Єнот на прізвисько Сокіл проникає на потяг щоб вкрасти їжу, але все йде не за планом.", link:"https://uaserials.my/11730-misiia-zviropotiag.html" },
+  { id:50, title_uk:"Мисливці на тролів: Повстання титанів", title_en:"Trollhunters: Rise of the Titans", title_ru:"Мисливці на тролів: Повстання титанів", year:2021, rating:6.6, genre:"animation", badge:"free", age:"7+", color:"135deg,#1a0a2e,#2e153e", emoji:"🧌", poster:"https://uaserials.my/posters/11643.webp", desc:"Джим Лейк-молодший у фінальній битві проти найнебезпечніших сил Всесвіту.", link:"https://uaserials.my/11661-myslyvci-na-troliv-povstannia-tytaniv.html" },
+  { id:51, title_uk:"Смурфики: Загублене містечко", title_en:"Smurfs: The Lost Village", title_ru:"Смурфики: Загублене містечко", year:2017, rating:6.0, genre:"animation", badge:"free", age:"7+", color:"135deg,#0a0a2e,#15153e", emoji:"🔵", poster:"https://photo.in.ck.ua/event/58d6/1bb7/c101/0544/cc01/0a3f/smurfiki-zateryannaya-derevnya.12@2x.jpeg", desc:"Смурфетка вирушає у чарівний ліс щоб знайти своє справжнє призначення.", link:"https://uaserials.my/11181-smurfyky-zagublene-mistechko.html" },
+  { id:52, title_uk:"Кейпоп-мисливиці на демонів", title_en:"KPop Demon Hunters", title_ru:"Кейпоп-мисливиці на демонів", year:2025, rating:7.7, genre:"animation", badge:"new", age:"7+", color:"135deg,#2e0a1a,#3e152e", emoji:"🎤", poster:"https://uaserials.my/posters/11006.webp", desc:"Три зірки K-pop вдень виступають на сцені, а вночі полюють на демонів.", link:"https://uaserials.my/11018-keipop-myslyvyci-na-demoniv.html" },
+  { id:53, title_uk:"Ваяна", title_en:"Moana", title_ru:"Ваяна", year:2016, rating:7.6, genre:"animation", badge:"free", age:"7+", color:"135deg,#0a1a2e,#152e3e", emoji:"🌊", poster:"https://uaserials.my/posters/10188.webp", desc:"Відважна дівчина вирушає у море щоб повернути серце богині та врятувати свій острів.", link:"https://uaserials.my/10188-vaiana.html" },
+  { id:54, title_uk:"Профі", title_en:"A Working Man", title_ru:"Профі", year:2025, rating:6.0, genre:"action", badge:"new", age:"18+", color:"135deg,#1a0a0a,#2e1515", emoji:"💪", poster:"https://uaserials.my/posters/10559.webp", desc:"Колишній морський піхотинець рятує доньку роботодавця від злочинців. Жорсткий бойовик 2025 року.", link:"https://uaserials.my/10392-profi-2025s.html" },
+  { id:55, title_uk:"Теорія змови", title_en:"Zulu", title_ru:"Теорія змови", year:2013, rating:6.7, genre:"thriller", age:"16+", badge:"free", color:"135deg,#0a1a0a,#152e15", emoji:"🔍", poster:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2CkH54TR8w-n9VImNNUdjR0xeTtDalJfbc8NS-btGtg&s", link:"https://megogo.net/ua/view/1065391-teoriya-zmovi.html", desc:"Поліцейський Алі Нойман розслідує жорстокі вбивства в Кейптауні. Захопливий кримінальний трилер про злочин і справедливість." },
+  { id:56, title_uk:"Безкоштовні зразки", title_en:"Free Samples", title_ru:"Безкоштовні зразки", year:2012, rating:5.6, genre:"comedy", age:"18+", badge:"free", color:"135deg,#1a1000,#2e1e00", emoji:"🍦", poster:"https://static.kinoafisha.info/k/movie_posters/220/upload/movie_posters/7/5/9/8134957/a7e83c197fceb55cb67aa9a1138c5e06.jpg", link:"https://megogo.net/ua/view/1065471-bezkoshtovni-zrazki.html", desc:"Дівчина втрачає місце в університеті і змушена роздавати безкоштовне морозиво. Комедія про другий шанс і несподівані зустрічі." },
+  { id:57, title_uk:"Липучка", title_en:"Flypaper", title_ru:"Липучка", year:2011, rating:6.3, genre:"comedy", age:"18+", badge:"free", color:"135deg,#1a0a00,#2e1500", emoji:"🏦", poster:"https://upload.wikimedia.org/wikipedia/ru/f/f2/Flypaper.jpg", link:"https://megogo.net/ua/view/1321721-lipuchka.html", desc:"Два гангстерські угруповання одночасно намагаються пограбувати один банк. Кримінальна комедія абсурду." },
+  { id:58, title_uk:"Ласкаво просимо до капкану", title_en:"Welcome to the Punch", title_ru:"Ласкаво просимо до капкану", year:2013, rating:6.1, genre:"action", age:"16+", badge:"free", color:"135deg,#0a0a1a,#15152e", emoji:"🔫", poster:"https://upload.wikimedia.org/wikipedia/ru/b/bb/Welcome_to_the_Punch.jpg", link:"https://megogo.net/ua/view/1343301-laskavo-prosimo-do-kapkanu.html", desc:"Злочинець повертається до Лондона щоб врятувати сина. Поліцейський нарешті отримує шанс його впіймати. Гострий британський бойовик." },
+  { id:59, title_uk:"Дітородні", title_en:"The Babymakers", title_ru:"Дітородні", year:2012, rating:5.0, genre:"comedy", age:"16+", badge:"free", color:"135deg,#1a1a00,#2e2e00", emoji:"👶", poster:"https://upload.wikimedia.org/wikipedia/uk/1/19/The_Babymakers_poster.jpg", link:"https://megogo.net/ua/view/1343781-ditorodni.html", desc:"Подружжя не може мати дітей. Чоловік вигадує шалений план — викрасти свої старі донорські зразки з банку сперми." },
+  { id:60, title_uk:"Обличчя янгола", title_en:"The Face of an Angel", title_ru:"Обличчя янгола", year:2014, rating:4.6, genre:"drama", age:"18+", badge:"free", color:"135deg,#1a0a1a,#2e152e", emoji:"😇", poster:"https://upload.wikimedia.org/wikipedia/ru/3/3e/The_Face_of_an_Angel_%28film%2C_2014%29.jpg", link:"https://megogo.net/ua/view/1656261-oblichchya-yangola.html", desc:"Британський режисер їде до Сієни шукати натхнення і потрапляє у вир кримінальної драми. Фільм заснований на реальних подіях." },
+  { id:61, title_uk:"Місія «Звіропотяг»", title_en:"Falcon Express", title_ru:"Місія «Звіропотяг»", year:2025, rating:6.3, genre:"animation", age:"7+", badge:"new", color:"135deg,#001a1a,#002e2e", emoji:"🦝", poster:"https://uaserials.my/posters/11711.webp", link:"https://uaserials.my/11730-misiia-zviropotiag.html", desc:"Єнот-злодій проникає на потяг щоб вкрасти їжу, але потрапляє у несподівану пригоду. Французько-американський мультфільм 2025 року." },
+  { id:62, title_uk:"Мисливці на тролів: Повстання титанів", title_en:"Trollhunters: Rise of the Titans", title_ru:"Мисливці на тролів: Повстання титанів", year:2021, rating:6.6, genre:"animation", age:"7+", badge:"free", color:"135deg,#0a001a,#15002e", emoji:"⚔️", poster:"https://uaserials.my/posters/11643.webp", link:"https://uaserials.my/11661-myslyvci-na-troliv-povstannia-tytaniv.html", desc:"Джим Лейк отримав магічний амулет і став воїном. Тепер йому загрожує найнебезпечніша битва у житті." },
+  { id:63, title_uk:"Смурфики: Загублене містечко", title_en:"Smurfs: The Lost Village", title_ru:"Смурфики: Загублене містечко", year:2017, rating:6.0, genre:"animation", age:"7+", badge:"free", color:"135deg,#001a2e,#002e4a", emoji:"🔵", poster:"https://photo.in.ck.ua/event/58d6/1bb7/c101/0544/cc01/0a3f/smurfiki-zateryannaya-derevnya.12@2x.jpeg", link:"https://uaserials.my/11181-smurfyky-zagublene-mistechko.html", desc:"Смурфетка відчуває що не знає свого призначення і вирушає у чарівний ліс повний таємниць. Барвистий мультфільм для всієї родини." },
+  { id:64, title_uk:"Кейпоп-мисливиці на демонів", title_en:"KPop Demon Hunters", title_ru:"Кейпоп-мисливиці на демонів", year:2025, rating:7.7, genre:"animation", age:"7+", badge:"new", color:"135deg,#1a001a,#2e002e", emoji:"🎤", poster:"https://uaserials.my/posters/11006.webp", link:"https://uaserials.my/11018-keipop-myslyvyci-na-demoniv.html", desc:"Три учасниці K-pop гурту вдень виступають на сцені, а вночі полюють на демонів. Яскравий мультфільм 2025 року." },
+  { id:65, title_uk:"Ваяна", title_en:"Moana", title_ru:"Ваяна", year:2016, rating:7.6, genre:"animation", age:"7+", badge:"free", color:"135deg,#001a2e,#003a5c", emoji:"🌊", poster:"https://uaserials.my/posters/10188.webp", link:"https://uaserials.my/10188-vaiana.html", desc:"Відважна дочка вождя вирушає у морську подорож щоб врятувати свій народ. Захопливий Disney мультфільм про сміливість та пригоди." },
+  { id:66, title_uk:"Профі", title_en:"A Working Man", title_ru:"Профі", year:2025, rating:6.0, genre:"action", age:"18+", badge:"new", color:"135deg,#1a0a00,#2e1500", emoji:"💪", poster:"https://uaserials.my/posters/10559.webp", link:"https://uaserials.my/10392-profi-2025s.html", desc:"Колишній морський піхотинець намагається жити звичайним життям. Але коли донька роботодавця зникає — він повертається до бойових навичок." },
 ];
 
 const newMovies = [
@@ -902,52 +954,38 @@ let currentFilter = 'all';
 // ===== RENDER MOVIES =====
 function renderMovies(list, containerId) {
   const container = document.getElementById(containerId);
+  if (!container) return;
   container.innerHTML = '';
-  const filtered = currentFilter === 'all' ? list : list.filter(m => m.genre === currentFilter);
-  filtered.forEach((m, i) => {
-    const title = m[`title_${currentLang}`] || m.title_en;
-    const badgeLabel = m.badge === 'free' ? {uk:'БЕЗКОШТОВНО',en:'FREE',ru:'БЕСПЛАТНО'}[currentLang]
-                     : m.badge === 'new'  ? {uk:'НОВИНКА',en:'NEW',ru:'НОВИНКА'}[currentLang] : '';
-    const badgeClass = m.badge === 'free' ? 'free' : m.badge === 'new' ? 'new' : '';
-    const genreLabels = {
-      'action':{uk:'Бойовик',en:'Action',ru:'Боевик'},
-      'sci-fi':{uk:'Фантастика',en:'Sci-Fi',ru:'Фантастика'},
-      'drama':{uk:'Драма',en:'Drama',ru:'Драма'},
-      'comedy':{uk:'Комедія',en:'Comedy',ru:'Комедия'},
-      'horror':{uk:'Жахи',en:'Horror',ru:'Ужасы'},
-      'thriller':{uk:'Трилер',en:'Thriller',ru:'Триллер'},
-      'animation':{uk:'Мультфільм',en:'Animation',ru:'Мультфильм'},
-    };
-    const genre = genreLabels[m.genre]?.[currentLang] || m.genre;
-
+  list.forEach((m, i) => {
+    const title = m['title_' + currentLang] || m.title_en;
+    const genreLabels = {action:{uk:'Бойовик',en:'Action'},drama:{uk:'Драма',en:'Drama'},comedy:{uk:'Комедія',en:'Comedy'},horror:{uk:'Жахи',en:'Horror'},thriller:{uk:'Трилер',en:'Thriller'},animation:{uk:'Мультфільм',en:'Animation'},'animation-series':{uk:'Мультсеріал',en:'Animated Series'},series:{uk:'Серіал',en:'Series'}};
+    const genreLabel = genreLabels[m.genre]?.[currentLang] || m.genre;
+    const badgeLabel = m.badge==='free'?'Безкоштовно':m.badge==='new'?'Новинка':'';
+    const badgeClass = m.badge==='free'?'badge-free':'badge-new';
+    const ageLabel = m.age ? `<span class="age-label">${m.age}</span>` : '';
     container.innerHTML += `
       <div class="movie-card" style="animation-delay:${i*0.07}s" onclick="openMoviePlayer(${m.id})">
         <div class="movie-poster">
-          ${m.poster 
+          ${m.poster
             ? `<div class="movie-poster-img" style="background-image:url('${m.poster}');background-size:cover;background-position:center"></div>`
             : `<div class="movie-poster-img" style="background:linear-gradient(${m.color})"></div><span style="position:relative;z-index:1;font-size:2.5rem">${m.emoji}</span>`
           }
         </div>
         ${badgeLabel ? `<span class="movie-badge ${badgeClass}">${badgeLabel}</span>` : ''}
+        ${ageLabel}
         <span class="movie-rating">⭐ ${m.rating}</span>
-        <div class="movie-overlay">
-          <button class="play-btn" onclick="openMoviePlayer(${m.id})">▶</button>
-        </div>
+        <div class="movie-overlay"><button class="play-btn" onclick="openMoviePlayer(${m.id})">▶</button></div>
         <div class="movie-info">
           <div class="movie-title">${title}</div>
           <div class="movie-meta"><span>${m.year}</span><span>HD</span></div>
-          <span class="movie-genre">${genre}</span>
+          <span class="movie-genre">${genreLabel}</span>
           ${m.desc ? `<p class="movie-desc">${m.desc}</p>` : ''}
-          ${m.age !== undefined ? `<span class="age-badge age-${m.age}">${m.age === 0 ? '0+' : m.age + '+'}</span>` : ''}
         </div>
       </div>`;
   });
-  if (filtered.length === 0) {
-    container.innerHTML = `<div style="color:var(--muted);padding:20px;grid-column:1/-1">
-      ${currentLang==='uk'?'Нічого не знайдено':currentLang==='en'?'Nothing found':'Ничего не найдено'}
-    </div>`;
-  }
 }
+
+
 
 function render() {
   renderMovies(movies, 'movieGrid');
@@ -982,16 +1020,20 @@ function setFilter(btn, genre) {
   currentFilter = genre;
   const container = document.getElementById('movieGrid');
   document.getElementById('movies')?.scrollIntoView({behavior:'smooth'});
-  
+
   let filtered;
   if (genre === 'all') {
     filtered = movies;
   } else if (genre === 'series') {
     filtered = movies.filter(m => m.genre === 'series');
+  } else if (genre === 'action') {
+    filtered = movies.filter(m => m.genre === 'action');
+  } else if (genre === 'animation-series') {
+    filtered = movies.filter(m => m.genre === 'animation-series');
   } else {
     filtered = movies.filter(m => m.genre === genre);
   }
-  
+
   container.innerHTML = '';
   if (filtered.length === 0) {
     container.innerHTML = '<div style="color:var(--muted);padding:40px;text-align:center">Нічого не знайдено</div>';
@@ -999,26 +1041,34 @@ function setFilter(btn, genre) {
   }
   filtered.forEach((m, i) => {
     const title = m['title_' + currentLang] || m.title_en;
-    const genreLabels = {action:{uk:'Бойовик',en:'Action'},drama:{uk:'Драма',en:'Drama'},comedy:{uk:'Комедія',en:'Comedy'},horror:{uk:'Жахи',en:'Horror'},thriller:{uk:'Трилер',en:'Thriller'},animation:{uk:'Мультфільм',en:'Animation'},series:{uk:'Серіал',en:'Series'}};
+    const genreLabels = {action:{uk:'Бойовик',en:'Action'},drama:{uk:'Драма',en:'Drama'},comedy:{uk:'Комедія',en:'Comedy'},horror:{uk:'Жахи',en:'Horror'},thriller:{uk:'Трилер',en:'Thriller'},animation:{uk:'Мультфільм',en:'Animation'},'animation-series':{uk:'Мультсеріал',en:'Animated Series'},series:{uk:'Серіал',en:'Series'}};
     const genreLabel = genreLabels[m.genre]?.[currentLang] || m.genre;
     const badgeLabel = m.badge==='free'?'Безкоштовно':m.badge==='new'?'Новинка':'';
     const badgeClass = m.badge==='free'?'badge-free':'badge-new';
+    const ageLabel = m.age ? `<span class="age-label">${m.age}</span>` : '';
     container.innerHTML += `
       <div class="movie-card" style="animation-delay:${i*0.07}s" onclick="openMoviePlayer(${m.id})">
         <div class="movie-poster">
-          ${m.poster ? `<div class="movie-poster-img" style="background-image:url('${m.poster}');background-size:cover;background-position:center"></div>` : `<div class="movie-poster-img" style="background:linear-gradient(${m.color})"></div><span style="position:relative;z-index:1;font-size:2.5rem">${m.emoji}</span>`}
+          ${m.poster
+            ? `<div class="movie-poster-img" style="background-image:url('${m.poster}');background-size:cover;background-position:center"></div>`
+            : `<div class="movie-poster-img" style="background:linear-gradient(${m.color})"></div><span style="position:relative;z-index:1;font-size:2.5rem">${m.emoji}</span>`
+          }
         </div>
         ${badgeLabel ? `<span class="movie-badge ${badgeClass}">${badgeLabel}</span>` : ''}
+        ${ageLabel}
         <span class="movie-rating">⭐ ${m.rating}</span>
         <div class="movie-overlay"><button class="play-btn" onclick="openMoviePlayer(${m.id})">▶</button></div>
         <div class="movie-info">
           <div class="movie-title">${title}</div>
           <div class="movie-meta"><span>${m.year}</span><span>HD</span></div>
           <span class="movie-genre">${genreLabel}</span>
+          ${m.desc ? `<p class="movie-desc">${m.desc}</p>` : ''}
         </div>
       </div>`;
   });
 }
+
+
 
 
 function filterMovies(query) {
