@@ -109,8 +109,8 @@
 
   /* HERO */
   .hero {
-    position: relative; height: 85vh; display: flex; align-items: flex-end;
-    padding: 0 60px 80px;
+    position: relative; min-height: 100vh; display: flex; flex-direction: column;
+    justify-content: center; padding: 60px 60px 0;
     background: linear-gradient(135deg, #0a0a0f 0%, #1a0a14 50%, #0a0f1a 100%);
     overflow: hidden;
   }
@@ -130,27 +130,32 @@
   }
 
   .hero-movies {
-    position: absolute; right: 0; top: 0; bottom: 0; width: 420px;
-    overflow: hidden; opacity: 0.97;
+    width: 100%; margin-top: 40px;
+    overflow: hidden; opacity: 0.97; position: relative;
   }
   .carousel-track {
-    display: flex; flex-direction: column; gap: 0;
-    animation: carouselScroll 30s linear infinite;
+    display: flex; flex-direction: row; gap: 12px;
+    animation: carouselScrollH 35s linear infinite;
+    width: max-content;
   }
   .carousel-track:hover { animation-play-state: paused; }
   .carousel-item {
-    width: 100%; height: 200px; flex-shrink: 0;
+    width: 150px; height: 220px; border-radius: 10px; flex-shrink: 0;
     background-size: cover; background-position: center;
-    cursor: pointer; position: relative;
-    border-bottom: 2px solid rgba(0,0,0,0.5);
+    cursor: pointer; position: relative; overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: transform 0.2s;
   }
+  .carousel-item:hover { transform: scale(1.05); }
   .carousel-item-overlay {
     position: absolute; bottom: 0; left: 0; right: 0;
     background: linear-gradient(transparent, rgba(0,0,0,0.8));
     padding: 12px; font-size: 0.75rem; color: white; font-weight: 600;
   }
-  @keyframes carouselScroll {
-    0% { transform: translateY(0); }
+  @keyframes carouselScrollH {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
     100% { transform: translateY(-50%); }
   }
 
@@ -170,7 +175,9 @@
     50% { transform: translateY(-12px); }
   }
 
-  .hero-content { position: relative; z-index: 1; max-width: 600px; }
+  .hero-content {
+    position: relative; z-index: 2; max-width: 700px;
+  }
   .age-badge {
     display: inline-block; background: #e50914; color: white;
     font-size: 0.75rem; font-weight: 800; padding: 3px 8px;
@@ -407,10 +414,11 @@
     display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
   }
   .stat-card {
-    background: var(--bg3); border: 1px solid var(--border);
-    border-radius: 12px; padding: 24px;
-    text-align: center;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px 16px; text-align: center;
+    flex: 1; min-width: 120px;
   }
+  .stat-icon { font-size: 1.8rem; margin-bottom: 6px; }
   .stat-num {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 2.5rem; color: var(--accent); letter-spacing: 2px;
@@ -593,7 +601,7 @@
       <span>😱 Жахи</span>
     </div>
     <div class="hero-actions">
-      <button class="btn-hero btn-watch" onclick="document.getElementById('movies').scrollIntoView({behavior:'smooth'})">
+      <button class="btn-hero btn-watch" onclick="setFilter(document.querySelector('.filter-btn'), 'all'); document.getElementById('movies').scrollIntoView({behavior:'smooth'})">
         ▶
         <span data-lang="uk">Почати дивитись</span>
         <span data-lang="en">Start Watching</span>
@@ -767,7 +775,26 @@
 <!-- STATS -->
 <div class="stats">
   <div class="stat-card">
-    <div class="stat-num">12,400+</div>
+    <div class="stat-icon">🎬</div>
+    <div class="stat-num">27+</div>
+    <div class="stat-label"><span data-lang="uk">Фільмів у каталозі</span><span data-lang="en">Movies in catalog</span></div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">📺</div>
+    <div class="stat-num">6</div>
+    <div class="stat-label"><span data-lang="uk">Серіалів онлайн</span><span data-lang="en">Series online</span></div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">🆓</div>
+    <div class="stat-num">100%</div>
+    <div class="stat-label"><span data-lang="uk">Безкоштовно</span><span data-lang="en">Free to watch</span></div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">🇺🇦</div>
+    <div class="stat-num">УКР</div>
+    <div class="stat-label"><span data-lang="uk">Українською мовою</span><span data-lang="en">In Ukrainian</span></div>
+  </div>
+</div>
     <div class="stat-label">
       <span data-lang="uk">Фільмів у каталозі</span>
       <span data-lang="en">Movies in catalog</span>
@@ -918,8 +945,10 @@ function renderMovies(list, containerId) {
 
 function render() {
   renderMovies(movies, 'movieGrid');
-  const newFilms = newMovies.filter(m => m.genre !== 'series');
-  renderMovies(newFilms, 'newGrid');
+  // newGrid shows only films not already in movies array
+  const mainIds = new Set(movies.map(m => m.id));
+  const uniqueNew = newMovies.filter(m => !mainIds.has(m.id));
+  renderMovies(uniqueNew, 'newGrid');
 }
 
 // ===== LANGUAGE =====
@@ -946,7 +975,7 @@ function setFilter(btn, genre) {
   btn.classList.add('active');
   currentFilter = genre;
   const container = document.getElementById('movieGrid');
-  scrollToSection('movies');
+  document.getElementById('movies')?.scrollIntoView({behavior:'smooth'});
   
   let filtered;
   if (genre === 'all') {
@@ -1384,7 +1413,9 @@ function showPage(type) {
 function initCarousel() {
   const track = document.getElementById('carouselTrack');
   if (!track) return;
-  const allMovies = [...movies, ...newMovies].filter(m => m.poster);
+  const mainIds = new Set(movies.map(m => m.id));
+  const uniqueNew = newMovies.filter(m => !mainIds.has(m.id));
+  const allMovies = [...movies, ...uniqueNew].filter(m => m.poster);
   const items = [...allMovies, ...allMovies]; // duplicate for infinite scroll
   track.innerHTML = '';
   items.forEach(m => {
