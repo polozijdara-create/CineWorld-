@@ -14,7 +14,7 @@
 <meta name="google-site-verification" content="biciCCaO8byJTwwPcCB7RBKRA6xQ1YUIAVraVCD7DwY" />
 <meta name="google-site-verification" content="R62LaNfti6rVzYbL0E-vptEKqazTyDevYFC6Z3uPmAA" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CineWorld — Дивись фільми онлайн</title>
+<title>CineWorldUkraine — Дивись фільми онлайн безкоштовно</title>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6017941702609770"
      crossorigin="anonymous"></script>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Mulish:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -561,7 +561,7 @@
 
 <!-- NAV -->
 <nav>
-  <div class="logo">CineWorld</div>
+  <div class="logo">CineWorldUkraine</div>
   <ul class="nav-links"></ul>
   <div class="nav-right">
     <div class="lang-switcher">
@@ -655,7 +655,7 @@
     <span data-lang="uk">Всі</span><span data-lang="en">All</span>
   </button>
   <button class="filter-btn" onclick="setFilter(this,'action')">
-    <span data-lang="uk">Бойовик</span><span data-lang="en">Action</span>
+    <span data-lang="uk">💥 Екшн</span><span data-lang="en">💥 Action</span>
   </button>
   <button class="filter-btn" onclick="setFilter(this,'comedy')">
     <span data-lang="uk">Комедія</span><span data-lang="en">Comedy</span>
@@ -666,16 +666,15 @@
   <button class="filter-btn" onclick="setFilter(this,'horror')">
     <span data-lang="uk">Жахи</span><span data-lang="en">Horror</span>
   </button>
-  <button class="filter-btn" onclick="setFilter(this,'sci-fi')">
-    <span data-lang="uk">Фантастика</span><span data-lang="en">Sci-Fi</span>
-  </button>
   <button class="filter-btn" onclick="setFilter(this,'thriller')">
     <span data-lang="uk">Трилер</span><span data-lang="en">Thriller</span>
   </button>
   <button class="filter-btn" onclick="setFilter(this,'animation')">
     <span data-lang="uk">Мультфільм</span><span data-lang="en">Animation</span>
   </button>
-
+  <button class="filter-btn" onclick="setFilter(this,'animation-series')">
+    <span data-lang="uk">🎨 Мультсеріали</span><span data-lang="en">🎨 Animated Series</span>
+  </button>
   <button class="filter-btn" onclick="setFilter(this,'series')">
     <span data-lang="uk">📺 Серіали</span><span data-lang="en">📺 Series</span>
   </button>
@@ -872,7 +871,7 @@
 <!-- FOOTER -->
 <footer>
   <div style="text-align:center; padding: 20px; color: var(--muted); font-size:0.8rem; border-top: 1px solid var(--border);">
-    <div class="footer-logo" style="margin-bottom:6px">CineWorld</div>
+    <div class="footer-logo" style="margin-bottom:6px">CineWorldUkraine</div>
     <span data-lang="uk">© 2025 CineWorld. Безкоштовний каталог фільмів. Всі права захищені.</span>
     <span data-lang="en">© 2025 CineWorld. Free movie catalog. All rights reserved.</span>
     <div style="margin-top:8px; display:flex; gap:16px; justify-content:center; flex-wrap:wrap">
@@ -903,7 +902,6 @@ const movies = [
   { id:30, title_uk:"Підстава", title_en:"Setup", title_ru:"Подстава", year:2011, rating:4.4, genre:"action", badge:"free", color:"135deg,#1a0a0a,#2e1515", emoji:"🔫", poster:"https://upload.wikimedia.org/wikipedia/ru/8/83/Setup_poster.jpg", youtube:"cuhFjHIR9Mk", desc:"Троє друзів планують пограбування але їх зраджує четвертий. Кримінальний бойовик з Брюсом Віллісом.", age:18, link:"https://megogo.net/ua/view/290-pidstava.html" },
   { id:31, title_uk:"Холостячки", title_en:"Bachelorette", title_ru:"Холостячки", year:2012, rating:5.3, genre:"comedy", badge:"free", color:"135deg,#1a0a1a,#2e152e", emoji:"💃", poster:"https://upload.wikimedia.org/wikipedia/ru/f/f9/BachelorettePoster.jpeg", youtube:"OZ8Fd6cion0", desc:"Подруги нареченої влаштовують безумний дівич-вечір напередодні весілля. Розкута комедія для дорослих.", age:18, link:"https://megogo.net/ua/view/21301-holostyachki.html" },
   { id:42, title_uk:"Воруши ластами 2", title_en:"A Turtle's Tale 2", title_ru:"Шевели ластами 2", year:2012, rating:5.6, genre:"animation", badge:"free", color:"135deg,#003a2e,#005a40", emoji:"🐢", poster:"https://uakino.best/uploads/mini/poster/5b/372bb500059c4ebeda15597a082bba.webp", desc:"Черепашка Семмі з друзями тікає з акваріума і відправляється у захопливу підводну пригоду. Мультфільм для всієї родини.", age:0, link:"https://megogo.net/ua/view/1348051-vorushi-lastami-2.html" },
-
   { id:32, title_uk:"Ідеальна втеча", title_en:"A Perfect Getaway", title_ru:"Идеальный побег", year:2009, rating:6.5, genre:"thriller", badge:"free", color:"135deg,#0a1a0a,#152e15", emoji:"🏃", poster:"https://ua-images.kinorium.com/movie/1080/410426.jpg?1718362756", desc:"Молоде подружжя в медовий місяць натикається на підозрілу пару на Гаваях. Напружений трилер на екзотичному острові.", age:16, link:"https://megogo.net/ua/view/8011-idealna-vtecha.html" },
   { id:33, title_uk:"Афера по-американськи", title_en:"American Hustle", title_ru:"Афёра по-американски", year:2014, rating:7.2, genre:"drama", badge:"free", color:"135deg,#1a1000,#2e2000", emoji:"🎭", poster:"https://upload.wikimedia.org/wikipedia/uk/1/10/%D0%90%D0%BC%D0%B5%D1%80%D0%B8%D0%BA%D0%B0%D0%BD%D1%81%D1%8C%D0%BA%D0%B0_%D0%B0%D1%84%D0%B5%D1%80%D0%B0_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg", desc:"Аферист та агент ФБР об'єднуються для розкриття корупційної схеми. Кримінальна драма з зіркою акторів.", age:16, link:"https://megogo.net/ua/view/103431-afera-po-amerikanski.html" },
   { id:34, title_uk:"Вірус", title_en:"Viral", title_ru:"Вирус", year:2016, rating:5.5, genre:"horror", badge:"free", color:"135deg,#001a00,#002e00", emoji:"🦠", poster:"https://upload.wikimedia.org/wikipedia/uk/2/24/Viral_film_poster.png", desc:"Таємничий вірус перетворює жителів міста на монстрів. Молода дівчина намагається врятувати сестру та вижити.", age:16, link:"https://megogo.net/ua/view/1191931-virus.html" },
@@ -914,8 +912,6 @@ const movies = [
   { id:39, title_uk:"Мій коханий демон", title_en:"My Demon", title_ru:"Мой любимый демон", year:2023, rating:7.7, genre:"series", badge:"free", color:"135deg,#1a0a1a,#2e152e", emoji:"😈", poster:"https://uaserials.my/posters/10972.webp", desc:"Звичайна дівчина укладає контракт з демоном і між ними виникають несподівані почуття. Корейська романтична дорама.", age:12, link:"https://uaserials.my/10984-mii-kokhanyi-demon.html" },
   { id:40, title_uk:"Вашингтон Блек", title_en:"Washington Black", title_ru:"Вашингтон Блэк", year:2025, rating:6.4, genre:"series", badge:"free", color:"135deg,#1a1000,#2e2000", emoji:"🌊", poster:"https://uaserials.my/posters/10999.webp", desc:"Молодий раб у 19 столітті тікає і подорожує світом відкриваючи для себе науку та свободу. Історична міні-драма.", age:12, link:"https://uaserials.my/11011-vashyngton-blek.html" },
   { id:41, title_uk:"9-1-1", title_en:"9-1-1", title_ru:"9-1-1", year:2018, rating:9.0, genre:"series", badge:"free", color:"135deg,#1a0000,#2e0000", emoji:"🚒", poster:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcHNIc_vQm7eNCezZ6CVNZqDohFCG7qKbTXA&s", desc:"Диспетчери та рятувальники екстреної служби щодня вирішують питання життя і смерті. Популярний американський серіал.", age:12, link:"https://uaserials.my/1230-9-1-1.html" },
-
-
   { id:43, title_uk:"Теорія змови", title_en:"Zulu", title_ru:"Теорія змови", year:2013, rating:6.7, genre:"thriller", badge:"free", age:"16+", color:"135deg,#0a0a1a,#1a1a2e", emoji:"🔍", poster:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2CkH54TR8w-n9VImNNUdjR0xeTtDalJfbc8NS-btGtg&s", desc:"Поліціянт Алі Нойман розслідує жорстокі злочини в Кейптауні. Кримінальний трилер про справедливість та темне минуле.", link:"https://megogo.net/ua/view/1065391-teoriya-zmovi.html" },
   { id:44, title_uk:"Безкоштовні зразки", title_en:"Free Samples", title_ru:"Безкоштовні зразки", year:2012, rating:5.6, genre:"comedy", badge:"free", age:"18+", color:"135deg,#1a1000,#2e2000", emoji:"🍦", poster:"https://static.kinoafisha.info/k/movie_posters/220/upload/movie_posters/7/5/9/8134957/a7e83c197fceb55cb67aa9a1138c5e06.jpg", desc:"Дівчина роздає безкоштовне морозиво але грубить усім клієнтам. Кумедна комедія про другий шанс у житті.", link:"https://megogo.net/ua/view/1065471-bezkoshtovni-zrazki.html" },
   { id:45, title_uk:"Липучка", title_en:"Flypaper", title_ru:"Липучка", year:2011, rating:6.3, genre:"comedy", badge:"free", age:"18+", color:"135deg,#1a0a0a,#2e1515", emoji:"🏦", poster:"https://upload.wikimedia.org/wikipedia/ru/f/f2/Flypaper.jpg", desc:"Два гангстерські угруповання одночасно пограбують один банк. Абсурдна кримінальна комедія.", link:"https://megogo.net/ua/view/1321721-lipuchka.html" },
@@ -925,27 +921,9 @@ const movies = [
   { id:49, title_uk:"Місія «Звіропотяг»", title_en:"Falcon Express", title_ru:"Місія «Звіропотяг»", year:2025, rating:6.3, genre:"animation", badge:"new", age:"7+", color:"135deg,#0a1a2e,#152e3e", emoji:"🚂", poster:"https://uaserials.my/posters/11711.webp", desc:"Єнот на прізвисько Сокіл проникає на потяг щоб вкрасти їжу, але все йде не за планом.", link:"https://uaserials.my/11730-misiia-zviropotiag.html" },
   { id:50, title_uk:"Мисливці на тролів: Повстання титанів", title_en:"Trollhunters: Rise of the Titans", title_ru:"Мисливці на тролів: Повстання титанів", year:2021, rating:6.6, genre:"animation", badge:"free", age:"7+", color:"135deg,#1a0a2e,#2e153e", emoji:"🧌", poster:"https://uaserials.my/posters/11643.webp", desc:"Джим Лейк-молодший у фінальній битві проти найнебезпечніших сил Всесвіту.", link:"https://uaserials.my/11661-myslyvci-na-troliv-povstannia-tytaniv.html" },
   { id:51, title_uk:"Смурфики: Загублене містечко", title_en:"Smurfs: The Lost Village", title_ru:"Смурфики: Загублене містечко", year:2017, rating:6.0, genre:"animation", badge:"free", age:"7+", color:"135deg,#0a0a2e,#15153e", emoji:"🔵", poster:"https://photo.in.ck.ua/event/58d6/1bb7/c101/0544/cc01/0a3f/smurfiki-zateryannaya-derevnya.12@2x.jpeg", desc:"Смурфетка вирушає у чарівний ліс щоб знайти своє справжнє призначення.", link:"https://uaserials.my/11181-smurfyky-zagublene-mistechko.html" },
-  { id:52, title_uk:"Кейпоп-мисливиці на демонів", title_en:"KPop Demon Hunters", title_ru:"Кейпоп-мисливиці на демонів", year:2025, rating:7.7, genre:"animation", badge:"new", age:"7+", color:"135deg,#2e0a1a,#3e152e", emoji:"🎤", poster:"https://uaserials.my/posters/11006.webp", desc:"Три зірки K-pop вдень виступають на сцені, а вночі полюють на демонів.", link:"https://uaserials.my/11018-keipop-myslyvyci-na-demoniv.html" },
-  { id:53, title_uk:"Ваяна", title_en:"Moana", title_ru:"Ваяна", year:2016, rating:7.6, genre:"animation", badge:"free", age:"7+", color:"135deg,#0a1a2e,#152e3e", emoji:"🌊", poster:"https://uaserials.my/posters/10188.webp", desc:"Відважна дівчина вирушає у море щоб повернути серце богині та врятувати свій острів.", link:"https://uaserials.my/10188-vaiana.html" },
-  { id:54, title_uk:"Профі", title_en:"A Working Man", title_ru:"Профі", year:2025, rating:6.0, genre:"action", badge:"new", age:"18+", color:"135deg,#1a0a0a,#2e1515", emoji:"💪", poster:"https://uaserials.my/posters/10559.webp", desc:"Колишній морський піхотинець рятує доньку роботодавця від злочинців. Жорсткий бойовик 2025 року.", link:"https://uaserials.my/10392-profi-2025s.html" },
-  { id:55, title_uk:"Теорія змови", title_en:"Zulu", title_ru:"Теорія змови", year:2013, rating:6.7, genre:"thriller", age:"16+", badge:"free", color:"135deg,#0a1a0a,#152e15", emoji:"🔍", poster:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2CkH54TR8w-n9VImNNUdjR0xeTtDalJfbc8NS-btGtg&s", link:"https://megogo.net/ua/view/1065391-teoriya-zmovi.html", desc:"Поліцейський Алі Нойман розслідує жорстокі вбивства в Кейптауні. Захопливий кримінальний трилер про злочин і справедливість." },
-  { id:56, title_uk:"Безкоштовні зразки", title_en:"Free Samples", title_ru:"Безкоштовні зразки", year:2012, rating:5.6, genre:"comedy", age:"18+", badge:"free", color:"135deg,#1a1000,#2e1e00", emoji:"🍦", poster:"https://static.kinoafisha.info/k/movie_posters/220/upload/movie_posters/7/5/9/8134957/a7e83c197fceb55cb67aa9a1138c5e06.jpg", link:"https://megogo.net/ua/view/1065471-bezkoshtovni-zrazki.html", desc:"Дівчина втрачає місце в університеті і змушена роздавати безкоштовне морозиво. Комедія про другий шанс і несподівані зустрічі." },
-  { id:57, title_uk:"Липучка", title_en:"Flypaper", title_ru:"Липучка", year:2011, rating:6.3, genre:"comedy", age:"18+", badge:"free", color:"135deg,#1a0a00,#2e1500", emoji:"🏦", poster:"https://upload.wikimedia.org/wikipedia/ru/f/f2/Flypaper.jpg", link:"https://megogo.net/ua/view/1321721-lipuchka.html", desc:"Два гангстерські угруповання одночасно намагаються пограбувати один банк. Кримінальна комедія абсурду." },
-  { id:58, title_uk:"Ласкаво просимо до капкану", title_en:"Welcome to the Punch", title_ru:"Ласкаво просимо до капкану", year:2013, rating:6.1, genre:"action", age:"16+", badge:"free", color:"135deg,#0a0a1a,#15152e", emoji:"🔫", poster:"https://upload.wikimedia.org/wikipedia/ru/b/bb/Welcome_to_the_Punch.jpg", link:"https://megogo.net/ua/view/1343301-laskavo-prosimo-do-kapkanu.html", desc:"Злочинець повертається до Лондона щоб врятувати сина. Поліцейський нарешті отримує шанс його впіймати. Гострий британський бойовик." },
-  { id:59, title_uk:"Дітородні", title_en:"The Babymakers", title_ru:"Дітородні", year:2012, rating:5.0, genre:"comedy", age:"16+", badge:"free", color:"135deg,#1a1a00,#2e2e00", emoji:"👶", poster:"https://upload.wikimedia.org/wikipedia/uk/1/19/The_Babymakers_poster.jpg", link:"https://megogo.net/ua/view/1343781-ditorodni.html", desc:"Подружжя не може мати дітей. Чоловік вигадує шалений план — викрасти свої старі донорські зразки з банку сперми." },
-  { id:60, title_uk:"Обличчя янгола", title_en:"The Face of an Angel", title_ru:"Обличчя янгола", year:2014, rating:4.6, genre:"drama", age:"18+", badge:"free", color:"135deg,#1a0a1a,#2e152e", emoji:"😇", poster:"https://upload.wikimedia.org/wikipedia/ru/3/3e/The_Face_of_an_Angel_%28film%2C_2014%29.jpg", link:"https://megogo.net/ua/view/1656261-oblichchya-yangola.html", desc:"Британський режисер їде до Сієни шукати натхнення і потрапляє у вир кримінальної драми. Фільм заснований на реальних подіях." },
-  { id:61, title_uk:"Місія «Звіропотяг»", title_en:"Falcon Express", title_ru:"Місія «Звіропотяг»", year:2025, rating:6.3, genre:"animation", age:"7+", badge:"new", color:"135deg,#001a1a,#002e2e", emoji:"🦝", poster:"https://uaserials.my/posters/11711.webp", link:"https://uaserials.my/11730-misiia-zviropotiag.html", desc:"Єнот-злодій проникає на потяг щоб вкрасти їжу, але потрапляє у несподівану пригоду. Французько-американський мультфільм 2025 року." },
-  { id:62, title_uk:"Мисливці на тролів: Повстання титанів", title_en:"Trollhunters: Rise of the Titans", title_ru:"Мисливці на тролів: Повстання титанів", year:2021, rating:6.6, genre:"animation", age:"7+", badge:"free", color:"135deg,#0a001a,#15002e", emoji:"⚔️", poster:"https://uaserials.my/posters/11643.webp", link:"https://uaserials.my/11661-myslyvci-na-troliv-povstannia-tytaniv.html", desc:"Джим Лейк отримав магічний амулет і став воїном. Тепер йому загрожує найнебезпечніша битва у житті." },
-  { id:63, title_uk:"Смурфики: Загублене містечко", title_en:"Smurfs: The Lost Village", title_ru:"Смурфики: Загублене містечко", year:2017, rating:6.0, genre:"animation", age:"7+", badge:"free", color:"135deg,#001a2e,#002e4a", emoji:"🔵", poster:"https://photo.in.ck.ua/event/58d6/1bb7/c101/0544/cc01/0a3f/smurfiki-zateryannaya-derevnya.12@2x.jpeg", link:"https://uaserials.my/11181-smurfyky-zagublene-mistechko.html", desc:"Смурфетка відчуває що не знає свого призначення і вирушає у чарівний ліс повний таємниць. Барвистий мультфільм для всієї родини." },
-  { id:64, title_uk:"Кейпоп-мисливиці на демонів", title_en:"KPop Demon Hunters", title_ru:"Кейпоп-мисливиці на демонів", year:2025, rating:7.7, genre:"animation", age:"7+", badge:"new", color:"135deg,#1a001a,#2e002e", emoji:"🎤", poster:"https://uaserials.my/posters/11006.webp", link:"https://uaserials.my/11018-keipop-myslyvyci-na-demoniv.html", desc:"Три учасниці K-pop гурту вдень виступають на сцені, а вночі полюють на демонів. Яскравий мультфільм 2025 року." },
-  { id:65, title_uk:"Ваяна", title_en:"Moana", title_ru:"Ваяна", year:2016, rating:7.6, genre:"animation", age:"7+", badge:"free", color:"135deg,#001a2e,#003a5c", emoji:"🌊", poster:"https://uaserials.my/posters/10188.webp", link:"https://uaserials.my/10188-vaiana.html", desc:"Відважна дочка вождя вирушає у морську подорож щоб врятувати свій народ. Захопливий Disney мультфільм про сміливість та пригоди." },
-  { id:66, title_uk:"Профі", title_en:"A Working Man", title_ru:"Профі", year:2025, rating:6.0, genre:"action", age:"18+", badge:"new", color:"135deg,#1a0a00,#2e1500", emoji:"💪", poster:"https://uaserials.my/posters/10559.webp", link:"https://uaserials.my/10392-profi-2025s.html", desc:"Колишній морський піхотинець намагається жити звичайним життям. Але коли донька роботодавця зникає — він повертається до бойових навичок." },
 ];
 
 const newMovies = [
-  { id:70, title_uk:"Високий потенціал", title_en:"High Potential", title_ru:"Большой потенциал", year:2024, rating:7.7, genre:"series", badge:"new", color:"135deg,#0a1a2e,#152e3e", emoji:"🔍", poster:"https://uaserials.my/posters/9488.webp", link:"https://uaserials.my/9488-vysokyi-potencial.html" },
-  { id:71, title_uk:"Мій коханий демон", title_en:"My Demon", title_ru:"Мой любимый демон", year:2023, rating:7.7, genre:"series", badge:"new", color:"135deg,#1a0a1a,#2e152e", emoji:"😈", poster:"https://uaserials.my/posters/10972.webp", link:"https://uaserials.my/10984-mii-kokhanyi-demon.html" },
-  { id:72, title_uk:"9-1-1", title_en:"9-1-1", title_ru:"9-1-1", year:2018, rating:9.0, genre:"series", badge:"new", color:"135deg,#1a0000,#2e0000", emoji:"🚒", poster:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcHNIc_vQm7eNCezZ6CVNZqDohFCG7qKbTXA&s", link:"https://uaserials.my/1230-9-1-1.html" },
 ];
 
 let currentLang = 'uk';
@@ -1471,19 +1449,21 @@ function initCarousel() {
   if (!track) return;
   const mainIds = new Set(movies.map(m => m.id));
   const uniqueNew = newMovies.filter(m => !mainIds.has(m.id));
-  const allMovies = [...movies, ...uniqueNew].filter(m => m.poster);
-  const items = [...allMovies, ...allMovies]; // duplicate for infinite scroll
+  const allMovies = [...movies, ...uniqueNew]
+    .filter(m => m.poster && m.year >= 2017)
+    .sort((a, b) => b.year - a.year);
+  const items = [...allMovies, ...allMovies];
   track.innerHTML = '';
   items.forEach(m => {
-    const title = m['title_uk'] || m.title_en;
     const div = document.createElement('div');
     div.className = 'carousel-item';
     div.style.backgroundImage = `url('${m.poster}')`;
     div.onclick = () => openMoviePlayer(m.id);
-    div.innerHTML = `<div class="carousel-item-overlay">${title} (${m.year}) ⭐${m.rating}</div>`;
+    div.innerHTML = `<div class="carousel-item-overlay">${m.title_uk} (${m.year}) ⭐${m.rating}</div>`;
     track.appendChild(div);
   });
 }
+
 document.addEventListener('DOMContentLoaded', initCarousel);
 
 </script>
@@ -1519,7 +1499,7 @@ document.addEventListener('DOMContentLoaded', initCarousel);
 <footer style="background:var(--bg2);border-top:1px solid var(--border);padding:40px 60px;margin-top:60px">
   <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px">
     <div>
-      <div style="font-family:Bebas Neue,sans-serif;font-size:1.8rem;color:var(--accent);letter-spacing:3px">CineWorld</div>
+      <div style="font-family:Bebas Neue,sans-serif;font-size:1.8rem;color:var(--accent);letter-spacing:3px">CineWorldUkraine</div>
       <div style="color:var(--muted);font-size:0.8rem;margin-top:4px">© 2025 CineWorld. Всі права захищені.</div>
     </div>
     <div style="display:flex;gap:24px;flex-wrap:wrap">
@@ -1545,7 +1525,7 @@ document.addEventListener('DOMContentLoaded', initCarousel);
       <p><strong style="color:var(--text)">Останнє оновлення:</strong> 1 березня 2025 року</p>
       
       <h3 style="color:var(--text);margin-top:20px">1. Загальні положення</h3>
-      <p>CineWorld (cine-world-gray.vercel.app) — це каталог фільмів та серіалів. Ми поважаємо вашу конфіденційність і зобов'язуємося захищати ваші персональні дані.</p>
+      <p>CineWorldUkraine (cine-world-gray.vercel.app) — це каталог фільмів та серіалів. Ми поважаємо вашу конфіденційність і зобов'язуємося захищати ваші персональні дані.</p>
       
       <h3 style="color:var(--text);margin-top:20px">2. Які дані ми збираємо</h3>
       <p>Ми не збираємо персональні дані користувачів безпосередньо. Наш сайт використовує:</p>
@@ -1580,11 +1560,11 @@ document.addEventListener('DOMContentLoaded', initCarousel);
     <h2>ℹ️ Про CineWorld</h2>
     <div style="color:var(--muted);font-size:0.85rem;line-height:1.8">
       <div style="background:var(--bg3);border-radius:12px;padding:20px;margin-bottom:20px;text-align:center">
-        <div style="font-family:Bebas Neue,sans-serif;font-size:2.5rem;color:var(--accent);letter-spacing:4px">CineWorld</div>
+        <div style="font-family:Bebas Neue,sans-serif;font-size:2.5rem;color:var(--accent);letter-spacing:4px">CineWorldUkraine</div>
         <div style="color:var(--muted);font-size:0.9rem">Твій провідник у світі кіно 🎬</div>
       </div>
       
-      <p><strong style="color:var(--text)">CineWorld</strong> — це безкоштовний каталог фільмів, серіалів та мультфільмів українською мовою.</p>
+      <p><strong style="color:var(--text)">CineWorldUkraine</strong> — це безкоштовний каталог фільмів, серіалів та мультфільмів українською мовою.</p>
       
       <h3 style="color:var(--text);margin-top:20px">🎯 Наша місія</h3>
       <p>Допомогти кожному знайти цікавий фільм або серіал для перегляду — швидко, зручно і безкоштовно.</p>
@@ -1602,7 +1582,7 @@ document.addEventListener('DOMContentLoaded', initCarousel);
       <p>Telegram канал: <a href="https://t.me/cineworld_film_ua" target="_blank" style="color:var(--accent)">@cineworld_film_ua</a></p>
       
       <h3 style="color:var(--text);margin-top:20px">⚖️ Правова інформація</h3>
-      <p>CineWorld є агрегатором посилань на легальний контент. Ми не зберігаємо та не розповсюджуємо відеоматеріали. Всі права на контент належать їх власникам.</p>
+      <p>CineWorldUkraine є агрегатором посилань на легальний контент. Ми не зберігаємо та не розповсюджуємо відеоматеріали. Всі права на контент належать їх власникам.</p>
     </div>
   </div>
 </div>
