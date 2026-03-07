@@ -109,10 +109,14 @@
 
   /* HERO */
   .hero {
-    position: relative; min-height: 100vh; display: flex; flex-direction: column;
-    justify-content: center; padding: 60px 60px 0;
+    position: relative; min-height: 100vh; display: flex; align-items: stretch;
     background: linear-gradient(135deg, #0a0a0f 0%, #1a0a14 50%, #0a0f1a 100%);
     overflow: hidden;
+  }
+  .hero-inner {
+    display: flex; flex-direction: row; align-items: center;
+    width: 100%; padding: 60px 60px 60px;
+    gap: 40px;
   }
 
   .hero-bg {
@@ -130,23 +134,27 @@
   }
 
   .hero-movies {
-    width: 100%; margin-top: 40px;
-    overflow: hidden; opacity: 0.97; position: relative;
+    flex: 1; overflow: hidden; opacity: 0.98;
+    position: relative; height: 80vh; min-height: 500px;
+    border-radius: 16px;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
   }
   .carousel-track {
-    display: flex; flex-direction: row; gap: 12px;
-    animation: carouselScrollH 35s linear infinite;
-    width: max-content;
+    display: flex; flex-direction: row; gap: 16px;
+    animation: carouselScrollH 40s linear infinite;
+    height: 100%; width: max-content; align-items: center;
   }
   .carousel-track:hover { animation-play-state: paused; }
   .carousel-item {
-    width: 150px; height: 220px; border-radius: 10px; flex-shrink: 0;
+    width: 280px; height: 420px; border-radius: 16px; flex-shrink: 0;
     background-size: cover; background-position: center;
     cursor: pointer; position: relative; overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.1);
-    transition: transform 0.2s;
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+    transition: transform 0.3s;
   }
-  .carousel-item:hover { transform: scale(1.05); }
+  .carousel-item:hover { transform: scale(1.03) translateY(-4px); }
   .carousel-item-overlay {
     position: absolute; bottom: 0; left: 0; right: 0;
     background: linear-gradient(transparent, rgba(0,0,0,0.8));
@@ -154,6 +162,8 @@
   }
   @keyframes carouselScrollH {
     0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
     100% { transform: translateX(-50%); }
   }
     100% { transform: translateY(-50%); }
@@ -176,13 +186,9 @@
   }
 
   .hero-content {
-    position: relative; z-index: 2; max-width: 700px;
+    position: relative; z-index: 2; flex: 0 0 38%; max-width: 480px;
   }
-  .age-badge {
-    display: inline-block; background: #e50914; color: white;
-    font-size: 0.75rem; font-weight: 800; padding: 3px 8px;
-    border-radius: 4px; margin-bottom: 8px; letter-spacing: 1px;
-  }
+  .hero-content h1 { font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; }
   .hero-tags {
     display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0;
   }
@@ -197,7 +203,7 @@
   }
   .hero h1 {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(3rem, 6vw, 5rem);
+    font-size-old: clamp(3rem, 6vw, 5rem);
     line-height: 0.95; letter-spacing: 2px;
     margin-bottom: 16px;
   }
@@ -575,41 +581,41 @@
 <section class="hero">
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
-  <div class="hero-movies" id="heroCarousel">
-    <div class="carousel-track" id="carouselTrack"></div>
-  </div>
-  <div class="hero-content">
-    <div class="hero-badge">
-      <span data-lang="uk">✦ Безкоштовно</span>
-      <span data-lang="en">✦ Free</span>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span data-lang="uk">✦ Безкоштовно</span>
+        <span data-lang="en">✦ Free</span>
+      </div>
+      <h1>
+        <span data-lang="uk">Дивись<br><span>фільми</span><br>онлайн</span>
+        <span data-lang="en">Watch<br><span>movies</span><br>online</span>
+      </h1>
+      <p>
+        <span data-lang="uk">Тисячі фільмів та серіалів безкоштовно. Без реєстрації, без підписки — просто натисни та дивись.</span>
+        <span data-lang="en">Thousands of movies and series for free. No registration, no subscription — just click and watch.</span>
+      </p>
+      <div class="hero-tags">
+        <span>🎬 Фільми</span>
+        <span>📺 Серіали</span>
+        <span>💥 Бойовик</span>
+        <span>😂 Комедія</span>
+        <span>😱 Жахи</span>
+      </div>
+      <div class="hero-actions">
+        <button class="btn-hero btn-watch" onclick="setFilter(document.querySelector('.filter-btn'), 'all'); document.getElementById('movies').scrollIntoView({behavior:'smooth'})">
+          ▶
+          <span data-lang="uk">Почати дивитись</span>
+          <span data-lang="en">Start Watching</span>
+        </button>
+        <button class="btn-hero btn-browse" onclick="document.getElementById('filters').scrollIntoView({behavior:'smooth'})">
+          <span data-lang="uk">Переглянути каталог</span>
+          <span data-lang="en">Browse Catalog</span>
+        </button>
+      </div>
     </div>
-    <div class="age-badge">18+</div>
-    <h1>
-      <span data-lang="uk">Дивись<br><span>фільми</span><br>онлайн</span>
-      <span data-lang="en">Watch<br><span>movies</span><br>online</span>
-    </h1>
-    <p>
-      <span data-lang="uk">Тисячі фільмів та серіалів безкоштовно. Без реєстрації, без підписки — просто натисни та дивись.</span>
-      <span data-lang="en">Thousands of movies and series for free. No registration, no subscription — just click and watch.</span>
-    </p>
-    <div class="hero-tags">
-      <span>🎬 Фільми</span>
-      <span>📺 Серіали</span>
-      <span>🎭 Драма</span>
-      <span>💥 Бойовик</span>
-      <span>😂 Комедія</span>
-      <span>😱 Жахи</span>
-    </div>
-    <div class="hero-actions">
-      <button class="btn-hero btn-watch" onclick="setFilter(document.querySelector('.filter-btn'), 'all'); document.getElementById('movies').scrollIntoView({behavior:'smooth'})">
-        ▶
-        <span data-lang="uk">Почати дивитись</span>
-        <span data-lang="en">Start Watching</span>
-      </button>
-      <button class="btn-hero btn-browse" onclick="document.getElementById('filters').scrollIntoView({behavior:'smooth'})">
-        <span data-lang="uk">Переглянути каталог</span>
-        <span data-lang="en">Browse Catalog</span>
-      </button>
+    <div class="hero-movies" id="heroCarousel">
+      <div class="carousel-track" id="carouselTrack"></div>
     </div>
   </div>
 </section>
