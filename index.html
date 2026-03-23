@@ -1,646 +1,1577 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>CineWorld — дивись фільми онлайн безкоштовно</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6017941702609770" crossorigin="anonymous"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZWWCB5LY72"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-ZWWCB5LY72');
+</script>
+<meta name="google-site-verification" content="biciCCaO8byJTwwPcCB7RBKRA6xQ1YUIAVraVCD7DwY" />
+<meta name="google-site-verification" content="R62LaNfti6rVzYbL0E-vptEKqazTyDevYFC6Z3uPmAA" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CineWorldUkraine — Дивись фільми онлайн безкоштовно</title>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6017941702609770"
+     crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Mulish:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #111118;
+    --bg3: #1a1a24;
+    --card: #16161e;
+    --accent: #e50914;
+    --accent2: #ff6b35;
+    --gold: #f5c518;
+    --text: #e8e8f0;
+    --muted: #7a7a9a;
+    --border: #2a2a3a;
+  }
 
-        body {
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            background: #0a0c10;
-            color: #eef2ff;
-            line-height: 1.5;
-            padding: 0 0 2rem 0;
-        }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-        }
+  body {
+    font-family: 'Mulish', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
 
-        /* Header */
-        .header {
-            text-align: center;
-            padding: 2rem 0 1rem 0;
-            border-bottom: 1px solid #2a2f3a;
-            position: relative;
-        }
-        .logo {
-            font-size: 2.5rem;
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #ffd966, #ff8c42);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        .tagline {
-            font-size: 1rem;
-            color: #9ca3af;
-            margin-top: 0.25rem;
-        }
-        .badge {
-            display: inline-block;
-            background: #1f2a3e;
-            padding: 0.2rem 0.8rem;
-            border-radius: 40px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            margin: 0.5rem 0 0;
-            color: #ffb347;
-        }
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
 
-        /* Language Switcher */
-        .lang-switcher {
-            position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            display: flex;
-            gap: 0.5rem;
-            background: #1e1f2c;
-            padding: 0.3rem;
-            border-radius: 40px;
-            border: 1px solid #2e3a4e;
-        }
-        .lang-btn {
-            background: none;
-            border: none;
-            padding: 0.3rem 0.8rem;
-            cursor: pointer;
-            font-weight: 600;
-            border-radius: 30px;
-            transition: all 0.2s;
-            color: #9ca3af;
-        }
-        .lang-btn.active {
-            background: #ff8c42;
-            color: #0a0c10;
-        }
-        .lang-btn:hover {
-            background: #ff8c42;
-            color: #0a0c10;
-        }
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 64px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.95), transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
 
-        /* Admin Panel */
-        .admin-panel {
-            background: #1e1f2c;
-            border-radius: 1rem;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            border: 2px solid #ff8c42;
-            display: none;
-        }
-        .admin-panel.show {
-            display: block;
-        }
-        .admin-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        .admin-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #ff8c42;
-        }
-        .admin-toggle {
-            background: #ff8c42;
-            border: none;
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-        .admin-form {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-        .admin-form input, .admin-form select {
-            background: #2a2f3a;
-            border: 1px solid #3a4050;
-            padding: 0.5rem;
-            border-radius: 8px;
-            color: white;
-        }
-        .admin-btn {
-            background: #ff8c42;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-        .admin-movie-item {
-            background: #2a2f3a;
-            padding: 0.5rem;
-            margin: 0.5rem 0;
-            border-radius: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-        .delete-movie {
-            background: #ff4444;
-            border: none;
-            padding: 0.2rem 0.8rem;
-            border-radius: 6px;
-            cursor: pointer;
-            color: white;
-        }
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 3px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    cursor: pointer;
+  }
 
-        /* Search & Filters */
-        .search-section {
-            margin: 2rem 0;
-        }
-        .search-box {
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
-            display: flex;
-            background: #1e1f2c;
-            border-radius: 60px;
-            border: 1px solid #2e3a4e;
-            overflow: hidden;
-        }
-        .search-box input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            padding: 0.9rem 1.2rem;
-            font-size: 1rem;
-            color: white;
-            outline: none;
-        }
-        .search-box button {
-            background: #ff8c42;
-            border: none;
-            padding: 0 1.5rem;
-            font-size: 1.2rem;
-            cursor: pointer;
-            color: #0a0c10;
-            font-weight: bold;
-        }
-        .genre-filters {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            justify-content: center;
-            margin-top: 1rem;
-        }
-        .genre-btn {
-            background: #1e1f2c;
-            border: 1px solid #2e3a4e;
-            padding: 0.4rem 1rem;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.2s;
-            color: #9ca3af;
-            font-size: 0.85rem;
-        }
-        .genre-btn.active, .genre-btn:hover {
-            background: #ff8c42;
-            color: #0a0c10;
-            border-color: #ff8c42;
-        }
+  .nav-links {
+    display: flex; gap: 28px; list-style: none;
+  }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: 0.85rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
 
-        /* Movies Grid */
-        .movies-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 1.2rem;
-            margin-top: 1rem;
-        }
-        .movie-card {
-            background: #14161f;
-            border-radius: 1rem;
-            overflow: hidden;
-            transition: transform 0.2s ease, box-shadow 0.2s;
-            border: 1px solid #2a2f3e;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-        .movie-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(0,0,0,0.3);
-            border-color: #ff9f4a;
-        }
-        .movie-poster {
-            width: 100%;
-            height: 240px;
-            object-fit: cover;
-            background: #1e2533;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-        }
-        .movie-poster img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .movie-info {
-            padding: 0.8rem;
-        }
-        .movie-title {
-            font-weight: 700;
-            font-size: 0.95rem;
-            margin-bottom: 0.3rem;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        .movie-genre {
-            font-size: 0.7rem;
-            color: #ffb347;
-            display: inline-block;
-            background: #252b3a;
-            padding: 0.2rem 0.5rem;
-            border-radius: 20px;
-            margin-top: 0.3rem;
-        }
-        .movie-year {
-            font-size: 0.7rem;
-            color: #6c7a8e;
-            margin-top: 0.3rem;
-        }
-        .watch-link {
-            display: inline-block;
-            margin-top: 0.5rem;
-            color: #ff8c42;
-            font-size: 0.75rem;
-            text-decoration: none;
-            font-weight: 600;
-        }
+  .nav-right {
+    display: flex; align-items: center; gap: 16px;
+  }
 
-        /* Benefits */
-        .benefits {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-        .benefit-card {
-            background: #11141f;
-            border-radius: 1rem;
-            padding: 1rem;
-            text-align: center;
-            border: 1px solid #2a2f3a;
-        }
-        .benefit-emoji {
-            font-size: 2rem;
-        }
+  .lang-switcher {
+    display: flex; gap: 6px;
+  }
+  .lang-btn {
+    background: var(--bg3); border: 1px solid var(--border);
+    color: var(--muted); padding: 4px 10px; border-radius: 4px;
+    font-size: 0.75rem; font-weight: 700; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .lang-btn.active, .lang-btn:hover {
+    background: var(--accent); color: white; border-color: var(--accent);
+  }
 
-        /* Footer */
-        .footer {
-            margin-top: 3rem;
-            text-align: center;
-            font-size: 0.8rem;
-            color: #6c7a8e;
-            border-top: 1px solid #1f2532;
-            padding-top: 2rem;
-        }
+  .btn {
+    padding: 8px 20px; border-radius: 6px; font-size: 0.85rem;
+    font-weight: 700; cursor: pointer; transition: all 0.2s; border: none;
+  }
+  .btn-outline {
+    background: transparent; border: 1px solid var(--border); color: var(--text);
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-primary {
+    background: var(--accent); color: white;
+  }
+  .btn-primary:hover { background: #c40812; transform: translateY(-1px); }
 
-        /* Mobile */
-        @media (max-width: 680px) {
-            .container {
-                padding: 0 1rem;
-            }
-            .logo {
-                font-size: 1.8rem;
-            }
-            .lang-switcher {
-                position: static;
-                justify-content: center;
-                margin-top: 1rem;
-                width: fit-content;
-                margin-left: auto;
-                margin-right: auto;
-            }
-            .movies-grid {
-                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-                gap: 0.8rem;
-            }
-            .movie-poster {
-                height: 180px;
-            }
-            .admin-form {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+  /* HERO */
+  .hero {
+    position: relative; min-height: 100vh; display: flex; align-items: stretch;
+    background: linear-gradient(135deg, #0a0a0f 0%, #1a0a14 50%, #0a0f1a 100%);
+    overflow: hidden;
+  }
+  .hero-inner {
+    display: flex; flex-direction: row; align-items: center;
+    width: 100%; padding: 60px 60px 60px;
+    gap: 40px;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 60% at 70% 40%, rgba(229,9,20,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 30% 60%, rgba(255,107,53,0.08) 0%, transparent 50%);
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0; opacity: 0.03;
+    background-image: linear-gradient(rgba(255,255,255,.5) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,.5) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+
+  .hero-movies {
+    flex: 1; overflow: hidden; opacity: 0.98;
+    position: relative; height: 80vh; min-height: 500px;
+    border-radius: 16px;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  }
+  .carousel-track {
+    display: flex; flex-direction: row; gap: 16px;
+    animation: carouselScrollH 40s linear infinite;
+    height: 100%; width: max-content; align-items: center;
+  }
+  .carousel-track:hover { animation-play-state: paused; }
+  .carousel-item {
+    width: 280px; height: 420px; border-radius: 16px; flex-shrink: 0;
+    background-size: cover; background-position: center;
+    cursor: pointer; position: relative; overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+    transition: transform 0.3s;
+  }
+  .carousel-item:hover { transform: scale(1.03) translateY(-4px); }
+  .carousel-item-overlay {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    padding: 12px; font-size: 0.75rem; color: white; font-weight: 600;
+  }
+  @keyframes carouselScrollH {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+    100% { transform: translateX(-50%); }
+  }
+    100% { transform: translateY(-50%); }
+  }
+
+  .hero-poster {
+    width: 190px; height: 285px; border-radius: 14px;
+    background: var(--card); border: 1px solid var(--border);
+    background-size: cover; background-position: center;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+    cursor: pointer; transition: transform 0.2s;
+  }
+  .hero-poster:hover { transform: scale(1.03); }
+  .hero-poster:nth-child(2) { animation-delay: -2s; margin-top: 30px; }
+  .hero-poster:nth-child(3) { animation-delay: -4s; }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  .hero-content {
+    position: relative; z-index: 2; flex: 0 0 38%; max-width: 480px;
+  }
+  .hero-content h1 { font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; }
+  .hero-tags {
+    display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0;
+  }
+  .hero-tags span {
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+    padding: 4px 12px; border-radius: 20px; font-size: 0.78rem; color: var(--muted);
+  }
+  .hero-badge {
+    display: inline-block; background: var(--accent); color: white;
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    padding: 4px 12px; border-radius: 4px; margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size-old: clamp(3rem, 6vw, 5rem);
+    line-height: 0.95; letter-spacing: 2px;
+    margin-bottom: 16px;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero p {
+    color: var(--muted); font-size: 1rem; line-height: 1.6;
+    margin-bottom: 28px; max-width: 480px;
+  }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-hero {
+    padding: 14px 32px; font-size: 0.95rem; font-weight: 700;
+    border-radius: 6px; cursor: pointer; border: none; transition: all 0.2s;
+  }
+  .btn-watch {
+    background: var(--accent); color: white;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .btn-watch:hover { background: #c40812; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(229,9,20,0.4); }
+  .btn-browse {
+    background: rgba(255,255,255,0.1); color: white;
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .btn-browse:hover { background: rgba(255,255,255,0.18); }
+
+  /* AD BANNER */
+  .ad-banner {
+    background: linear-gradient(90deg, var(--bg2), var(--bg3));
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    padding: 12px 60px;
+    display: flex; align-items: center; justify-content: center; gap: 16px;
+    font-size: 0.8rem; color: var(--muted);
+  }
+  .ad-label {
+    background: var(--gold); color: #000;
+    font-size: 0.65rem; font-weight: 800; letter-spacing: 1px;
+    padding: 2px 6px; border-radius: 3px; text-transform: uppercase;
+  }
+  .ad-content {
+    display: flex; align-items: center; gap: 24px; flex: 1; justify-content: center;
+    max-width: 800px;
+  }
+  .ad-slot {
+    height: 60px; background: var(--bg3); border: 1px dashed var(--border);
+    border-radius: 6px; flex: 1; display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-size: 0.75rem; letter-spacing: 1px;
+  }
+
+  /* SEARCH */
+  .search-section {
+    padding: 48px 60px 32px;
+    background: var(--bg);
+  }
+  .search-wrapper {
+    max-width: 700px; margin: 0 auto; position: relative;
+  }
+  .search-input {
+    width: 100%; padding: 18px 24px 18px 56px;
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 12px; color: var(--text); font-size: 1rem;
+    font-family: 'Mulish', sans-serif; outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .search-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(229,9,20,0.15);
+  }
+  .search-input::placeholder { color: var(--muted); }
+  .search-icon {
+    position: absolute; left: 20px; top: 50%; transform: translateY(-50%);
+    color: var(--muted); font-size: 1.2rem;
+  }
+  .search-btn {
+    position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+    background: var(--accent); color: white; border: none;
+    padding: 10px 20px; border-radius: 8px; font-weight: 700;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .search-btn:hover { background: #c40812; }
+
+  /* FILTERS */
+  .filters {
+    padding: 0 60px 40px;
+    display: flex; gap: 10px; flex-wrap: wrap;
+  }
+  .filter-btn {
+    padding: 8px 18px; border-radius: 20px; font-size: 0.8rem; font-weight: 700;
+    cursor: pointer; transition: all 0.2s;
+    border: 1px solid var(--border); background: var(--bg3); color: var(--muted);
+  }
+  .filter-btn.active, .filter-btn:hover {
+    background: var(--accent); color: white; border-color: var(--accent);
+  }
+
+  /* SECTIONS */
+  .section { padding: 40px 60px; }
+  .section-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem; letter-spacing: 2px;
+  }
+  .section-title span { color: var(--accent); }
+  .see-all {
+    color: var(--muted); font-size: 0.8rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px; cursor: pointer;
+    transition: color 0.2s;
+  }
+  .see-all:hover { color: var(--accent); }
+
+  /* MOVIE GRID */
+  .movie-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+  }
+
+  .movie-card {
+    position: relative; cursor: pointer;
+    border-radius: 10px; overflow: hidden;
+    background: var(--card); border: 1px solid var(--border);
+    transition: transform 0.25s, box-shadow 0.25s;
+    animation: fadeIn 0.5s ease both;
+  }
+  .movie-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 0 1px var(--accent);
+    z-index: 2;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .movie-poster {
+    width: 100%; aspect-ratio: 2/3;
+    background: linear-gradient(135deg, var(--bg3), var(--bg2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3rem; position: relative; overflow: hidden;
+  }
+
+  .movie-poster-img {
+    position: absolute; inset: 0;
+    background-size: cover; background-position: center;
+    transition: transform 0.4s;
+  }
+  .movie-card:hover .movie-poster-img { transform: scale(1.06); }
+
+  .movie-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0) 50%);
+    opacity: 0; transition: opacity 0.25s;
+    display: flex; align-items: flex-end; padding: 14px;
+  }
+  .movie-card:hover .movie-overlay { opacity: 1; }
+  .play-btn {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: var(--accent); border: none; color: white;
+    font-size: 1rem; cursor: pointer; display: flex;
+    align-items: center; justify-content: center;
+    transition: transform 0.2s, background 0.2s;
+  }
+  .play-btn:hover { transform: scale(1.1); background: #ff1a25; }
+
+  .movie-age-badge {
+    position: absolute; top: 8px; right: 8px; z-index: 3;
+    background: rgba(0,0,0,0.75); color: #fff;
+    font-size: 0.65rem; font-weight: 700; padding: 2px 6px;
+    border-radius: 4px; border: 1px solid rgba(255,255,255,0.3);
+  }
+  .movie-badge {
+    position: absolute; top: 10px; left: 10px;
+    background: var(--accent); color: white;
+    font-size: 0.6rem; font-weight: 800; letter-spacing: 1px;
+    padding: 3px 7px; border-radius: 4px; text-transform: uppercase;
+  }
+  .movie-badge.free { background: #22c55e; }
+  .movie-badge.new { background: var(--accent2); }
+
+  .movie-rating {
+    position: absolute; top: 10px; right: 10px;
+    background: rgba(0,0,0,0.8); color: var(--gold);
+    font-size: 0.7rem; font-weight: 800;
+    padding: 3px 7px; border-radius: 4px;
+    display: flex; align-items: center; gap: 3px;
+  }
+
+  .movie-info { padding: 12px 14px; }
+  .movie-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 4px; line-height: 1.3; }
+  .movie-meta { color: var(--muted); font-size: 0.75rem; display: flex; gap: 8px; }
+  .movie-genre {
+    display: inline-block; background: var(--bg3);
+    color: var(--muted); font-size: 0.65rem; font-weight: 700;
+    padding: 2px 7px; border-radius: 3px; margin-top: 6px;
+  }
+
+  /* AD STRIP */
+  .ad-strip {
+    margin: 0 60px;
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px 24px;
+    display: flex; align-items: center; gap: 20px;
+  }
+  .ad-strip-label {
+    background: var(--gold); color: #000;
+    font-size: 0.6rem; font-weight: 800; letter-spacing: 1px;
+    padding: 2px 6px; border-radius: 3px; white-space: nowrap;
+  }
+  .ad-strip-slot {
+    flex: 1; height: 80px; border: 1px dashed rgba(255,255,255,0.1);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-size: 0.75rem;
+  }
+
+  /* STATS */
+  .stats {
+    display: flex; gap: 16px; padding: 24px;
+    background: var(--bg2); flex-wrap: wrap;
+    justify-content: center;
+  }
+  .stat-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px 28px; text-align: center;
+    flex: 1; min-width: 140px;
+  }
+  .stat-icon { font-size: 1.8rem; margin-bottom: 6px; }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem; color: var(--accent); letter-spacing: 2px;
+  }
+  .stat-label { color: var(--muted); font-size: 0.8rem; margin-top: 4px; }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,0.85); backdrop-filter: blur(6px);
+    align-items: center; justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 16px; padding: 40px; max-width: 440px; width: 90%;
+    position: relative; animation: slideUp 0.3s ease;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .modal-close {
+    position: absolute; top: 16px; right: 16px;
+    background: var(--bg3); border: 1px solid var(--border);
+    color: var(--muted); width: 32px; height: 32px; border-radius: 50%;
+    cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  }
+  .modal-close:hover { color: white; border-color: var(--accent); }
+  .modal h2 {
+    font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+  .modal p { color: var(--muted); font-size: 0.85rem; margin-bottom: 24px; }
+  .form-group { margin-bottom: 16px; }
+  .form-input {
+    width: 100%; padding: 12px 16px;
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text); font-size: 0.9rem;
+    font-family: 'Mulish', sans-serif; outline: none; transition: border-color 0.2s;
+  }
+  .form-input:focus { border-color: var(--accent); }
+  .form-input::placeholder { color: var(--muted); }
+  .btn-submit {
+    width: 100%; padding: 14px; background: var(--accent); color: white;
+    border: none; border-radius: 8px; font-size: 1rem; font-weight: 700;
+    cursor: pointer; transition: background 0.2s;
+    font-family: 'Mulish', sans-serif;
+  }
+  .btn-submit:hover { background: #c40812; }
+  .form-switch { text-align: center; margin-top: 16px; color: var(--muted); font-size: 0.85rem; }
+  .form-switch a { color: var(--accent); cursor: pointer; }
+
+  /* FOOTER */
+  .catalog-intro {
+    padding: 12px 16px; margin-bottom: 16px;
+    background: rgba(255,255,255,0.04); border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0; color: var(--muted);
+    font-size: 0.82rem; line-height: 1.7;
+  }
+  .about-section {
+    padding: 40px 24px;
+    background: var(--bg2);
+  }
+  .about-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px; max-width: 1100px; margin: 0 auto;
+  }
+  .about-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 24px; text-align: center;
+  }
+  .about-icon { font-size: 2rem; margin-bottom: 12px; }
+  .about-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+  .about-card p { font-size: 0.78rem; color: var(--muted); line-height: 1.6; }
+  footer {
+    background: var(--bg2); border-top: 1px solid var(--border);
+    padding: 48px 60px 24px;
+    margin-top: 60px;
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px; margin-bottom: 40px;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 3px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 12px;
+  }
+  .footer-desc { color: var(--muted); font-size: 0.85rem; line-height: 1.6; }
+  .footer-col h4 {
+    font-size: 0.75rem; font-weight: 800; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 16px;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 8px; }
+  .footer-col a { color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--accent); }
+  .footer-bottom {
+    border-top: 1px solid var(--border); padding-top: 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    color: var(--muted); font-size: 0.75rem;
+  }
+
+  /* TRANSLATIONS */
+  [data-lang] { display: none !important; }
+  body[data-active-lang="uk"] [data-lang="uk"],
+  body[data-active-lang="en"] [data-lang="en"],
+  body[data-active-lang="ru"] [data-lang="ru"] { display: inline !important; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 0 20px 60px; }
+    .hero-movies { display: none; }
+    .search-section, .section, .filters { padding-left: 20px; padding-right: 20px; }
+    .stats { grid-template-columns: repeat(2, 1fr); padding: 20px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .ad-banner, .ad-strip { margin: 0 20px; padding: 12px 16px; }
+  }
+</style>
 </head>
-<body>
-    <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <div class="logo">🎬 CineWorld</div>
-            <div class="tagline" id="tagline">Дивись фільми онлайн безкоштовно</div>
-            <div class="badge">✦ Безкоштовно ✦ Free</div>
-            <div class="lang-switcher">
-                <button class="lang-btn active" onclick="switchLanguage('uk')">🇺🇦 УКР</button>
-                <button class="lang-btn" onclick="switchLanguage('en')">🇬🇧 ENG</button>
-            </div>
-        </div>
+<body data-active-lang="uk">
 
-        <!-- Admin Panel Toggle -->
-        <div style="text-align: right; margin: 1rem 0;">
-            <button class="admin-toggle" onclick="toggleAdminPanel()">🔧 Панель адміністратора</button>
-        </div>
-
-        <!-- Admin Panel -->
-        <div class="admin-panel" id="adminPanel">
-            <div class="admin-header">
-                <div class="admin-title">📝 Додати новий фільм / серіал</div>
-            </div>
-            <div class="admin-form">
-                <input type="text" id="movieTitle" placeholder="Назва фільму">
-                <input type="text" id="movieTitleEn" placeholder="Title (English)">
-                <select id="movieGenre">
-                    <option value="Бойовик">Бойовик</option>
-                    <option value="Комедія">Комедія</option>
-                    <option value="Драма">Драма</option>
-                    <option value="Жахи">Жахи</option>
-                    <option value="Трилер">Трилер</option>
-                    <option value="Мультфільм">Мультфільм</option>
-                    <option value="Серіал">Серіал</option>
-                </select>
-                <input type="text" id="movieYear" placeholder="Рік">
-                <input type="text" id="moviePosterUrl" placeholder="URL постера (зображення)">
-                <input type="text" id="movieLink" placeholder="Посилання на перегляд (Megogo, YouTube тощо)">
-                <button class="admin-btn" onclick="addMovie()">➕ Додати фільм</button>
-            </div>
-            <div class="admin-header" style="margin-top: 1rem;">
-                <div class="admin-title">📋 Список фільмів (для редагування)</div>
-            </div>
-            <div id="adminMovieList"></div>
-        </div>
-
-        <!-- Search & Filters -->
-        <div class="search-section">
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="🔍 Назва фільму, серіалу... / Movie title...">
-                <button id="searchBtn">Знайти</button>
-            </div>
-            <div class="genre-filters" id="genreFilters"></div>
-        </div>
-
-        <!-- Movies Grid -->
-        <div class="section">
-            <div class="movies-grid" id="moviesGrid"></div>
-        </div>
-
-        <!-- Benefits Section -->
-        <div class="benefits" id="benefitsSection">
-            <div class="benefit-card"><div class="benefit-emoji">🆓</div><div>Безкоштовно</div><small>Без підписки</small></div>
-            <div class="benefit-card"><div class="benefit-emoji">⚖️</div><div>Легально</div><small>Megogo, UASerials</small></div>
-            <div class="benefit-card"><div class="benefit-emoji">🇺🇦</div><div>Українською</div><small>Повний каталог</small></div>
-            <div class="benefit-card"><div class="benefit-emoji">🔄</div><div>Оновлення</div><small>Щодня новинки</small></div>
-            <div class="benefit-card"><div class="benefit-emoji">📱</div><div>Будь-який пристрій</div><small>Телефон, планшет, ПК</small></div>
-        </div>
-
-        <div class="footer">
-            CineWorld — безкоштовний каталог фільмів, серіалів та мультфільмів українською мовою.<br>
-            Всі фільми доступні на легальних платформах. Сайт не зберігає відео, а лише допомагає знаходити легальний контент.<br>
-            © CineWorld 2025
-        </div>
+<!-- NAV -->
+<nav>
+  <div class="logo">CineWorldUkraine</div>
+  <ul class="nav-links"></ul>
+  <div class="nav-right">
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLang('uk')">УКР</button>
+      <button class="lang-btn" onclick="setLang('en')">ENG</button>
     </div>
 
-    <script>
-        // Мови
-        let currentLang = 'uk';
-        
-        // Початкова база фільмів
-        let movies = [
-            { id: 1, title: "Розумний сумнів", titleEn: "Reasonable Doubt", genre: "Трилер", year: "2024", poster: "https://via.placeholder.com/300x450/2a2f3a/ff8c42?text=Розумний+сумнів", link: "https://megogo.ua/ua", isPopular: true },
-            { id: 2, title: "Обман", titleEn: "Deception", genre: "Бойовик", year: "2024", poster: "https://via.placeholder.com/300x450/2a2f3a/ff8c42?text=Обман", link: "https://megogo.ua/ua", isPopular: true },
-            { id: 3, title: "Погана поведінка", titleEn: "Bad Behavior", genre: "Комедія", year: "2023", poster: "https://via.placeholder.com/300x450/2a2f3a/ff8c42?text=Погана+поведінка", link: "https://uaserial.tv", isPopular: true },
-            { id: 4, title: "Опинись у моїй шкірі", titleEn: "Under the Skin", genre: "Жахи", year: "2024", poster: "https://via.placeholder.com/300x450/2a2f3a/ff8c42?text=Опинись+у+моїй+шкірі", link: "https://megogo.ua/ua", isPopular: true },
-            { id: 5, title: "Ваяна", titleEn: "Moana", genre: "Мультфільм", year: "2023", poster: "https://via.placeholder.com/300x450/2a2f3a/ff8c42?text=Ваяна", link: "https://www.disneyplus.com", isPopular: true },
-            { id: 6, title: "9-1-1", titleEn: "9-1-1", genre: "Серіал", year: "2024", poster: "https://via.placeholder.com/300x450/2a2f3a/ff8c42?text=9-1-1", link: "https://uaserial.tv", isPopular: true },
-        ];
+    <button class="btn" style="background:var(--bg3);border:1px solid var(--border);color:var(--muted);font-size:0.75rem;" onclick="openModal('admin')">⚙️ Адмін</button>
+  </div>
+</nav>
 
-        let currentGenre = 'all';
-        let searchQuery = '';
+<!-- ADSENSE TOP BANNER -->
+<div style="text-align:center;padding:10px;background:var(--bg2);min-height:120px">
+  <ins class="adsbygoogle"
+     style="display:block;min-width:320px;min-height:100px"
+     data-ad-client="ca-pub-6017941702609770"
+     data-ad-slot="auto"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
 
-        // Збереження в localStorage
-        function saveMovies() {
-            localStorage.setItem('cineworld_movies', JSON.stringify(movies));
-        }
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span data-lang="uk">✦ Безкоштовно</span>
+        <span data-lang="en">✦ Free</span>
+      </div>
+      <h1>
+        <span data-lang="uk">Дивись<br><span>фільми</span><br>онлайн</span>
+        <span data-lang="en">Watch<br><span>movies</span><br>online</span>
+      </h1>
+      <p>
+        <span data-lang="uk">Тисячі фільмів та серіалів безкоштовно. Без реєстрації, без підписки — просто натисни та дивись.</span>
+        <span data-lang="en">Thousands of movies and series for free. No registration, no subscription — just click and watch.</span>
+      </p>
+      <div class="hero-tags">
+        <span>🎬 Фільми</span>
+        <span>📺 Серіали</span>
+        <span>💥 Бойовик</span>
+        <span>😂 Комедія</span>
+        <span>😱 Жахи</span>
+      </div>
+      <div class="hero-actions">
+        <button class="btn-hero btn-watch" onclick="setFilter(document.querySelector('.filter-btn'), 'all'); document.getElementById('movies').scrollIntoView({behavior:'smooth'})">
+          ▶
+          <span data-lang="uk">Почати дивитись</span>
+          <span data-lang="en">Start Watching</span>
+        </button>
+        <button class="btn-hero btn-browse" onclick="document.getElementById('filters').scrollIntoView({behavior:'smooth'})">
+          <span data-lang="uk">Переглянути каталог</span>
+          <span data-lang="en">Browse Catalog</span>
+        </button>
+      </div>
+    </div>
+    <div class="hero-movies" id="heroCarousel">
+      <div class="carousel-track" id="carouselTrack"></div>
+    </div>
+  </div>
+</section>
 
-        function loadMovies() {
-            const saved = localStorage.getItem('cineworld_movies');
-            if (saved) {
-                movies = JSON.parse(saved);
-            } else {
-                saveMovies();
-            }
-            renderMovies();
-            renderAdminList();
-        }
+<!-- AD BANNER -->
+<div class="ad-banner">
+  <span class="ad-label">AD</span>
+  <div class="ad-content">
+    <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-6017941702609770" data-ad-slot="auto"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+</div>
 
-        // Додавання фільму
-        function addMovie() {
-            const title = document.getElementById('movieTitle').value.trim();
-            const titleEn = document.getElementById('movieTitleEn').value.trim();
-            const genre = document.getElementById('movieGenre').value;
-            const year = document.getElementById('movieYear').value.trim();
-            let poster = document.getElementById('moviePosterUrl').value.trim();
-            const link = document.getElementById('movieLink').value.trim();
+<!-- SEARCH -->
+<section class="search-section">
+  <div class="search-wrapper">
+    <span class="search-icon">🔍</span>
+    <input type="text" class="search-input" id="searchInput"
+      placeholder="Пошук фільмів, серіалів, актори..."
+      oninput="filterMovies(this.value)">
+    <button class="search-btn">
+      <span data-lang="uk">Знайти</span>
+      <span data-lang="en">Search</span>
+    </button>
+  </div>
+</section>
 
-            if (!title) {
-                alert('Введіть назву фільму');
-                return;
-            }
+<!-- FILTERS -->
+<div class="filters" id="filters">
+  <button class="filter-btn active" onclick="setFilter(this,'all')">
+    <span data-lang="uk">Всі</span><span data-lang="en">All</span>
+  </button>
+  <button class="filter-btn" onclick="setFilter(this,'action')">
+    <span data-lang="uk">💥 Екшн</span><span data-lang="en">💥 Action</span>
+  </button>
+  <button class="filter-btn" onclick="setFilter(this,'comedy')">
+    <span data-lang="uk">Комедія</span><span data-lang="en">Comedy</span>
+  </button>
+  <button class="filter-btn" onclick="setFilter(this,'drama')">
+    <span data-lang="uk">Драма</span><span data-lang="en">Drama</span>
+  </button>
+  <button class="filter-btn" onclick="setFilter(this,'horror')">
+    <span data-lang="uk">Жахи</span><span data-lang="en">Horror</span>
+  </button>
+  <button class="filter-btn" onclick="setFilter(this,'thriller')">
+    <span data-lang="uk">Трилер</span><span data-lang="en">Thriller</span>
+  </button>
+  <button class="filter-btn" onclick="setFilter(this,'animation')">
+    <span data-lang="uk">Мультфільм</span><span data-lang="en">Animation</span>
+  </button>
+  <button class="filter-btn" onclick="setFilter(this,'animation-series')">
+    <span data-lang="uk">🎨 Мультсеріали</span><span data-lang="en">🎨 Animated Series</span>
+  </button>
+  <button class="filter-btn" onclick="setFilter(this,'series')">
+    <span data-lang="uk">📺 Серіали</span><span data-lang="en">📺 Series</span>
+  </button>
+  <button class="filter-btn" onclick="showTopMovies()">
+    <span data-lang="uk">🏆 Топ</span><span data-lang="en">🏆 Top</span>
+  </button>
+</div>
 
-            const newId = Date.now();
-            if (!poster) {
-                poster = `https://via.placeholder.com/300x450/2a2f3a/ff8c42?text=${encodeURIComponent(title)}`;
-            }
+<!-- MOVIES SECTION -->
+<section class="section" id="movies">
+  <div class="catalog-intro">
+    <span data-lang="uk">🎬 CineWorld — безкоштовний каталог фільмів, серіалів та мультфільмів українською мовою. Знаходь найкращі фільми різних жанрів: бойовики, комедії, драми, жахи, трилери. Всі фільми доступні для перегляду онлайн безкоштовно на легальних платформах.</span>
+    <span data-lang="en">🎬 CineWorld is a free catalog of movies, series and cartoons. Find the best films by genre: action, comedy, drama, horror, thrillers. All movies are free on legal platforms.</span>
+  </div>
+  <div class="section-header">
+    <div class="section-title">
+      <span data-lang="uk">🔥 <span>Популярні</span> зараз</span>
+      <span data-lang="en">🔥 <span>Popular</span> now</span>
+      <span data-lang="ru">🔥 <span>Популярные</span> сейчас</span>
+    </div>
+    <span class="see-all" onclick="showAllMovies()">
+      <span data-lang="uk">Всі фільми →</span>
+      <span data-lang="en">All movies →</span>
+    </span>
+  </div>
+  <div class="movie-grid" id="movieGrid"></div>
+</section>
 
-            movies.push({
-                id: newId,
-                title: title,
-                titleEn: titleEn || title,
-                genre: genre,
-                year: year || '2024',
-                poster: poster,
-                link: link || 'https://megogo.ua/ua',
-                isPopular: false
-            });
+<!-- AD STRIP -->
 
-            saveMovies();
-            renderMovies();
-            renderAdminList();
-            
-            // Очистити форму
-            document.getElementById('movieTitle').value = '';
-            document.getElementById('movieTitleEn').value = '';
-            document.getElementById('movieYear').value = '';
-            document.getElementById('moviePosterUrl').value = '';
-            document.getElementById('movieLink').value = '';
-            
-            alert('Фільм додано!');
-        }
+<!-- ADSENSE MID BANNER -->
+<div style="text-align:center;padding:20px 60px;min-height:120px">
+  <ins class="adsbygoogle"
+     style="display:block;min-width:320px;min-height:100px"
+     data-ad-client="ca-pub-6017941702609770"
+     data-ad-slot="auto"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
 
-        // Видалення фільму
-        function deleteMovie(id) {
-            movies = movies.filter(m => m.id !== id);
-            saveMovies();
-            renderMovies();
-            renderAdminList();
-        }
+<!-- NORDVPN BANNER -->
+<div style="margin:20px 60px;background:linear-gradient(135deg,#0a0a2e 0%,#1a0a3e 50%,#0d1a3e 100%);border:1px solid #3a2a6e;border-radius:16px;padding:28px 36px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
+  <div style="display:flex;align-items:center;gap:20px">
+    <div style="font-size:2.5rem">🔒</div>
+    <div>
+      <div style="font-family:Bebas Neue,sans-serif;font-size:1.6rem;letter-spacing:2px;color:white;margin-bottom:4px">ЗАХИСТИ СВОЄ З'ЄДНАННЯ</div>
+      <div style="color:#a0a0c0;font-size:0.9rem;max-width:400px">Деякі фільми недоступні у твоєму регіоні? NordVPN відкриє доступ до будь-якого контенту за 2 хвилини</div>
+      <div style="display:flex;gap:16px;margin-top:10px;flex-wrap:wrap">
+        <span style="color:#4ade80;font-size:0.8rem;font-weight:700">✓ Швидке підключення</span>
+        <span style="color:#4ade80;font-size:0.8rem;font-weight:700">✓ 111 країн</span>
+        <span style="color:#4ade80;font-size:0.8rem;font-weight:700">✓ Без логів</span>
+      </div>
+    </div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:10px;flex-shrink:0">
+    <a href="https://go.nordvpn.net/aff_c?offer_id=15&aff_id=142219&url_id=902" target="_blank" style="background:linear-gradient(135deg,#4687ff,#6e3fff);color:white;text-decoration:none;padding:14px 28px;border-radius:8px;font-weight:800;font-size:0.95rem;text-align:center;display:block;">
+      🛡️ Спробувати NordVPN
+    </a>
+    <a href="https://go.nordpass.io/aff_c?offer_id=488&aff_id=142219&url_id=9356" target="_blank" style="background:transparent;color:#a0a0c0;text-decoration:none;padding:8px 28px;border-radius:8px;font-size:0.8rem;text-align:center;border:1px solid #3a2a6e;display:block;">
+      🔑 NordPass — менеджер паролів
+    </a>
+  </div>
+</div>
 
-        // Рендер адмін списку
-        function renderAdminList() {
-            const container = document.getElementById('adminMovieList');
-            if (!container) return;
-            
-            container.innerHTML = movies.map(movie => `
-                <div class="admin-movie-item">
-                    <span><strong>${movie.title}</strong> (${movie.genre}, ${movie.year})</span>
-                    <button class="delete-movie" onclick="deleteMovie(${movie.id})">🗑 Видалити</button>
-                </div>
-            `).join('');
-        }
+<!-- NEW SECTION -->
+<section class="section" id="series">
+  <div class="section-header">
+    <div class="section-title">
+      <span data-lang="uk">🆕 <span>Нові</span> надходження</span>
+      <span data-lang="en">🆕 <span>New</span> arrivals</span>
+      <span data-lang="ru">🆕 <span>Новые</span> поступления</span>
+    </div>
+  </div>
+  <div class="movie-grid" id="newGrid"></div>
+</section>
 
-        // Фільтрація
-        function getFilteredMovies() {
-            let filtered = [...movies];
-            
-            if (currentGenre !== 'all') {
-                filtered = filtered.filter(m => m.genre === currentGenre);
-            }
-            
-            if (searchQuery) {
-                const query = searchQuery.toLowerCase();
-                filtered = filtered.filter(m => 
-                    m.title.toLowerCase().includes(query) || 
-                    (m.titleEn && m.titleEn.toLowerCase().includes(query)) ||
-                    m.genre.toLowerCase().includes(query)
-                );
-            }
-            
-            return filtered;
-        }
+<!-- WHY US SECTION -->
+<div style="background:var(--bg2);padding:40px 60px;margin:0">
+  <div style="text-align:center;margin-bottom:30px">
+    <div style="font-family:Bebas Neue,sans-serif;font-size:2rem;letter-spacing:3px;color:white">
+      <span data-lang="uk">ЧОМУ <span style="color:var(--accent)">CINEWORLD</span>?</span>
+      <span data-lang="en">WHY <span style="color:var(--accent)">CINEWORLD</span>?</span>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px">
+    <div style="background:var(--bg3);border-radius:12px;padding:24px;text-align:center;border:1px solid var(--border)">
+      <div style="font-size:2rem;margin-bottom:10px">🆓</div>
+      <div style="font-weight:700;color:white;margin-bottom:6px"><span data-lang="uk">Безкоштовно</span><span data-lang="en">Free</span></div>
+      <div style="color:var(--muted);font-size:0.8rem"><span data-lang="uk">Всі фільми доступні без підписки та реєстрації</span><span data-lang="en">All movies available without subscription</span></div>
+    </div>
+    <div style="background:var(--bg3);border-radius:12px;padding:24px;text-align:center;border:1px solid var(--border)">
+      <div style="font-size:2rem;margin-bottom:10px">⚖️</div>
+      <div style="font-weight:700;color:white;margin-bottom:6px"><span data-lang="uk">Легально</span><span data-lang="en">Legal</span></div>
+      <div style="color:var(--muted);font-size:0.8rem"><span data-lang="uk">Тільки легальні джерела — Megogo, UASerials та інші</span><span data-lang="en">Only legal sources — Megogo, UASerials and others</span></div>
+    </div>
+    <div style="background:var(--bg3);border-radius:12px;padding:24px;text-align:center;border:1px solid var(--border)">
+      <div style="font-size:2rem;margin-bottom:10px">🇺🇦</div>
+      <div style="font-weight:700;color:white;margin-bottom:6px"><span data-lang="uk">Українською</span><span data-lang="en">In Ukrainian</span></div>
+      <div style="color:var(--muted);font-size:0.8rem"><span data-lang="uk">Каталог повністю українською мовою для зручності</span><span data-lang="en">Catalog fully in Ukrainian language</span></div>
+    </div>
+    <div style="background:var(--bg3);border-radius:12px;padding:24px;text-align:center;border:1px solid var(--border)">
+      <div style="font-size:2rem;margin-bottom:10px">🔄</div>
+      <div style="font-weight:700;color:white;margin-bottom:6px"><span data-lang="uk">Оновлення</span><span data-lang="en">Updates</span></div>
+      <div style="color:var(--muted);font-size:0.8rem"><span data-lang="uk">Нові фільми та серіали додаються щодня</span><span data-lang="en">New movies and series added daily</span></div>
+    </div>
+  </div>
+</div>
 
-        // Рендер фільмів
-        function renderMovies() {
-            const container = document.getElementById('moviesGrid');
-            const filtered = getFilteredMovies();
-            
-            if (filtered.length === 0) {
-                container.innerHTML = '<div style="text-align: center; padding: 3rem; color: #6c7a8e;">😕 Нічого не знайдено. Спробуйте інший жанр або назву.</div>';
-                return;
-            }
-            
-            container.innerHTML = filtered.map(movie => {
-                const displayTitle = currentLang === 'uk' ? movie.title : (movie.titleEn || movie.title);
-                return `
-                    <a href="${movie.link}" target="_blank" class="movie-card">
-                        <div class="movie-poster">
-                            <img src="${movie.poster}" alt="${displayTitle}" onerror="this.src='https://via.placeholder.com/300x450/2a2f3a/ff8c42?text=No+Image'">
-                        </div>
-                        <div class="movie-info">
-                            <div class="movie-title">${escapeHtml(displayTitle)}</div>
-                            <span class="movie-genre">${movie.genre}</span>
-                            <div class="movie-year">${movie.year}</div>
-                            <div class="watch-link">▶ Дивитись →</div>
-                        </div>
-                    </a>
-                `;
-            }).join('');
-        }
+<!-- STATS -->
+<div class="stats">
+  <div class="stat-card">
+    <div class="stat-icon">🎬</div>
+    <div class="stat-num">35+</div>
+    <div class="stat-label"><span data-lang="uk">Фільмів у каталозі</span><span data-lang="en">Movies in catalog</span></div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">📺</div>
+    <div class="stat-num">6+</div>
+    <div class="stat-label"><span data-lang="uk">Серіалів онлайн</span><span data-lang="en">Series online</span></div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">🆓</div>
+    <div class="stat-num">100%</div>
+    <div class="stat-label"><span data-lang="uk">Безкоштовно</span><span data-lang="en">Free to watch</span></div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">🇺🇦</div>
+    <div class="stat-num">УКР</div>
+    <div class="stat-label"><span data-lang="uk">Українською мовою</span><span data-lang="en">In Ukrainian</span></div>
+  </div>
+</div>
+<!-- ADSENSE BOTTOM BANNER -->
+<div style="text-align:center;padding:20px 60px;min-height:120px">
+  <ins class="adsbygoogle"
+     style="display:block;min-width:320px;min-height:100px"
+     data-ad-client="ca-pub-6017941702609770"
+     data-ad-slot="auto"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
 
-        // Рендер жанрів
-        function renderGenreFilters() {
-            const genres = ['all', 'Бойовик', 'Комедія', 'Драма', 'Жахи', 'Трилер', 'Мультфільм', 'Серіал'];
-            const container = document.getElementById('genreFilters');
-            
-            const genreNames = {
-                uk: { all: 'Всі жанри', Бойовик: 'Бойовик', Комедія: 'Комедія', Драма: 'Драма', Жахи: 'Жахи', Трилер: 'Трилер', Мультфільм: 'Мультфільм', Серіал: 'Серіал' },
-                en: { all: 'All Genres', Бойовик: 'Action', Комедія: 'Comedy', Драма: 'Drama', Жахи: 'Horror', Трилер: 'Thriller', Мультфільм: 'Animation', Серіал: 'Series' }
-            };
-            
-            container.innerHTML = genres.map(genre => `
-                <button class="genre-btn ${currentGenre === genre ? 'active' : ''}" onclick="setGenre('${genre}')">
-                    ${genreNames[currentLang][genre] || genre}
-                </button>
-            `).join('');
-        }
 
-        function setGenre(genre) {
-            currentGenre = genre;
-            renderGenreFilters();
-            renderMovies();
-        }
+</div>
 
-        function searchMovies() {
-            searchQuery = document.getElementById('searchInput').value.trim();
-            renderMovies();
-        }
+<!-- FOOTER -->
+<footer>
+  <div style="text-align:center; padding: 20px; color: var(--muted); font-size:0.8rem; border-top: 1px solid var(--border);">
+    <div class="footer-logo" style="margin-bottom:6px">CineWorldUkraine</div>
+    <span data-lang="uk">© 2025 CineWorld. Безкоштовний каталог фільмів. Всі права захищені.</span>
+    <span data-lang="en">© 2025 CineWorld. Free movie catalog. All rights reserved.</span>
+    <div style="margin-top:8px; display:flex; gap:16px; justify-content:center; flex-wrap:wrap">
+      <a href="#" onclick="showModal('privacy')" style="color:var(--muted)"><span data-lang="uk">Політика конфіденційності</span><span data-lang="en">Privacy Policy</span></a>
+      <a href="#" onclick="showModal('about')" style="color:var(--muted)"><span data-lang="uk">Про нас</span><span data-lang="en">About</span></a>
+      <a href="#" onclick="showModal('contacts')" style="color:var(--muted)"><span data-lang="uk">Контакти</span><span data-lang="en">Contacts</span></a>
+    </div>
+  </div>
+</footer>
 
-        // Перемикання мови
-        function switchLanguage(lang) {
-            currentLang = lang;
-            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            const tagline = document.getElementById('tagline');
-            if (lang === 'uk') {
-                tagline.textContent = 'Дивись фільми онлайн безкоштовно';
-                document.querySelector('.search-box button').textContent = 'Знайти';
-                document.getElementById('searchInput').placeholder = '🔍 Назва фільму, серіалу...';
-            } else {
-                tagline.textContent = 'Watch movies online free';
-                document.querySelector('.search-box button').textContent = 'Search';
-                document.getElementById('searchInput').placeholder = '🔍 Movie title...';
-            }
-            
-            renderGenreFilters();
-            renderMovies();
-        }
 
-        // Панель адміністратора
-        function toggleAdminPanel() {
-            const panel = document.getElementById('adminPanel');
-            panel.classList.toggle('show');
-        }
 
-        function escapeHtml(str) {
-            return str.replace(/[&<>]/g, function(m) {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                return m;
-            });
-        }
 
-        // Ініціалізація
-        document.getElementById('searchBtn').addEventListener('click', searchMovies);
-        document.getElementById('searchInput').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') searchMovies();
-        });
 
-        loadMovies();
-        renderGenreFilters();
-    </script>
+<script>
+// ===== MOVIE DATA =====
+const movies = [
+  { id:20, title_uk:"Розумний сумнів", title_en:"Reasonable Doubt", title_ru:"Разумное сомнение", year:2014, rating:5.7, genre:"thriller", badge:"free", color:"135deg,#0a0a1a,#1a1a2e", emoji:"⚖️", poster:"https://uaserials.com/posters/3902.jpg", youtube:"2ouw3hSAjWs", desc:"Адвокат бере справу про вбивство, але незабаром розуміє, що обвинувачений може бути невинним. Напружений трилер про справедливість та сумніви.", age:16, link:"https://megogo.net/ua/view/1244321-rozumniy-sumniv.html" },
+  { id:21, title_uk:"Обман", title_en:"Absolute Deception", title_ru:"Обман", year:2013, rating:4.4, genre:"action", badge:"free", color:"135deg,#1a0a0a,#2e1a1a", emoji:"🕵️", poster:"https://www.kino-teatr.ru/movie/posters/big/2/9/182692.jpg", youtube:"Ziztcy7pndE", desc:"Колишній морський котик виконує небезпечну місію щоб врятувати дружину. Бойовик з несподіваними поворотами сюжету.", age:16, link:"https://megogo.net/ua/view/1030271-obman.html" },
+  { id:22, title_uk:"Погана поведінка", title_en:"Behaving Badly", title_ru:"Плохое поведение", year:2013, rating:4.3, genre:"comedy", badge:"free", color:"135deg,#1a1a0a,#2e2e1a", emoji:"😈", poster:"https://upload.wikimedia.org/wikipedia/ru/8/80/Behaving_Badly.jpg", youtube:"oyVTKJugsiA", desc:"Підліток йде на все заради дівчини своєї мрії — навіть на найбожевільніші витівки. Смішна комедія про першу любов.", age:16, link:"https://megogo.net/ua/view/68781-pogana-povedinka.html" },
+  { id:23, title_uk:"Опинись у моїй шкірі", title_en:"Under the Skin", title_ru:"Окажись в моей коже", year:2014, rating:4.4, genre:"horror", badge:"free", color:"135deg,#0a0a0a,#1a0a2e", emoji:"👁️", poster:"https://upload.wikimedia.org/wikipedia/uk/4/4c/Under_the_Skin_poster.jpg", youtube:"2Nh21Wo86tI", desc:"Прибулець приймає образ жінки щоб вивчити людство. Психологічний трилер з Скарлетт Йоганссон у головній ролі.", age:18, link:"https://megogo.net/ua/view/21329-opinis-u-mo-y-shkiri.html" },
+  { id:24, title_uk:"Як кохатися по-англійськи", title_en:"Some Kind of Beautiful", title_ru:"Как заниматься любовью по-английски", year:2015, rating:5.7, genre:"comedy", badge:"free", color:"135deg,#1a0a1a,#2e1a2e", emoji:"💑", poster:"https://s3.vcdn.biz/static/f/872130621/image.jpg/pt/r375x0x4", youtube:"yNICzXRiYcM", desc:"Успішний викладач закохується одночасно в двох жінок і не може зробити вибір. Легка романтична комедія з Пірсом Броснаном.", age:18, link:"https://megogo.net/ua/view/1065441-yak-kohatisya-po-angliyski.html" },
+  { id:25, title_uk:"Фортуна Вегаса", title_en:"Lay the Favorite", title_ru:"Фортуна Вегаса", year:2012, rating:4.9, genre:"comedy", badge:"free", color:"135deg,#0a1a0a,#1a2e1a", emoji:"🎰", poster:"https://upload.wikimedia.org/wikipedia/ru/4/4f/Lay_the_Favorite.jpg", youtube:"WLQBynHyAvo", desc:"Молода жінка влаштовується на роботу до букмекера у Лас-Вегасі і виявляє хист до ставок. Комедія про азартні ігри.", age:16, link:"https://megogo.net/ua/view/21323-fortuna-vehasa.html" },
+  { id:26, title_uk:"День мумії", title_en:"Day of the Mummy", title_ru:"День мумии", year:2014, rating:2.6, genre:"horror", badge:"free", color:"135deg,#1a0a00,#2e1500", emoji:"🧟", poster:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZ12krQI-GZ6mnwD5e1O5fIRSVAOe-XSSrWaWVVyeVAla2aD1HW27okeF-fdOR9-Am469oQiLsjcz2UkLRneZqpZXCdqBb_o0AEUbgIrA&s=10", youtube:"MOpu2m_3HGg", desc:"Команда шукачів скарбів вирушає до Єгипту і пробуджує стародавню мумію. Пригодницький фільм жахів.", age:16, link:"https://megogo.net/ua/view/2718571-den-mumi.html" },
+  { id:27, title_uk:"Допоможіть згадати", title_en:"The Blackout", title_ru:"Помогите вспомнить", year:2013, rating:2.6, genre:"comedy", badge:"free", color:"135deg,#0a1a0a,#152e15", emoji:"🤔", youtube:"dpyJfoc8tI0", desc:"Після вечірки хлопець прокидається без пам'яті і намагається відновити події минулої ночі. Комедія непорозумінь.", age:18, link:"https://megogo.net/ua/view/2718681-dopomozhit-zgadati.html" },
+  { id:28, title_uk:"Підозрюваний", title_en:"The Suspect", title_ru:"Подозреваемый", year:2013, rating:5.7, genre:"thriller", badge:"free", color:"135deg,#0a0a1a,#15152e", emoji:"🔍", poster:"https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSKm9PUErKqjGwirjQuIGHLgpj94gJGMv0dCmV97zdR-rzL15c6", youtube:"2_BH-dZOpMk", desc:"Успішний прокурор стає підозрюваним у справі про вбивство після ДТП з утечею. Гострий кримінальний трилер.", age:16, link:"https://megogo.net/ua/view/2718941-pidozryuvaniy.html" },
+  { id:29, title_uk:"Карти, Гроші І Слова", title_en:"Three Holes, Two Brads, and a Smoking Gun", title_ru:"Карты, деньги и слова", year:2015, rating:4.7, genre:"thriller", badge:"free", color:"135deg,#1a1a0a,#2e2e15", emoji:"🃏", poster:"https://i.ytimg.com/vi/3GRR90tnDRI/sddefault.jpg", youtube:"z3J904YS87I", desc:"Четверо незнайомців об'єднуються для пружного пограбування в нью-йоркському метро. Кримінальний трилер.", age:16, link:"https://megogo.net/ua/view/2718781-karti-groshi-i-slova.html" },
+  { id:30, title_uk:"Підстава", title_en:"Setup", title_ru:"Подстава", year:2011, rating:4.4, genre:"action", badge:"free", color:"135deg,#1a0a0a,#2e1515", emoji:"🔫", poster:"https://upload.wikimedia.org/wikipedia/ru/8/83/Setup_poster.jpg", youtube:"cuhFjHIR9Mk", desc:"Троє друзів планують пограбування але їх зраджує четвертий. Кримінальний бойовик з Брюсом Віллісом.", age:18, link:"https://megogo.net/ua/view/290-pidstava.html" },
+  { id:31, title_uk:"Холостячки", title_en:"Bachelorette", title_ru:"Холостячки", year:2012, rating:5.3, genre:"comedy", badge:"free", color:"135deg,#1a0a1a,#2e152e", emoji:"💃", poster:"https://upload.wikimedia.org/wikipedia/ru/f/f9/BachelorettePoster.jpeg", youtube:"OZ8Fd6cion0", desc:"Подруги нареченої влаштовують безумний дівич-вечір напередодні весілля. Розкута комедія для дорослих.", age:18, link:"https://megogo.net/ua/view/21301-holostyachki.html" },
+  { id:42, title_uk:"Воруши ластами 2", title_en:"A Turtle's Tale 2", title_ru:"Шевели ластами 2", year:2012, rating:5.6, genre:"animation", badge:"free", color:"135deg,#003a2e,#005a40", emoji:"🐢", poster:"https://uakino.best/uploads/mini/poster/5b/372bb500059c4ebeda15597a082bba.webp", desc:"Черепашка Семмі з друзями тікає з акваріума і відправляється у захопливу підводну пригоду. Мультфільм для всієї родини.", age:0, link:"https://megogo.net/ua/view/1348051-vorushi-lastami-2.html" },
+  { id:32, title_uk:"Ідеальна втеча", title_en:"A Perfect Getaway", title_ru:"Идеальный побег", year:2009, rating:6.5, genre:"thriller", badge:"free", color:"135deg,#0a1a0a,#152e15", emoji:"🏃", poster:"https://ua-images.kinorium.com/movie/1080/410426.jpg?1718362756", desc:"Молоде подружжя в медовий місяць натикається на підозрілу пару на Гаваях. Напружений трилер на екзотичному острові.", age:16, link:"https://megogo.net/ua/view/8011-idealna-vtecha.html" },
+  { id:33, title_uk:"Афера по-американськи", title_en:"American Hustle", title_ru:"Афёра по-американски", year:2014, rating:7.2, genre:"drama", badge:"free", color:"135deg,#1a1000,#2e2000", emoji:"🎭", poster:"https://upload.wikimedia.org/wikipedia/uk/1/10/%D0%90%D0%BC%D0%B5%D1%80%D0%B8%D0%BA%D0%B0%D0%BD%D1%81%D1%8C%D0%BA%D0%B0_%D0%B0%D1%84%D0%B5%D1%80%D0%B0_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg", desc:"Аферист та агент ФБР об'єднуються для розкриття корупційної схеми. Кримінальна драма з зіркою акторів.", age:16, link:"https://megogo.net/ua/view/103431-afera-po-amerikanski.html" },
+  { id:34, title_uk:"Вірус", title_en:"Viral", title_ru:"Вирус", year:2016, rating:5.5, genre:"horror", badge:"free", color:"135deg,#001a00,#002e00", emoji:"🦠", poster:"https://upload.wikimedia.org/wikipedia/uk/2/24/Viral_film_poster.png", desc:"Таємничий вірус перетворює жителів міста на монстрів. Молода дівчина намагається врятувати сестру та вижити.", age:16, link:"https://megogo.net/ua/view/1191931-virus.html" },
+  { id:35, title_uk:"Драйвер на ніч", title_en:"Stretch", title_ru:"Драйвер на ночь", year:2015, rating:6.5, genre:"comedy", badge:"free", color:"135deg,#0a0a1a,#15152e", emoji:"🚗", poster:"https://upload.wikimedia.org/wikipedia/ru/b/b9/%D0%94%D1%80%D0%B0%D0%B9%D0%B2%D0%B5%D1%80_%D0%BD%D0%B0_%D0%BD%D0%BE%D1%87%D1%8C.jpg", desc:"Водій лімузина за одну ніч перевозить дивних клієнтів і потрапляє у смертельні пригоди. Кримінальна комедія.", age:16, link:"https://megogo.net/ua/view/1065921-drayver-na-nich.html" },
+  { id:36, title_uk:"Високий потенціал", title_en:"High Potential", title_ru:"Большой потенциал", year:2024, rating:7.7, genre:"series", badge:"free", color:"135deg,#0a1a2e,#152e3e", emoji:"🔍", poster:"https://uaserials.my/posters/9488.webp", desc:"Жінка з унікальними розумовими здібностями допомагає поліції розкривати найскладніші злочини. Детективний серіал.", age:12, link:"https://uaserials.my/9488-vysokyi-potencial.html" },
+  { id:37, title_uk:"9-1-1: Нешвілл", title_en:"9-1-1: Nashville", title_ru:"9-1-1 Нешвилл", year:2025, rating:5.2, genre:"series", badge:"free", color:"135deg,#1a0a0a,#2e1515", emoji:"🚨", poster:"https://uaserials.my/posters/11511.webp", desc:"Нова команда рятувальників екстреної служби Нешвілла щодня ризикує життям заради порятунку інших. Драматичний серіал.", age:12, link:"https://uaserials.my/11527-9-1-1-neshvill.html" },
+  { id:38, title_uk:"Праведниця", title_en:"The Equalizer", title_ru:"Праведница", year:2021, rating:5.6, genre:"series", badge:"free", color:"135deg,#0a0a1a,#15152e", emoji:"⚖️", poster:"https://uaserials.my/posters/11199.webp", desc:"Колишній агент ЦРУ захищає звичайних людей від несправедливості і злочинців. Бойовий детективний серіал.", age:16, link:"https://uaserials.my/11213-pravednycia.html" },
+  { id:39, title_uk:"Мій коханий демон", title_en:"My Demon", title_ru:"Мой любимый демон", year:2023, rating:7.7, genre:"series", badge:"free", color:"135deg,#1a0a1a,#2e152e", emoji:"😈", poster:"https://uaserials.my/posters/10972.webp", desc:"Звичайна дівчина укладає контракт з демоном і між ними виникають несподівані почуття. Корейська романтична дорама.", age:12, link:"https://uaserials.my/10984-mii-kokhanyi-demon.html" },
+  { id:40, title_uk:"Вашингтон Блек", title_en:"Washington Black", title_ru:"Вашингтон Блэк", year:2025, rating:6.4, genre:"series", badge:"free", color:"135deg,#1a1000,#2e2000", emoji:"🌊", poster:"https://uaserials.my/posters/10999.webp", desc:"Молодий раб у 19 столітті тікає і подорожує світом відкриваючи для себе науку та свободу. Історична міні-драма.", age:12, link:"https://uaserials.my/11011-vashyngton-blek.html" },
+  { id:41, title_uk:"9-1-1", title_en:"9-1-1", title_ru:"9-1-1", year:2018, rating:9.0, genre:"series", badge:"free", color:"135deg,#1a0000,#2e0000", emoji:"🚒", poster:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcHNIc_vQm7eNCezZ6CVNZqDohFCG7qKbTXA&s", desc:"Диспетчери та рятувальники екстреної служби щодня вирішують питання життя і смерті. Популярний американський серіал.", age:12, link:"https://uaserials.my/1230-9-1-1.html" },
+  { id:43, title_uk:"Теорія змови", title_en:"Zulu", title_ru:"Теорія змови", year:2013, rating:6.7, genre:"thriller", badge:"free", age:"16+", color:"135deg,#0a0a1a,#1a1a2e", emoji:"🔍", poster:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2CkH54TR8w-n9VImNNUdjR0xeTtDalJfbc8NS-btGtg&s", desc:"Поліціянт Алі Нойман розслідує жорстокі злочини в Кейптауні. Кримінальний трилер про справедливість та темне минуле.", link:"https://megogo.net/ua/view/1065391-teoriya-zmovi.html" },
+  { id:44, title_uk:"Безкоштовні зразки", title_en:"Free Samples", title_ru:"Безкоштовні зразки", year:2012, rating:5.6, genre:"comedy", badge:"free", age:"18+", color:"135deg,#1a1000,#2e2000", emoji:"🍦", poster:"https://static.kinoafisha.info/k/movie_posters/220/upload/movie_posters/7/5/9/8134957/a7e83c197fceb55cb67aa9a1138c5e06.jpg", desc:"Дівчина роздає безкоштовне морозиво але грубить усім клієнтам. Кумедна комедія про другий шанс у житті.", link:"https://megogo.net/ua/view/1065471-bezkoshtovni-zrazki.html" },
+  { id:45, title_uk:"Липучка", title_en:"Flypaper", title_ru:"Липучка", year:2011, rating:6.3, genre:"comedy", badge:"free", age:"18+", color:"135deg,#1a0a0a,#2e1515", emoji:"🏦", poster:"https://upload.wikimedia.org/wikipedia/ru/f/f2/Flypaper.jpg", desc:"Два гангстерські угруповання одночасно пограбують один банк. Абсурдна кримінальна комедія.", link:"https://megogo.net/ua/view/1321721-lipuchka.html" },
+  { id:46, title_uk:"Ласкаво просимо до капкану", title_en:"Welcome to the Punch", title_ru:"Ласкаво просимо до капкану", year:2013, rating:6.1, genre:"action", badge:"free", age:"16+", color:"135deg,#0a1a0a,#152e15", emoji:"🎯", poster:"https://upload.wikimedia.org/wikipedia/ru/b/bb/Welcome_to_the_Punch.jpg", desc:"Злочинець повертається щоб врятувати сина, а поліцейський нарешті має шанс його спіймати. Гострий британський бойовик.", link:"https://megogo.net/ua/view/1343301-laskavo-prosimo-do-kapkanu.html" },
+  { id:47, title_uk:"Дітородні", title_en:"The Babymakers", title_ru:"Дітородні", year:2012, rating:5.0, genre:"comedy", badge:"free", age:"16+", color:"135deg,#1a1a0a,#2e2e15", emoji:"👶", poster:"https://upload.wikimedia.org/wikipedia/uk/1/19/The_Babymakers_poster.jpg", desc:"Чоловік планує викрасти власні донорські зразки з банку сперми щоб завести дитину. Безумна комедія.", link:"https://megogo.net/ua/view/1343781-ditorodni.html" },
+  { id:48, title_uk:"Обличчя янгола", title_en:"The Face of an Angel", title_ru:"Обличчя янгола", year:2014, rating:4.6, genre:"drama", badge:"free", age:"18+", color:"135deg,#1a0a1a,#2e152e", emoji:"😇", poster:"https://upload.wikimedia.org/wikipedia/ru/3/3e/The_Face_of_an_Angel_%28film%2C_2014%29.jpg", desc:"Британський режисер їде до Сієни шукати натхнення і потрапляє у резонансну кримінальну справу.", link:"https://megogo.net/ua/view/1656261-oblichchya-yangola.html" },
+  { id:49, title_uk:"Місія «Звіропотяг»", title_en:"Falcon Express", title_ru:"Місія «Звіропотяг»", year:2025, rating:6.3, genre:"animation", badge:"new", age:"7+", color:"135deg,#0a1a2e,#152e3e", emoji:"🚂", poster:"https://uaserials.my/posters/11711.webp", desc:"Єнот на прізвисько Сокіл проникає на потяг щоб вкрасти їжу, але все йде не за планом.", link:"https://uaserials.my/11730-misiia-zviropotiag.html" },
+  { id:50, title_uk:"Мисливці на тролів: Повстання титанів", title_en:"Trollhunters: Rise of the Titans", title_ru:"Мисливці на тролів: Повстання титанів", year:2021, rating:6.6, genre:"animation", badge:"free", age:"7+", color:"135deg,#1a0a2e,#2e153e", emoji:"🧌", poster:"https://uaserials.my/posters/11643.webp", desc:"Джим Лейк-молодший у фінальній битві проти найнебезпечніших сил Всесвіту.", link:"https://uaserials.my/11661-myslyvci-na-troliv-povstannia-tytaniv.html" },
+  { id:51, title_uk:"Смурфики: Загублене містечко", title_en:"Smurfs: The Lost Village", title_ru:"Смурфики: Загублене містечко", year:2017, rating:6.0, genre:"animation", badge:"free", age:"7+", color:"135deg,#0a0a2e,#15153e", emoji:"🔵", poster:"https://photo.in.ck.ua/event/58d6/1bb7/c101/0544/cc01/0a3f/smurfiki-zateryannaya-derevnya.12@2x.jpeg", desc:"Смурфетка вирушає у чарівний ліс щоб знайти своє справжнє призначення.", link:"https://uaserials.my/11181-smurfyky-zagublene-mistechko.html" },
+  { id:80, title_uk:"Ваяна", title_en:"Moana", title_ru:"Моана", year:2016, rating:7.6, genre:"animation", age:"7+", badge:"free", color:"135deg,#001a2e,#003a5c", emoji:"🌊", poster:"https://uaserials.my/posters/10188.webp", link:"https://uaserials.my/10188-vaiana.html", desc:"Відважна дочка вождя вирушає у морську подорож щоб врятувати свій народ. Захопливий Disney мультфільм про сміливість та пригоди." },
+  { id:81, title_uk:"Кейпоп-мисливиці на демонів", title_en:"KPop Demon Hunters", title_ru:"Кейпоп-охотницы на демонов", year:2025, rating:7.7, genre:"animation", age:"7+", badge:"new", color:"135deg,#1a001a,#2e002e", emoji:"🎤", poster:"https://uaserials.my/posters/11006.webp", link:"https://uaserials.my/11018-keipop-myslyvyci-na-demoniv.html", desc:"Три учасниці K-pop гурту вдень виступають на сцені, а вночі полюють на демонів. Яскравий мультфільм 2025 року." },
+  { id:82, title_uk:"Профі", title_en:"A Working Man", title_ru:"Профи", year:2025, rating:6.0, genre:"action", age:"18+", badge:"new", color:"135deg,#1a0a00,#2e1500", emoji:"💪", poster:"https://uaserials.my/posters/10559.webp", link:"https://uaserials.my/10392-profi-2025s.html", desc:"Колишній морський піхотинець намагається жити звичайним життям. Але коли донька роботодавця зникає — він повертається до бойових навичок." },
+];
+
+const newMovies = [];
+
+let currentLang = 'uk';
+let currentFilter = 'all';
+
+// ===== RENDER MOVIES =====
+function renderMovies(list, containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.innerHTML = '';
+  list.forEach((m, i) => {
+    const title = m['title_' + currentLang] || m.title_en;
+    const genreLabels = {action:{uk:'Бойовик',en:'Action'},drama:{uk:'Драма',en:'Drama'},comedy:{uk:'Комедія',en:'Comedy'},horror:{uk:'Жахи',en:'Horror'},thriller:{uk:'Трилер',en:'Thriller'},animation:{uk:'Мультфільм',en:'Animation'},'animation-series':{uk:'Мультсеріал',en:'Animated Series'},series:{uk:'Серіал',en:'Series'}};
+    const genreLabel = genreLabels[m.genre]?.[currentLang] || m.genre;
+    const badgeLabel = m.badge==='free'?'Безкоштовно':m.badge==='new'?'Новинка':'';
+    const badgeClass = m.badge==='free'?'badge-free':'badge-new';
+    const ageLabel = m.age ? `<span class="age-label">${m.age}</span>` : '';
+    container.innerHTML += `
+      <div class="movie-card" style="animation-delay:${i*0.07}s" onclick="openMoviePlayer(${m.id})">
+        <div class="movie-poster">
+          ${m.poster
+            ? `<div class="movie-poster-img" style="background-image:url('${m.poster}');background-size:cover;background-position:center"></div>`
+            : `<div class="movie-poster-img" style="background:linear-gradient(${m.color})"></div><span style="position:relative;z-index:1;font-size:2.5rem">${m.emoji}</span>`
+          }
+        </div>
+        ${badgeLabel ? `<span class="movie-badge ${badgeClass}">${badgeLabel}</span>` : ''}
+        ${ageLabel}
+        <span class="movie-rating">⭐ ${m.rating}</span>
+        <div class="movie-overlay"><button class="play-btn" onclick="openMoviePlayer(${m.id})">▶</button></div>
+        <div class="movie-info">
+          <div class="movie-title">${title}</div>
+          <div class="movie-meta"><span>${m.year}</span><span>HD</span></div>
+          <span class="movie-genre">${genreLabel}</span>
+          ${m.desc ? `<p class="movie-desc">${m.desc}</p>` : ''}
+        </div>
+      </div>`;
+  });
+}
+
+
+
+function render() {
+  renderMovies(movies, 'movieGrid');
+  // newGrid shows only films not already in movies array
+  const mainIds = new Set(movies.map(m => m.id));
+  const uniqueNew = newMovies.filter(m => !mainIds.has(m.id));
+  renderMovies(uniqueNew, 'newGrid');
+}
+
+// ===== LANGUAGE =====
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    if (b.textContent.toLowerCase().includes(lang) ||
+        (lang==='uk'&&b.textContent.includes('УКР')) ||
+        (lang==='en'&&b.textContent.includes('ENG')) ||
+        (lang==='ru'&&b.textContent.includes('РУС'))) b.classList.add('active');
+  });
+  // Hide all lang elements
+  document.body.setAttribute('data-active-lang', lang);
+  // placeholder
+  const pl = {uk:'Пошук фільмів, серіалів, актори...', en:'Search movies, series, actors...', ru:'Поиск фильмов, сериалов, актёры...'};
+  document.getElementById('searchInput').placeholder = pl[lang];
+  render();
+}
+
+// ===== FILTER =====
+function setFilter(btn, genre) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentFilter = genre;
+  const container = document.getElementById('movieGrid');
+  document.getElementById('movies')?.scrollIntoView({behavior:'smooth'});
+
+  let filtered;
+  if (genre === 'all') {
+    filtered = movies;
+  } else if (genre === 'series') {
+    filtered = movies.filter(m => m.genre === 'series');
+  } else if (genre === 'action') {
+    filtered = movies.filter(m => m.genre === 'action');
+  } else if (genre === 'animation-series') {
+    filtered = movies.filter(m => m.genre === 'animation-series');
+  } else {
+    filtered = movies.filter(m => m.genre === genre);
+  }
+
+  container.innerHTML = '';
+  if (filtered.length === 0) {
+    container.innerHTML = '<div style="color:var(--muted);padding:40px;text-align:center">Нічого не знайдено</div>';
+    return;
+  }
+  filtered.forEach((m, i) => {
+    const title = m['title_' + currentLang] || m.title_en;
+    const genreLabels = {action:{uk:'Бойовик',en:'Action'},drama:{uk:'Драма',en:'Drama'},comedy:{uk:'Комедія',en:'Comedy'},horror:{uk:'Жахи',en:'Horror'},thriller:{uk:'Трилер',en:'Thriller'},animation:{uk:'Мультфільм',en:'Animation'},'animation-series':{uk:'Мультсеріал',en:'Animated Series'},series:{uk:'Серіал',en:'Series'}};
+    const genreLabel = genreLabels[m.genre]?.[currentLang] || m.genre;
+    const badgeLabel = m.badge==='free'?'Безкоштовно':m.badge==='new'?'Новинка':'';
+    const badgeClass = m.badge==='free'?'badge-free':'badge-new';
+    const ageLabel = m.age ? `<span class="age-label">${m.age}</span>` : '';
+    container.innerHTML += `
+      <div class="movie-card" style="animation-delay:${i*0.07}s" onclick="openMoviePlayer(${m.id})">
+        <div class="movie-poster">
+          ${m.poster
+            ? `<div class="movie-poster-img" style="background-image:url('${m.poster}');background-size:cover;background-position:center"></div>`
+            : `<div class="movie-poster-img" style="background:linear-gradient(${m.color})"></div><span style="position:relative;z-index:1;font-size:2.5rem">${m.emoji}</span>`
+          }
+        </div>
+        ${badgeLabel ? `<span class="movie-badge ${badgeClass}">${badgeLabel}</span>` : ''}
+        ${ageLabel}
+        <span class="movie-rating">⭐ ${m.rating}</span>
+        <div class="movie-overlay"><button class="play-btn" onclick="openMoviePlayer(${m.id})">▶</button></div>
+        <div class="movie-info">
+          <div class="movie-title">${title}</div>
+          <div class="movie-meta"><span>${m.year}</span><span>HD</span></div>
+          <span class="movie-genre">${genreLabel}</span>
+          ${m.desc ? `<p class="movie-desc">${m.desc}</p>` : ''}
+        </div>
+      </div>`;
+  });
+}
+
+
+
+
+function filterMovies(query) {
+  const q = query.toLowerCase();
+  if (!q) { render(); return; }
+  const all = [...movies, ...newMovies];
+  const filtered = all.filter(m =>
+    (m[`title_${currentLang}`]||m.title_en).toLowerCase().includes(q)
+  );
+  const container = document.getElementById('movieGrid');
+  container.innerHTML = '';
+  if (filtered.length === 0) {
+    container.innerHTML = `<div style="color:var(--muted);padding:20px;grid-column:1/-1">
+      ${currentLang==='uk'?'Нічого не знайдено':currentLang==='en'?'Nothing found':'Ничего не найдено'}
+    </div>`;
+    return;
+  }
+  filtered.forEach((m,i) => {
+    const title = m[`title_${currentLang}`]||m.title_en;
+    container.innerHTML += `
+      <div class="movie-card" style="animation-delay:${i*0.07}s" onclick="openMoviePlayer(${m.id})">
+        <div class="movie-poster">
+          <div class="movie-poster-img" style="background:linear-gradient(${m.color})"></div>
+          <span style="position:relative;z-index:1;font-size:2.5rem">${m.emoji}</span>
+        </div>
+        <span class="movie-rating">⭐ ${m.rating}</span>
+        <div class="movie-overlay"><button class="play-btn">▶</button></div>
+        <div class="movie-info">
+          <div class="movie-title">${title}</div>
+          <div class="movie-meta"><span>${m.year}</span></div>
+        </div>
+      </div>`;
+  });
+}
+
+// ===== MODAL =====
+function openModal(type) {
+  document.getElementById(type+'Modal').classList.add('open');
+}
+function closeModal(type) {
+  document.getElementById(type+'Modal').classList.remove('open');
+}
+function switchModal(from, to) {
+  closeModal(from); openModal(to);
+}
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) overlay.classList.remove('open');
+  });
+});
+
+// ===== SCROLL =====
+function scrollToSection(id) {
+  document.getElementById(id)?.scrollIntoView({behavior:'smooth'});
+}
+
+// ===== INIT =====
+setLang('uk');
+
+// ===== ADMIN PANEL =====
+const ADMIN_PASS = 'cineworld2026';
+
+// Load movies from localStorage if available
+function loadCustomMovies() {
+  try {
+    const saved = localStorage.getItem('cineworld_movies');
+    if (saved) {
+      const custom = JSON.parse(saved);
+      custom.forEach(m => {
+        if (!movies.find(x => x.id === m.id)) movies.push(m);
+      });
+    }
+  } catch(e) {}
+}
+
+function saveCustomMovies() {
+  try {
+    const custom = movies.filter(m => m.custom);
+    localStorage.setItem('cineworld_movies', JSON.stringify(custom));
+  } catch(e) {}
+}
+
+function checkAdminPass() {
+  const pass = document.getElementById('adminPassInput').value;
+  const err = document.getElementById('adminPassError');
+  if (pass === ADMIN_PASS) {
+    err.style.display = 'none';
+    closeModal('admin');
+    document.getElementById('adminPassInput').value = '';
+    openAdminPanel();
+  } else {
+    err.style.display = 'block';
+  }
+}
+
+function openAdminPanel() {
+  renderAdminMovieList();
+  document.getElementById('movieCount').textContent = movies.length + newMovies.length;
+  document.getElementById('adminPanelModal').classList.add('open');
+}
+
+function renderAdminMovieList() {
+  const container = document.getElementById('adminMovieList');
+  const allMovies = movies;
+  container.innerHTML = allMovies.map(m => `
+    <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:12px">
+      <div style="font-size:1.8rem;width:40px;text-align:center">${m.emoji||'🎬'}</div>
+      <div style="flex:1">
+        <div style="font-weight:700;font-size:0.9rem">${m.title_uk || m.title_en}</div>
+        <div style="color:var(--muted);font-size:0.75rem">${m.year} • ⭐${m.rating} • ${m.genre}</div>
+        ${m.link ? `<div style="color:var(--accent);font-size:0.7rem;margin-top:2px">🔗 ${m.link.substring(0,40)}...</div>` : '<div style="color:var(--muted);font-size:0.7rem;margin-top:2px">⚠️ Немає посилання</div>'}
+      </div>
+      <div style="display:flex;gap:8px;flex-shrink:0">
+        <button onclick="adminEditLink(${m.id})" style="background:var(--bg);border:1px solid var(--border);color:var(--muted);padding:6px 12px;border-radius:6px;cursor:pointer;font-size:0.75rem">✏️ Посилання</button>
+        <button onclick="adminDeleteMovie(${m.id})" style="background:rgba(229,9,20,0.1);border:1px solid rgba(229,9,20,0.3);color:var(--accent);padding:6px 12px;border-radius:6px;cursor:pointer;font-size:0.75rem">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function adminAddMovie() {
+  const titleUk = document.getElementById('addTitleUk').value.trim();
+  const titleEn = document.getElementById('addTitleEn').value.trim();
+  const titleRu = document.getElementById('addTitleRu').value.trim();
+  const year = parseInt(document.getElementById('addYear').value);
+  const rating = parseFloat(document.getElementById('addRating').value);
+  const genre = document.getElementById('addGenre').value;
+  const badge = document.getElementById('addBadge').value;
+  const emoji = document.getElementById('addEmoji').value || '🎬';
+  const link = document.getElementById('addLink').value.trim();
+  const poster = document.getElementById('addPoster').value.trim();
+  const youtube = document.getElementById('addYoutube').value.trim();
+  const color = document.getElementById('addColor').value.trim() || '135deg,#1a1030,#3a1050';
+  const msg = document.getElementById('addMovieMsg');
+
+  if (!titleUk || !titleEn || !year || !rating) {
+    msg.style.display = 'block';
+    msg.style.color = '#e50914';
+    msg.textContent = "❌ Заповни всі обов'язкові поля (*)";
+    return;
+  }
+
+  const newId = Date.now();
+  const movie = { id: newId, title_uk: titleUk, title_en: titleEn, title_ru: titleRu || titleUk, year, rating, genre, badge, emoji, link, poster, youtube, color, custom: true };
+  movies.unshift(movie);
+  saveCustomMovies();
+  render();
+  renderAdminMovieList();
+  document.getElementById('movieCount').textContent = movies.length + newMovies.length;
+
+  // Clear form
+  ['addTitleUk','addTitleEn','addTitleRu','addYear','addRating','addLink','addPoster','addYoutube'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('addEmoji').value = '';
+  document.getElementById('addColor').value = '135deg,#1a1030,#3a1050';
+
+  msg.style.display = 'block';
+  msg.style.color = '#22c55e';
+  msg.textContent = '✅ Фільм успішно додано!';
+  setTimeout(() => msg.style.display = 'none', 3000);
+}
+
+function adminEditLink(id) {
+  const allMovies = movies;
+  const movie = allMovies.find(m => m.id === id);
+  if (!movie) return;
+  const newLink = prompt(`Введи посилання для фільму "${movie.title_uk || movie.title_en}":`, movie.link || '');
+  if (newLink !== null) {
+    movie.link = newLink;
+    saveCustomMovies();
+    renderAdminMovieList();
+    render();
+  }
+}
+
+function adminDeleteMovie(id) {
+  const movie = movies.find(m => m.id === id) || newMovies.find(m => m.id === id);
+  if (!movie) return;
+  if (!confirm(`Видалити фільм "${movie.title_uk || movie.title_en}"?`)) return;
+  const mi = movies.findIndex(m => m.id === id);
+  if (mi !== -1) movies.splice(mi, 1);
+  const ni = newMovies.findIndex(m => m.id === id);
+  if (ni !== -1) newMovies.splice(ni, 1);
+  saveCustomMovies();
+  render();
+  renderAdminMovieList();
+  document.getElementById('movieCount').textContent = movies.length + newMovies.length;
+}
+
+// Override movie card click to open link if available
+function openMovieLink(id) {
+  const allMovies = movies;
+  const m = allMovies.find(x => x.id === id);
+  if (m && m.link) {
+    window.open(m.link, '_blank');
+  } else {
+    scrollToSection('movies');
+  }
+}
+
+// Load custom movies on init
+loadCustomMovies();
+
+
+// ===== MOVIE CLICK =====
+let currentPlayerMovie = null;
+function openMoviePlayer(id) {
+  const allMovies = movies;
+  const m = allMovies.find(x => x.id === id);
+  if (!m) return;
+  if (m.link) {
+    window.open(m.link, '_blank');
+  }
+}
+
+
+
+
+
+// Stop youtube on player close
+
+
+
+function showTopMovies() {
+  scrollToSection('movies');
+  const top = movies.filter(m => m.rating >= 5.0).sort((a,b) => b.rating - a.rating);
+  renderMovies(top, 'movieGrid');
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+}
+
+
+function showAllMovies() {
+  scrollToSection('movies');
+  render();
+}
+
+// ===== PAGES =====
+function showPage(type) {
+  const allMovies = movies;
+  const movieGrid = document.getElementById('movieGrid');
+  const seriesSection = document.getElementById('series');
+  const moviesSection = document.getElementById('movies');
+
+  if (type === 'films') {
+    const films = allMovies.filter(m => m.genre !== 'series' && m.genre !== 'animation');
+    moviesSection.style.display = 'block';
+    seriesSection.style.display = 'none';
+    renderMovies(films, 'movieGrid');
+    scrollToSection('movies');
+    // Update section title
+    document.querySelector('#movies .section-title [data-lang="uk"]').innerHTML = '🎬 <span>Всі</span> фільми';
+  } else if (type === 'series') {
+    const series = allMovies.filter(m => m.genre === 'series');
+    moviesSection.style.display = 'block';
+    seriesSection.style.display = 'none';
+    renderMovies(series, 'movieGrid');
+    scrollToSection('movies');
+    document.querySelector('#movies .section-title [data-lang="uk"]').innerHTML = '📺 <span>Всі</span> серіали';
+  } else if (type === 'top') {
+    const top = allMovies.filter(m => m.rating >= 5.0).sort((a,b) => b.rating - a.rating);
+    moviesSection.style.display = 'block';
+    seriesSection.style.display = 'none';
+    renderMovies(top, 'movieGrid');
+    scrollToSection('movies');
+    document.querySelector('#movies .section-title [data-lang="uk"]').innerHTML = '🏆 <span>Топ</span> фільмів';
+  }
+}
+</script>
+
+<!-- ADMIN LOGIN MODAL -->
+<div class="modal-overlay" id="adminModal">
+  <div class="modal" style="max-width:480px">
+    <button class="modal-close" onclick="closeModal('admin')">✕</button>
+    <h2>⚙️ Адмін панель</h2>
+    <p>Введи пароль для входу</p>
+    <div class="form-group">
+      <input type="password" class="form-input" id="adminPassInput" placeholder="Пароль" onkeydown="if(event.key==='Enter')checkAdminPass()">
+    </div>
+    <button class="btn-submit" onclick="checkAdminPass()">Увійти</button>
+    <div id="adminPassError" style="color:#e50914;font-size:0.8rem;margin-top:8px;display:none">❌ Невірний пароль</div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL MODAL -->
+<div class="modal-overlay" id="adminPanelModal">
+  <div class="modal" style="max-width:700px;width:95%;max-height:90vh;overflow-y:auto">
+    <button class="modal-close" onclick="closeModal('adminPanel')">✕</button>
+    <h2>⚙️ Управління фільмами</h2>
+    <p style="margin-bottom:20px">Додавай, редагуй та видаляй фільми з каталогу</p>
+
+    <!-- ADD MOVIE FORM -->
+    <div style="background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:24px">
+      <div style="font-size:0.85rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:16px">➕ Додати новий фільм</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div>
+          <div style="font-size:0.75rem;color:var(--muted);margin-bottom:4px">Назва (УКР) *</div>
+          <input type="text" class="form-input" id="addTitleUk" placeholder="Наприклад: Початок">
+        </div>
+        <div>
+          <div style="font-size:0.75rem;color:var(--muted);margin-bottom:4px">Назва (ENG) *</div>
+          <input type="text" class="form-input" id="addTitleEn" placeholder="Inception">
+        </div>
+        <div>
+          <div style="font-size:0.75rem;color:var(--muted);margin-bottom:4px">Назва (РУС)</div>
+          <input type="text" class="form-input" id="addTitleRu" placeholder="Начало">
+        </div>
+        <div>
+          <div style="font-size:0.75rem;color:var(--muted);margin-bottom:4px">Рік *</div>
+          <input type="number" class="form-input" id="addYear" placeholder="2024" min="1900" max="2030">
+        </div>
+        <div>
+          <div style="font-size:0.75rem;color:var(--muted);margin-bottom:4px">Рейтинг IMDb *</div>
+          <input type="number" class="form-input" id="addRating" placeholder="8.5" min="1" max="10" step="0.1">
+        </div>
+        <div>
+          <div style="font-size:0.75rem;color:var(--muted);margin-bottom:4px">Жанр *</div>
+          <select class="form-input" id="addGenre">
+            <option value="action">Бойовик</option>
+            <option value="comedy">Комедія</option>
+            <option value="drama">Драма</option>
+            <option value="horror">Жахи</option>
+            <option value="sci-fi">Фантастика</option>
+            <option value="thriller">Трилер</option>
+            <option value="animation">Мультфільм</option>
+          </select>
+        </div>
+        <div>
+          <div style="font-size:0.75rem;color:var(--muted);margin-bottom:4px">Мітка</div>
+          <select class="form-input" id="addBadge">
+            <option value="free">Безкоштовно</option>
+            <option value="new">Новинка</option>
+            <option value="">Без мітки</option>
+          </select>
+        </div>
+        <div>
+          <div style="font-size:0.75rem;color:var(--muted);margin-bottom:4px">Емодзі постера</div>
+          <input type="text" class="form-input" id="addEmoji" placeholder="🎬" maxlength="2">
+        </div>
+        <div style="grid-column:1/-1">
+          <div style="font-size:0.75rem;color:var(--muted);margin-bottom:4px">Постер фільму (URL зображення)</div>
+          <input type="text" class="form-input" id="addPoster" placeholder="https://... посилання на постер з Google або IMDb">
+        </div>
+        <div style="grid-column:1/-1">
+          <div style="font-size:0.75rem;color:var(--muted);margin-bottom:4px">YouTube трейлер (ID відео)</div>
+          <input type="text" class="form-input" id="addYoutube" placeholder="dQw4w9WgXcQ (тільки ID після v= в посиланні)">
+        </div>
+        <div style="grid-column:1/-1">
+          <div style="font-size:0.75rem;color:var(--muted);margin-bottom:4px">Посилання на фільм (URL)</div>
+          <input type="text" class="form-input" id="addLink" placeholder="https://megogo.net/... або інше посилання">
+        </div>
+        <div style="grid-column:1/-1">
+          <div style="font-size:0.75rem;color:var(--muted);margin-bottom:4px">Колір постера (CSS градієнт)</div>
+          <input type="text" class="form-input" id="addColor" placeholder="135deg,#1a1030,#3a1050" value="135deg,#1a1030,#3a1050">
+        </div>
+      </div>
+      <button class="btn-submit" style="margin-top:16px" onclick="adminAddMovie()">➕ Додати фільм</button>
+      <div id="addMovieMsg" style="margin-top:8px;font-size:0.85rem;display:none"></div>
+    </div>
+
+    <!-- MOVIE LIST -->
+    <div style="font-size:0.85rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:12px">
+      📋 Всі фільми у каталозі (<span id="movieCount">0</span>)
+    </div>
+    <div id="adminMovieList"></div>
+  </div>
+</div>
+
+
+    <!-- YouTube embed -->
+    <div id="youtubeContainer" style="display:none;position:relative;padding-bottom:56.25%;height:0">
+      <iframe id="youtubeFrame" style="position:absolute;top:0;left:0;width:100%;height:100%" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <!-- No trailer fallback -->
+    <div id="noTrailerBox" style="display:none;padding:40px;text-align:center">
+      <div style="font-size:3rem;margin-bottom:12px">🎬</div>
+      <div id="noTrailerPoster" style="width:150px;height:220px;margin:0 auto 16px;border-radius:8px;background:var(--bg3);background-size:cover;background-position:center"></div>
+      <div style="color:var(--muted);margin-bottom:8px">Трейлер недоступний</div>
+      <div style="color:var(--text);font-size:0.9rem">Натисни кнопку вище щоб дивитись повністю</div>
+    </div>
+    <!-- Movie info bar -->
+    <div style="padding:14px 20px;background:var(--bg2);display:flex;gap:16px;align-items:center">
+      <span id="playerRating" style="color:#f5c518;font-weight:700">⭐</span>
+      <span id="playerYear" style="color:var(--muted);font-size:0.85rem"></span>
+      <span id="playerGenre" style="background:var(--bg3);color:var(--muted);font-size:0.75rem;padding:2px 8px;border-radius:4px"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ADSENSE BOTTOM BANNER -->
+<div style="text-align:center;padding:20px 60px;min-height:120px">
+  <ins class="adsbygoogle"
+     style="display:block;min-width:320px;min-height:100px"
+     data-ad-client="ca-pub-6017941702609770"
+     data-ad-slot="auto"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});
+// ===== HERO CAROUSEL =====
+function initCarousel() {
+  const track = document.getElementById('carouselTrack');
+  if (!track) return;
+  const mainIds = new Set(movies.map(m => m.id));
+  const uniqueNew = newMovies.filter(m => !mainIds.has(m.id));
+  const allMovies = [...movies, ...uniqueNew]
+    .filter(m => m.poster && m.year >= 2017)
+    .sort((a, b) => b.year - a.year);
+  const items = [...allMovies, ...allMovies];
+  track.innerHTML = '';
+  items.forEach(m => {
+    const div = document.createElement('div');
+    div.className = 'carousel-item';
+    div.style.backgroundImage = `url('${m.poster}')`;
+    div.onclick = () => openMoviePlayer(m.id);
+    div.innerHTML = `<div class="carousel-item-overlay">${m.title_uk} (${m.year}) ⭐${m.rating}</div>`;
+    track.appendChild(div);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', initCarousel);
+
+</script>
+</div>
+
+<!-- ПРО СЕРВІС -->
+<div class="about-section">
+  <div class="about-grid">
+    <div class="about-card">
+      <div class="about-icon">🎬</div>
+      <h3><span data-lang="uk">Безкоштовний перегляд</span><span data-lang="en">Free Watching</span></h3>
+      <p><span data-lang="uk">Всі фільми та серіали доступні безкоштовно на легальних платформах. Без підписки та реєстрації.</span><span data-lang="en">All movies and series are available for free on legal platforms. No subscription or registration required.</span></p>
+    </div>
+    <div class="about-card">
+      <div class="about-icon">🔍</div>
+      <h3><span data-lang="uk">Зручний пошук</span><span data-lang="en">Easy Search</span></h3>
+      <p><span data-lang="uk">Фільтруй за жанром, шукай найкращі фільми за рейтингом IMDb. Знаходь те що хочеш за секунди.</span><span data-lang="en">Filter by genre, find the best films by IMDb rating. Find what you want in seconds.</span></p>
+    </div>
+    <div class="about-card">
+      <div class="about-icon">📱</div>
+      <h3><span data-lang="uk">На будь-якому пристрої</span><span data-lang="en">Any Device</span></h3>
+      <p><span data-lang="uk">Сайт працює на телефоні, планшеті та комп'ютері. Дивись де зручно та коли зручно.</span><span data-lang="en">The site works on phone, tablet and computer. Watch wherever and whenever you want.</span></p>
+    </div>
+    <div class="about-card">
+      <div class="about-icon">🇺🇦</div>
+      <h3><span data-lang="uk">Українською мовою</span><span data-lang="en">Ukrainian Language</span></h3>
+      <p><span data-lang="uk">Каталог повністю українською. Підтримуй українські сервіси та дивись улюблені фільми рідною мовою.</span><span data-lang="en">The catalog is fully in Ukrainian. Support Ukrainian services and watch your favorite films in your native language.</span></p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer style="background:var(--bg2);border-top:1px solid var(--border);padding:40px 60px;margin-top:60px">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px">
+    <div>
+      <div style="font-family:Bebas Neue,sans-serif;font-size:1.8rem;color:var(--accent);letter-spacing:3px">CineWorldUkraine</div>
+      <div style="color:var(--muted);font-size:0.8rem;margin-top:4px">© 2025 CineWorld. Всі права захищені.</div>
+    </div>
+    <div style="display:flex;gap:24px;flex-wrap:wrap">
+      <a href="#" onclick="openModal('privacy')" style="color:var(--muted);text-decoration:none;font-size:0.85rem;transition:color 0.2s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">
+        🔒 Політика конфіденційності
+      </a>
+      <a href="#" onclick="openModal('about')" style="color:var(--muted);text-decoration:none;font-size:0.85rem;transition:color 0.2s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">
+        ℹ️ Про нас
+      </a>
+      <a href="#" onclick="openModal('contacts')" style="color:var(--muted);text-decoration:none;font-size:0.85rem;transition:color 0.2s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">
+        📧 Контакти
+      </a>
+    </div>
+  </div>
+</footer>
+
+<!-- PRIVACY POLICY MODAL -->
+<div class="modal-overlay" id="privacyModal">
+  <div class="modal" style="max-width:680px;max-height:85vh;overflow-y:auto">
+    <button class="modal-close" onclick="closeModal('privacy')">✕</button>
+    <h2>🔒 Політика конфіденційності</h2>
+    <div style="color:var(--muted);font-size:0.85rem;line-height:1.8">
+      <p><strong style="color:var(--text)">Останнє оновлення:</strong> 1 березня 2025 року</p>
+      
+      <h3 style="color:var(--text);margin-top:20px">1. Загальні положення</h3>
+      <p>CineWorldUkraine (cine-world-gray.vercel.app) — це каталог фільмів та серіалів. Ми поважаємо вашу конфіденційність і зобов'язуємося захищати ваші персональні дані.</p>
+      
+      <h3 style="color:var(--text);margin-top:20px">2. Які дані ми збираємо</h3>
+      <p>Ми не збираємо персональні дані користувачів безпосередньо. Наш сайт використовує:</p>
+      <ul style="margin-left:20px">
+        <li><strong style="color:var(--text)">Google Analytics</strong> — для аналізу відвідуваності (анонімні дані)</li>
+        <li><strong style="color:var(--text)">Google AdSense</strong> — для показу реклами (використовує cookies)</li>
+        <li><strong style="color:var(--text)">Cookies</strong> — технічні файли для коректної роботи сайту</li>
+      </ul>
+      
+      <h3 style="color:var(--text);margin-top:20px">3. Використання cookies</h3>
+      <p>Наш сайт використовує файли cookies для покращення досвіду користувачів. Google AdSense може використовувати cookies для показу персоналізованої реклами. Ви можете відключити cookies у налаштуваннях браузера.</p>
+      
+      <h3 style="color:var(--text);margin-top:20px">4. Реклама</h3>
+      <p>Ми використовуємо Google AdSense для монетизації сайту. Google може використовувати дані про ваші відвідування для показу релевантної реклами. Детальніше: <a href="https://policies.google.com/privacy" target="_blank" style="color:var(--accent)">Політика конфіденційності Google</a></p>
+      
+      <h3 style="color:var(--text);margin-top:20px">5. Посилання на сторонні сайти</h3>
+      <p>Наш сайт містить посилання на сторонні ресурси (Megogo, UASerials та інші). Ми не несемо відповідальності за їх політику конфіденційності.</p>
+      
+      <h3 style="color:var(--text);margin-top:20px">6. Зміни до політики</h3>
+      <p>Ми залишаємо за собою право змінювати цю політику. Актуальна версія завжди доступна на цій сторінці.</p>
+      
+      <h3 style="color:var(--text);margin-top:20px">7. Контакти</h3>
+      <p>З питань конфіденційності: <a href="mailto:cineworldfilms9@gmail.com" style="color:var(--accent)">cineworldfilms9@gmail.com</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT MODAL -->
+<div class="modal-overlay" id="aboutModal">
+  <div class="modal" style="max-width:680px;max-height:85vh;overflow-y:auto">
+    <button class="modal-close" onclick="closeModal('about')">✕</button>
+    <h2>ℹ️ Про CineWorld</h2>
+    <div style="color:var(--muted);font-size:0.85rem;line-height:1.8">
+      <div style="background:var(--bg3);border-radius:12px;padding:20px;margin-bottom:20px;text-align:center">
+        <div style="font-family:Bebas Neue,sans-serif;font-size:2.5rem;color:var(--accent);letter-spacing:4px">CineWorldUkraine</div>
+        <div style="color:var(--muted);font-size:0.9rem">Твій провідник у світі кіно 🎬</div>
+      </div>
+      
+      <p><strong style="color:var(--text)">CineWorldUkraine</strong> — це безкоштовний каталог фільмів, серіалів та мультфільмів українською мовою.</p>
+      
+      <h3 style="color:var(--text);margin-top:20px">🎯 Наша місія</h3>
+      <p>Допомогти кожному знайти цікавий фільм або серіал для перегляду — швидко, зручно і безкоштовно.</p>
+      
+      <h3 style="color:var(--text);margin-top:20px">✅ Що ми пропонуємо</h3>
+      <ul style="margin-left:20px">
+        <li>Великий каталог фільмів та серіалів</li>
+        <li>Зручний пошук та фільтрація за жанрами</li>
+        <li>Посилання на легальні джерела перегляду</li>
+        <li>Інтерфейс українською, англійською та російською мовами</li>
+        <li>Постійне оновлення каталогу новинками</li>
+      </ul>
+      
+      <h3 style="color:var(--text);margin-top:20px">📱 Ми в соцмережах</h3>
+      <p>Telegram канал: <a href="https://t.me/cineworld_film_ua" target="_blank" style="color:var(--accent)">@cineworld_film_ua</a></p>
+      
+      <h3 style="color:var(--text);margin-top:20px">⚖️ Правова інформація</h3>
+      <p>CineWorldUkraine є агрегатором посилань на легальний контент. Ми не зберігаємо та не розповсюджуємо відеоматеріали. Всі права на контент належать їх власникам.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACTS MODAL -->
+<div class="modal-overlay" id="contactsModal">
+  <div class="modal" style="max-width:580px">
+    <button class="modal-close" onclick="closeModal('contacts')">✕</button>
+    <h2>📧 Контакти</h2>
+    <div style="color:var(--muted);font-size:0.85rem;line-height:1.8">
+      
+      <div style="background:var(--bg3);border-radius:12px;padding:20px;margin-bottom:16px">
+        <div style="font-weight:700;color:var(--text);margin-bottom:8px">📧 Email</div>
+        <a href="mailto:cineworld.film.ua@gmail.com" style="color:var(--accent);text-decoration:none">cineworldfilms9@gmail.com</a>
+      </div>
+      
+      <div style="background:var(--bg3);border-radius:12px;padding:20px;margin-bottom:16px">
+        <div style="font-weight:700;color:var(--text);margin-bottom:8px">📱 Telegram / Viber (тільки SMS)</div>
+        <a href="https://t.me/cineworld_film_ua" target="_blank" style="color:var(--accent);text-decoration:none">@cineworld_film_ua</a>
+        <div style="margin-top:8px;color:var(--text)">+38 066 669 03 37</div>
+      </div>
+      
+      <div style="background:var(--bg3);border-radius:12px;padding:20px;margin-bottom:16px">
+        <div style="font-weight:700;color:var(--text);margin-bottom:8px">🌐 Сайт</div>
+        <a href="https://cine-world-gray.vercel.app" target="_blank" style="color:var(--accent);text-decoration:none">cine-world-gray.vercel.app</a>
+      </div>
+
+      <div style="background:var(--bg3);border-radius:12px;padding:20px">
+        <div style="font-weight:700;color:var(--text);margin-bottom:8px">💬 З питань співпраці та реклами</div>
+        <p>Якщо ви хочете розмістити рекламу на нашому сайті або запропонувати співпрацю — пишіть на email вище.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
