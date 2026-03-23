@@ -544,16 +544,62 @@
   body[data-active-lang="en"] [data-lang="en"],
   body[data-active-lang="ru"] [data-lang="ru"] { display: inline !important; }
 
-  /* RESPONSIVE */
+  /* RESPONSIVE — TABLET */
   @media (max-width: 900px) {
     nav { padding: 0 20px; }
     .nav-links { display: none; }
-    .hero { padding: 0 20px 60px; }
+    .hero-inner { padding: 80px 24px 40px; flex-direction: column; }
+    .hero-content { flex: none; max-width: 100%; }
     .hero-movies { display: none; }
-    .search-section, .section, .filters { padding-left: 20px; padding-right: 20px; }
+    .search-section { padding: 32px 20px 24px; }
+    .filters { padding: 0 20px 24px; }
+    .section { padding: 32px 20px; }
     .stats { grid-template-columns: repeat(2, 1fr); padding: 20px; }
-    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
     .ad-banner, .ad-strip { margin: 0 20px; padding: 12px 16px; }
+  }
+
+  /* RESPONSIVE — MOBILE */
+  @media (max-width: 600px) {
+    nav { padding: 0 16px; height: 56px; }
+    .logo { font-size: 1.4rem; letter-spacing: 2px; }
+    .lang-btn { padding: 3px 7px; font-size: 0.65rem; }
+    nav .btn { display: none; }
+    .hero { min-height: auto; }
+    .hero-inner { padding: 72px 16px 40px; gap: 24px; flex-direction: column; }
+    .hero-content { max-width: 100%; }
+    .hero h1 { font-size: clamp(2.8rem, 12vw, 4rem) !important; }
+    .hero p { font-size: 0.9rem; margin-bottom: 20px; }
+    .hero-actions { gap: 10px; width: 100%; }
+    .btn-hero { padding: 12px 20px; font-size: 0.85rem; flex: 1; justify-content: center; }
+    .hero-movies { display: none; }
+    .search-section { padding: 24px 16px 16px; }
+    .search-input { padding: 14px 16px 14px 44px; font-size: 0.9rem; }
+    .search-btn { padding: 8px 14px; font-size: 0.8rem; }
+    .filters { padding: 0 16px 20px; gap: 8px; overflow-x: auto; flex-wrap: nowrap; scrollbar-width: none; }
+    .filters::-webkit-scrollbar { display: none; }
+    .filter-btn { padding: 7px 14px; font-size: 0.75rem; white-space: nowrap; flex-shrink: 0; }
+    .section { padding: 24px 16px; }
+    .cards-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
+    .card-poster { height: 200px !important; }
+    .card-body { padding: 10px !important; }
+    .card-title { font-size: 0.8rem !important; }
+    .card-meta { font-size: 0.7rem !important; }
+    .card-genres { display: none; }
+    .stats { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 16px; }
+    .stat-card { padding: 16px 12px; }
+    .stat-num { font-size: 2rem; }
+    .ad-banner { padding: 10px 16px; margin: 0; }
+    .ad-strip { margin: 0 16px; }
+    footer { padding: 32px 16px 24px !important; margin-top: 32px; }
+    .footer-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
+    .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+    .modal { padding: 24px 20px !important; width: calc(100% - 32px) !important; margin: 16px; border-radius: 16px !important; }
+    .modal h2 { font-size: 1.5rem !important; }
+    .about-section { padding: 28px 16px; }
+    .about-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .about-card { padding: 16px 12px; }
+    .catalog-intro { font-size: 0.78rem; padding: 10px 14px; }
   }
 </style>
 </head>
@@ -1503,7 +1549,7 @@ document.addEventListener('DOMContentLoaded', initCarousel);
       <p>Ми залишаємо за собою право змінювати цю політику. Актуальна версія завжди доступна на цій сторінці.</p>
       
       <h3 style="color:var(--text);margin-top:20px">7. Контакти</h3>
-      <p>З питань конфіденційності: <a href="mailto:cineworldfilms9@gmail.com" style="color:var(--accent)">cineworldfilms9@gmail.com</a></p>
+      <p>З питань конфіденційності: <a href="/cdn-cgi/l/email-protection#67040e09021008150b03010e0b0a145e27000a060e0b4904080a" style="color:var(--accent)"><span class="__cf_email__" data-cfemail="80e3e9eee5f7eff2ece4e6e9ecedf3b9c0e7ede1e9ecaee3efed">[email&#160;protected]</span></a></p>
     </div>
   </div>
 </div>
@@ -1551,7 +1597,7 @@ document.addEventListener('DOMContentLoaded', initCarousel);
       
       <div style="background:var(--bg3);border-radius:12px;padding:20px;margin-bottom:16px">
         <div style="font-weight:700;color:var(--text);margin-bottom:8px">📧 Email</div>
-        <a href="mailto:cineworld.film.ua@gmail.com" style="color:var(--accent);text-decoration:none">cineworldfilms9@gmail.com</a>
+        <a href="/cdn-cgi/l/email-protection#75161c1b10021a0719115b131c19185b0014351218141c195b161a18" style="color:var(--accent);text-decoration:none"><span class="__cf_email__" data-cfemail="3053595e55475f425c5456595c5d430970575d51595c1e535f5d">[email&#160;protected]</span></a>
       </div>
       
       <div style="background:var(--bg3);border-radius:12px;padding:20px;margin-bottom:16px">
@@ -1566,12 +1612,4 @@ document.addEventListener('DOMContentLoaded', initCarousel);
       </div>
 
       <div style="background:var(--bg3);border-radius:12px;padding:20px">
-        <div style="font-weight:700;color:var(--text);margin-bottom:8px">💬 З питань співпраці та реклами</div>
-        <p>Якщо ви хочете розмістити рекламу на нашому сайті або запропонувати співпрацю — пишіть на email вище.</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-</body>
-</html>
+        <div style="font-weight:700;color:var(--text);margin-bottom:8px">💬 З питань с�
